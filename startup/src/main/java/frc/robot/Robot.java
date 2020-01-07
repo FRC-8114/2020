@@ -56,7 +56,12 @@ public class Robot extends TimedRobot {
      * -1.0     1.0
      *      1.0
      * Invert just the getY() to get movement right
+     * Joystick has drift, use stepping by 100 steps ie
+     *    1.0 ~ 1.0
+     *    0.938 ~ 0.93
+     *    0.006 ~ 0.0
      */
-    motorDrive.arcadeDrive(-stick.getY(), stick.getX());
+
+      motorDrive.arcadeDrive(-Math.floor(stick.getY()*100)/100, Math.floor(stick.getX()*100)/100);
   }
 }
