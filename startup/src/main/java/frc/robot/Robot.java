@@ -14,34 +14,49 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-/**
- * This is a demo program showing the use of the RobotDrive class, specifically
- * it contains the code necessary to operate a robot with tank drive.
- */
 public class Robot extends TimedRobot {
   private SpeedController zero, one, two, three;
   private SpeedControllerGroup left, right;
   private Joystick stick;
-  private DifferentialDrive MotorDrive;
-  //private Joystick m_rightStick;
+  private DifferentialDrive motorDrive;
+
 
   @Override
   public void robotInit() {
+    /*
+     * Drive train Motors
+     * 
+     * 0 = Left Back
+     * 1 = Left Front
+     * 2 = Right Back
+     * 3 = Right Front
+    */
+    
     zero = new PWMVictorSPX(0);
     one = new PWMVictorSPX(1);
     two = new PWMVictorSPX(2);
     three = new PWMVictorSPX(3);
 
+    //Speed controllers for controling halves of the drive train motors as a group
     left = new SpeedControllerGroup(zero, one);
     right = new SpeedControllerGroup(two, three);
 
+    //Initiates the motor and the joystick objects
     MotorDrive = new DifferentialDrive(left, right);
-    stick = new Joystick(0);
-    //m_rightStick = new Joystick(1);
+    stick = new Joystick(0); //joystick ID zero, can change
   }
 
   @Override
   public void teleopPeriodic() {
-    MotorDrive.arcadeDrive(-stick.getY(), -stick.getX());
+    /**
+     * The stick is mapped like this:
+     * Y AXIS IS UP AND DOWN
+     * X AXIS IS LEFT AND RIGHT
+     *     -1.0
+     * -1.0     1.0
+     *      1.0
+     * Invert just the getY() to get movement logo
+     */
+    motorDrive.arcadeDrive(-stick.getY(), stick.getX());
   }
 }
