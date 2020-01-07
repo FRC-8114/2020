@@ -1,18 +1,18 @@
-package frc.robot.auto;
+package frc.robot.Auto;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Timer;
 
 public class AutoSegment {
     private DifferentialDrive motorDrive;
-    private Timer timer;
+
+    
 
     //---------------------------------------------------------------\\
     //--Constructor--\\
     public AutoSegment(DifferentialDrive motorDrive) {
         this.motorDrive = motorDrive;
 
-        timer = new Timer();
     }
 
     //---------------------------------------------------------------\\
@@ -24,8 +24,24 @@ public class AutoSegment {
     //---------------------------------------------------------------\\
     //--Moves the robot off of the starting line--\\
     public void moveOffLine() {
+
+        //-Moves the robot straight foward at half speed
         motorDrive.arcadeDrive(.5, 0);
-        timer.delay(1);
-        motorDrive.arcadeDrive(0,0);
+        Timer.delay(1);
+        //-Rotates clockwise, no foward motion
+        motorDrive.arcadeDrive(0, .5);
+        Timer.delay(4);
+        //-Move motor of the arm up, possibly until camera detects color at spot
+        
+        /** It's comment code time
+         * 
+         * where camera is edu.wpi.cscore.UsbCamera
+         * while(!camera.isColorPositionCorrect()) {
+         *  armDrive.drive(.5);
+         *  Timer.delay(0.5);
+         * }
+         * shootDrive.drive(1.0);
+         * Timer.delay(4);
+         */
     }
 }

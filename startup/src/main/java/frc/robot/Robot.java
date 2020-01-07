@@ -7,22 +7,33 @@
 
 package frc.robot;
 
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
+
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
+import edu.wpi.cscore.UsbCamera;
+
 public class Robot extends TimedRobot {
-  private SpeedController zero, one, two, three;
+  //--Objects for motors and motor grouping--\\
+  private SpeedController leftBack, leftFront, rightBack, rightFront,
+                          launcherConveyer, launcherTop, launcherBottom, wheelSpinner;
   private SpeedControllerGroup left, right;
-  private Joystick stick;
   private DifferentialDrive motorDrive;
 
+  //--Objects for inputs--\\
+  private UsbCamera mainCamera;
+
+  //--Objects for user inputs
+  private Joystick driveStick;
 
   @Override
   public void robotInit() {
+    //--Initilization of motors
     /*
      * Drive train Motors
      * 
@@ -30,24 +41,53 @@ public class Robot extends TimedRobot {
      * 1 = Left Front
      * 2 = Right Back
      * 3 = Right Front
+     * 4 = Conveyer Belt
+     * 5 = Top Launch Wheel
+     * 6 = Bottom Launch Wheel
+     * 7 = Wheel Motor
+     * 8 = Arm Rotation Motor (maybe )
     */
     
-    zero = new PWMVictorSPX(0);
-    one = new PWMVictorSPX(1);
-    two = new PWMVictorSPX(2);
-    three = new PWMVictorSPX(3);
+    //-Motors for drive train
+    leftBack = new PWMVictorSPX(0);
+    leftFront = new PWMVictorSPX(1);
+    rightBack = new PWMVictorSPX(2);
+    rightFront = new PWMVictorSPX(3);
+    //-Motors for ball launcher
+    launcherConveyer = new PWMVictorSPX(4);
+    launcherTop = new PWMVictorSPX(5);
+    launcherBottom = new PWMVictorSPX(6);
+    //-Motor for wheel spinner
+    wheelSpinner = new PWMVictorSPX(7);
+    /*              0
+     *   o   o   o
+     *              0
+     */
 
-    //Speed controllers for controling halves of the drive train motors as a group
-    left = new SpeedControllerGroup(zero, one);
-    right = new SpeedControllerGroup(two, three);
+    // Speed controllers for controling halves of the drive train motors as a group
+    left = new SpeedControllerGroup(leftBack, leftFront);
+    right = new SpeedControllerGroup(rightBack, rightFront);
 
     //Initiates the motor and the joystick objects
-    MotorDrive = new DifferentialDrive(left, right);
-    stick = new Joystick(0); //joystick ID zero, can change
+    motorDrive = new DifferentialDrive(left, right);
+
+    //--Initilization of input devices
+    //-Buttons
+    driveStick = new Joystick(0); //joystick ID zero, can change
+    //-Camera
+    mainCamera = new UsbCamera("FrontCamera", 1); //Camera
+    /**
+     * PCODE for button init
+     * HashMap<Button, String> buttons = new HashMap<Button, String>(9);
+     * buttons.put(autoButton(lolnumber), "autoButton");
+     * ...
+     * buttons.get("autoButton").state();
+     */
   }
 
   @Override
   public void teleopPeriodic() {
+
     /**
      * The stick is mapped like this:
      * Y AXIS IS UP AND DOWN
@@ -61,7 +101,10 @@ public class Robot extends TimedRobot {
      *    0.938 ~ 0.93
      *    0.006 ~ 0.0
      */
+    motorDrive.arcadeDrive(-Math.floor(driveStick.getY()*100)/100, Math.floor(driveStick.getX()*100)/100);
+  }
 
-      motorDrive.arcadeDrive(-Math.floor(stick.getY()*100)/100, Math.floor(stick.getX()*100)/100);
+
+  public void autonomous() {
   }
 }
