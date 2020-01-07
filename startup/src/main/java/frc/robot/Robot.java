@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
      *     -1.0
      * -1.0     1.0
      *      1.0
-     * Invert just the getY() to get movement logo
+     * Invert just the getY() to get movement right
      */
     motorDrive.arcadeDrive(-stick.getY(), stick.getX());
   }
