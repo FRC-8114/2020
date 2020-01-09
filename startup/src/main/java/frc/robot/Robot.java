@@ -8,15 +8,19 @@
 package frc.robot;
 
 
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 import edu.wpi.cscore.UsbCamera;
+
+import frc.robot.Auto.AutoSegment;
 
 public class Robot extends TimedRobot {
   //--Objects for motors and motor grouping--\\
@@ -29,7 +33,10 @@ public class Robot extends TimedRobot {
   private UsbCamera mainCamera;
 
   //--Objects for user inputs
-  private Joystick driveStick;
+  private XboxController controller;
+
+  //--Objects for autonomous
+  private AutoSegment autoSegment;
 
   @Override
   public void robotInit() {
@@ -68,12 +75,12 @@ public class Robot extends TimedRobot {
     left = new SpeedControllerGroup(leftBack, leftFront);
     right = new SpeedControllerGroup(rightBack, rightFront);
 
-    //Initiates the motor and the joystick objects
+    //Initiates the motor and the controller objects
     motorDrive = new DifferentialDrive(left, right);
 
     //--Initilization of input devices
     //-Buttons
-    driveStick = new Joystick(0); //joystick ID zero, can change
+    controller = new XboxController(0); //joystick ID zero, can change
     //-Camera
     mainCamera = new UsbCamera("FrontCamera", 1); //Camera
     /**
@@ -101,10 +108,13 @@ public class Robot extends TimedRobot {
      *    0.938 ~ 0.93
      *    0.006 ~ 0.0
      */
-    motorDrive.arcadeDrive(-Math.floor(driveStick.getY()*100)/100, Math.floor(driveStick.getX()*100)/100);
+    motorDrive.tankDrive(-Math.floor(controller.getY(Hand.kLeft)*100)/100, Math.floor(controller.getY(Hand.kRight)*100)/100);
   }
 
 
   public void autonomous() {
+    autoSegment = new AutoSegment(motorDrive);
+
+    autoSegment.moveOffLine();
   }
 }

@@ -31,17 +31,5 @@ public class AutoSegment {
         //-Rotates clockwise, no foward motion
         motorDrive.arcadeDrive(0, .5);
         Timer.delay(4);
-        //-Move motor of the arm up, possibly until camera detects color at spot
-        
-        /** It's comment code time
-         * 
-         * where camera is edu.wpi.cscore.UsbCamera
-         * while(!camera.isColorPositionCorrect()) {
-         *  armDrive.drive(.5);
-         *  Timer.delay(0.5);
-         * }
-         * shootDrive.drive(1.0);
-         * Timer.delay(4);
-         */
     }
 }
