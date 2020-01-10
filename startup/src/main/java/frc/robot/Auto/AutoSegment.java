@@ -23,15 +23,15 @@ public class AutoSegment {
     //---------------------------------------------------------------\\
     //--Moves the robot off of the starting line--\\
     public void moveOffLine(Timer timer) {
-        if(timer.get()<2) {
+        if(timer.get()<.5) {
             motorDrive.tankDrive(.2, .2, false);
-        } else if(timer.get()<4) {
+        } else if(timer.get()<1) {
             motorDrive.tankDrive(.4, .4, false);
-        } else if(timer.get()<8) {
+        } else if(timer.get()<2) {
             motorDrive.tankDrive(.8, .8, false);
-        } else if(timer.get()<10) {
+        } else if(timer.get()<2.5) {
             motorDrive.tankDrive(.4, .4, false);
-        } else if(timer.get()<12) {
+        } else if(timer.get()<3) {
             motorDrive.tankDrive(.2, .2, false);
         } else {
             motorDrive.stopMotor();
