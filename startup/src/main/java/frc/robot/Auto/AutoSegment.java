@@ -26,11 +26,13 @@ public class AutoSegment {
     public void moveOffLine() {
 
         //-Moves the robot straight foward at half speed
-        motorDrive.tankDrive(.5, .50);
+        motorDrive.tankDrive(.5, .5);
         Timer.delay(1);
         //-Rotates clockwise, no foward motion
+        /*
         motorDrive.tankDrive(.5, -.5);
         Timer.delay(4);
         motorDrive.tankDrive(0, 0);
+        */
     }
 }
