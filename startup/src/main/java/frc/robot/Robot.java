@@ -111,11 +111,13 @@ public class Robot extends TimedRobot {
     motorDrive.tankDrive((-Math.floor(controller.getY(Hand.kLeft)*100)/100)*.75, (-Math.floor(controller.getY(Hand.kRight)*100)/100)*.75);
   }
 
+  @Override
   public void autonomousInit() {
     autoSegment = new AutoSegment(motorDrive);
     autoSegment.moveOffLine();
   }
 
+  @Override
   public void autonomousPeriodic() {
     motorDrive.tankDrive(0,0);
   }
