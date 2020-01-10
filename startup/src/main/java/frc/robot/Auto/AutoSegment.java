@@ -2,14 +2,17 @@ package frc.robot.Auto;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Encoder;
 
 
 public class AutoSegment {
     private DifferentialDrive motorDrive;
-
+    private Encoder leftEncoder, rightEncoder;
     //---------------------------------------------------------------\\
     //--Constructor--\\
-    public AutoSegment(DifferentialDrive motorDrive) {
+    public AutoSegment(DifferentialDrive motorDrive, Encoder leftEncoder, Encoder rightEncoder) {
+        this.leftEncoder = leftEncoder;
+        this.rightEncoder = rightEncoder;
         this.motorDrive = motorDrive;
 
     }

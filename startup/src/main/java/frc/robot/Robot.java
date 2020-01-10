@@ -9,6 +9,7 @@ package frc.robot;
 
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -39,8 +40,12 @@ public class Robot extends TimedRobot {
   //--Objects for autonomous
   private AutoSegment autoSegment;
 
-  //--Timer
+  //--Objects for Encoders
+  private Encoder leftEncoder, rightEncoder; 
+
+  //--Object for Timer
   private Timer timer;
+  
 
   @Override
   public void robotInit() {
@@ -70,10 +75,10 @@ public class Robot extends TimedRobot {
     launcherBottom = new PWMVictorSPX(6);
     //-Motor for wheel spinner
     wheelSpinner = new PWMVictorSPX(7);
-    /*              0
-     *   o   o   o
-     *              0
-     */
+    
+    //-Encoders for driving
+    leftEncoder = new Encoder(0,1);
+    rightEncoder = new Encoder(2,3);
 
     // Speed controllers for controling halves of the drive train motors as a group
     left = new SpeedControllerGroup(leftBack, leftFront);
@@ -98,7 +103,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-
+    System.out.print(leftEncoder.getDistance());
+    System.out.print(rightEncoder.getDistance());
   }
 
   @Override
@@ -128,7 +134,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    autoSegment = new AutoSegment(motorDrive);
+    autoSegment = new AutoSegment(motorDrive, leftEncoder, rightEncoder);
 
     timer = new Timer();
     timer.start();
