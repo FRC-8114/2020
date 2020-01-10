@@ -93,6 +93,16 @@ public class Robot extends TimedRobot {
   }
 
   @Override
+  public void robotPeriodic() {
+
+  }
+
+  @Override
+  public void teleopInit() {
+    
+  }
+
+  @Override
   public void teleopPeriodic() {
 
     /**
@@ -120,5 +130,15 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     motorDrive.tankDrive(0,0);
+  }
+
+  @Override
+  public void disabledInit() {
+
+  }
+
+  @Override
+  public void disabledPeriodic() {
+
   }
 }

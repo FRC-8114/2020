@@ -22,7 +22,6 @@ public class AutoSegment {
     //---------------------------------------------------------------\\
     //--Moves the robot off of the starting line--\\
     public void moveOffLine() {
-
         //-Moves the robot straight foward at half speed
         /*
         motorDrive.tankDrive(.1, .1);
@@ -63,7 +62,7 @@ public class AutoSegment {
         Timer timer = new Timer();
         timer.start();
         while(timer.get()<seconds) {
-            motorDrive.tankDrive(leftSpeed, rightSpeed);
+            motorDrive.tankDrive(leftSpeed, -rightSpeed);
         }
     }
 }
