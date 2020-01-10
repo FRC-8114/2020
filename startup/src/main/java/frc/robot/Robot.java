@@ -21,7 +21,7 @@ import edu.wpi.cscore.UsbCamera;
 
 import frc.robot.Auto.AutoSegment;
 
-import frc.subsystems.DriveSystem;
+import frc.robot.RobotContainer;
 
 public class Robot extends TimedRobot {
   //--Objects for motors and motor grouping--\\
@@ -42,8 +42,8 @@ public class Robot extends TimedRobot {
   //--Timer
   private Timer timer;
 
-  //--Subsystems
-  private DriveSystem driveSystem;
+  //--Robot Controller
+  private RobotContainer robotContainer;
 
   @Override
   public void robotInit() {
@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
     mainCamera = new UsbCamera("FrontCamera", 1); //Camera
     
     //-Subsystems
-    driveSystem = new DriveSystem(motorDrive, controller);
+    robotContainer = new RobotContainer(motorDrive, controller);
   }
 
   //-------------------------------------------------------------------------------------------------\\
