@@ -123,7 +123,7 @@ public class Robot extends TimedRobot {
      *    0.006 ~ 0.0
      */
     motorDrive.tankDrive(-Math.floor(controller.getY(Hand.kLeft)*100)/100*.75,
-                        -Math.floor(controller.getY(Hand.kRight)*100)/100*.75);
+                        -Math.floor(controller.getY(Hand.kRight)*100)/100*.75, false);
   }
 
   @Override
