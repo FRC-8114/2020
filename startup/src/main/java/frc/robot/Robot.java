@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
@@ -37,6 +38,9 @@ public class Robot extends TimedRobot {
 
   //--Objects for autonomous
   private AutoSegment autoSegment;
+
+  //--Timer
+  private Timer timer;
 
   @Override
   public void robotInit() {
@@ -118,18 +122,21 @@ public class Robot extends TimedRobot {
      *    0.938 ~ 0.93
      *    0.006 ~ 0.0
      */
-    motorDrive.tankDrive((-Math.floor(controller.getY(Hand.kLeft)*100)/100)*.75, (-Math.floor(controller.getY(Hand.kRight)*100)/100)*.75);
+    motorDrive.tankDrive(-Math.floor(controller.getY(Hand.kLeft)*100)/100*.75,
+                        -Math.floor(controller.getY(Hand.kRight)*100)/100*.75);
   }
 
   @Override
   public void autonomousInit() {
     autoSegment = new AutoSegment(motorDrive);
-    autoSegment.moveOffLine();
+
+    timer = new Timer();
+    timer.start();
   }
 
   @Override
   public void autonomousPeriodic() {
-    motorDrive.tankDrive(0,0);
+    autoSegment.moveOffLine(timer);
   }
 
   @Override
