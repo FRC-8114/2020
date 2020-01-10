@@ -15,13 +15,13 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
-
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 import edu.wpi.cscore.UsbCamera;
 
 import frc.robot.Auto.AutoSegment;
+
+import frc.subsystems.DriveSystem;
 
 public class Robot extends TimedRobot {
   //--Objects for motors and motor grouping--\\
@@ -41,6 +41,9 @@ public class Robot extends TimedRobot {
 
   //--Timer
   private Timer timer;
+
+  //--Subsystems
+  private DriveSystem driveSystem;
 
   @Override
   public void robotInit() {
@@ -87,44 +90,13 @@ public class Robot extends TimedRobot {
     controller = new XboxController(0); //joystick ID zero, can change
     //-Camera
     mainCamera = new UsbCamera("FrontCamera", 1); //Camera
-    /**
-     * PCODE for button init
-     * HashMap<Button, String> buttons = new HashMap<Button, String>(9);
-     * buttons.put(autoButton(lolnumber), "autoButton");
-     * ...
-     * buttons.get("autoButton").state();
-     */
-  }
-
-  @Override
-  public void robotPeriodic() {
-
-  }
-
-  @Override
-  public void teleopInit() {
     
+    //-Subsystems
+    driveSystem = new DriveSystem(motorDrive, controller);
   }
 
-  @Override
-  public void teleopPeriodic() {
-
-    /**
-     * The stick is mapped like this:
-     * Y AXIS IS UP AND DOWN
-     * X AXIS IS LEFT AND RIGHT
-     *     -1.0
-     * -1.0     1.0
-     *      1.0
-     * Invert just the getY() to get movement right
-     * Joystick has drift, use stepping by 100 steps ie
-     *    1.0 ~ 1.0
-     *    0.938 ~ 0.93
-     *    0.006 ~ 0.0
-     */
-    motorDrive.tankDrive(-Math.floor(controller.getY(Hand.kLeft)*100)/100*.75,
-                        -Math.floor(controller.getY(Hand.kRight)*100)/100*.75, false);
-  }
+  //-------------------------------------------------------------------------------------------------\\
+  //--Auto methods--\\
 
   @Override
   public void autonomousInit() {
@@ -139,6 +111,24 @@ public class Robot extends TimedRobot {
     autoSegment.moveOffLine(timer.get());
   }
 
+  //-------------------------------------------------------------------------------------------------\\
+  //--Unused methods--\\
+  /*@Override
+  public void robotPeriodic() {
+
+  }
+
+  @Override
+  public void teleopInit() {
+    
+  }
+
+  @Override
+  public void teleopPeriodic() {
+
+    
+  }
+
   @Override
   public void disabledInit() {
 
@@ -147,5 +137,5 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
 
-  }
+  }*/
 }
