@@ -1,7 +1,6 @@
-package frc.robot.Auto;
+package frc.robot.auto;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.Timer;
 
 
 public class AutoSegment {

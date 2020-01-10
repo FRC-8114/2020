@@ -9,6 +9,8 @@ public class DriveSystem extends SubsystemBase {
     private DifferentialDrive motorDrive;
     private XboxController controller;
 
+    int i = -1;
+
     //----------------------------------------------------------------------------\\
     //--Constructor--\\
     public DriveSystem(DifferentialDrive motorDrive, XboxController controller) {
@@ -32,7 +34,15 @@ public class DriveSystem extends SubsystemBase {
          *    0.938 ~ 0.93
          *    0.006 ~ 0.0
         */
-        motorDrive.tankDrive(-Math.floor(controller.getY(Hand.kLeft)*100)/100*.75,
-        -Math.floor(controller.getY(Hand.kRight)*100)/100*.75, false);
+        if(controller.getAButtonPressed() && !controller.getAButtonReleased())
+            inverse();
+        motorDrive.tankDrive(i*Math.floor(controller.getY(Hand.kLeft)*100)/100*.75,
+        i*Math.floor(controller.getY(Hand.kRight)*100)/100*.75, false);
+    }
+
+    //----------------------------------------------------------------------------\\
+    //--Reverse for command--\\
+    public void inverse() {
+        i*=-1;
     }
 }

@@ -19,14 +19,12 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 import edu.wpi.cscore.UsbCamera;
 
-import frc.robot.Auto.AutoSegment;
-
-import frc.robot.RobotContainer;
+import frc.robot.auto.AutoSegment;
 
 public class Robot extends TimedRobot {
   //--Objects for motors and motor grouping--\\
   private SpeedController leftBack, leftFront, rightBack, rightFront,
-                          launcherConveyer, launcherTop, launcherBottom, wheelSpinner;
+                          launcherConveyer, launcherTop, launcherBottom, wheelSpinner, armRotationMotor;
   private SpeedControllerGroup left, right;
   private DifferentialDrive motorDrive;
 
@@ -68,11 +66,14 @@ public class Robot extends TimedRobot {
     rightBack = new PWMVictorSPX(2);
     rightFront = new PWMVictorSPX(3);
     //-Motors for ball launcher
+    /*
     launcherConveyer = new PWMVictorSPX(4);
     launcherTop = new PWMVictorSPX(5);
     launcherBottom = new PWMVictorSPX(6);
     //-Motor for wheel spinner
     wheelSpinner = new PWMVictorSPX(7);
+    armRotationMotor = new PWMVictorSPX(8);
+    */
     /*              0
      *   o   o   o
      *              0
