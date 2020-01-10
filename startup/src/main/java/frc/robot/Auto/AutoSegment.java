@@ -25,20 +25,16 @@ public class AutoSegment {
 
     //---------------------------------------------------------------\\
     //--Moves the robot off of the starting line--\\
-    public void moveOffLine(Timer timer) {
-        if(timer.get()<.5) {
-            motorDrive.tankDrive(.2, .2, false);
-        } else if(timer.get()<1) {
-            motorDrive.tankDrive(.4, .4, false);
-        } else if(timer.get()<2) {
+    public void moveOffLine(double time) {
+        double second_total = 4;
+        if(time<=(0.25*second_total)) {
+            motorDrive.tankDrive(time*.8, time*.8, false);
+        } else if(time<(0.75*second_total)) {
             motorDrive.tankDrive(.8, .8, false);
-        } else if(timer.get()<2.5) {
-            motorDrive.tankDrive(.4, .4, false);
-        } else if(timer.get()<3) {
-            motorDrive.tankDrive(.2, .2, false);
+        } else if(time<second_total) {
+            motorDrive.tankDrive((4-time)*.8, (4-time)*.8, false);
         } else {
             motorDrive.stopMotor();
         }
-        System.out.println("Time: "+ timer.get());
     }
 }
