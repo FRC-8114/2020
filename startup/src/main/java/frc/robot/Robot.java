@@ -136,7 +136,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    autoSegment.moveOffLine(timer);
+    autoSegment.moveOffLine(timer.get());
   }
 
   @Override
