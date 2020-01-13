@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
@@ -20,6 +19,15 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
+import edu.wpi.first.cameraserver.CameraServer;
+
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
+
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 
 import frc.robot.Auto.AutoSegment;
@@ -32,7 +40,6 @@ public class Robot extends TimedRobot {
   private DifferentialDrive motorDrive;
 
   //--Objects for inputs--\\
-  private UsbCamera mainCamera;
 
   //--Objects for user inputs
   private XboxController controller;
@@ -45,7 +52,6 @@ public class Robot extends TimedRobot {
 
   //--Object for Timer
   private Timer timer;
-  
 
   @Override
   public void robotInit() {
@@ -91,7 +97,25 @@ public class Robot extends TimedRobot {
     //-Buttons
     controller = new XboxController(0); //joystick ID zero, can change
     //-Camera
-    mainCamera = new UsbCamera("FrontCamera", 1); //Camera
+    new Thread(() -> {
+      UsbCamera mainCamera = CameraServer.getInstance().startAutomaticCapture();
+      mainCamera.setResolution(320, 240);
+      CvSink cvSink = CameraServer.getInstance().getVideo();
+      CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 320, 240);
+
+      Mat source = new Mat();
+      Mat filtered = new Mat();
+      Mat output = new Mat();
+
+      while(!Thread.interrupted()) {
+        if (cvSink.grabFrame(source) == 0) {
+          continue;
+        }
+        Core.inRange(source, new Scalar(0, 0, 0), new Scalar(0, 255, 0), output);
+        Imgproc.cvtColor(filtered, output, Imgproc.COLOR_BGR2GRAY);
+        outputStream.putFrame(output);
+      }
+    }).start();
     /**
      * PCODE for button init
      * HashMap<Button, String> buttons = new HashMap<Button, String>(9);
@@ -103,8 +127,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    System.out.print(leftEncoder.getDistance());
-    System.out.print(rightEncoder.getDistance());
+    //System.out.print(leftEncoder.getDistance());
+    //System.out.print(rightEncoder.getDistance());
   }
 
   @Override
