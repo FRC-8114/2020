@@ -1,19 +1,20 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSystem extends SubsystemBase {
     private DifferentialDrive motorDrive;
-    private XboxController controller;
+    private Joystick controller;
 
     int i = -1;
 
     //----------------------------------------------------------------------------\\
     //--Constructor--\\
-    public DriveSystem(DifferentialDrive motorDrive, XboxController controller) {
+    public DriveSystem(DifferentialDrive motorDrive, Joystick controller) {
         this.controller = controller;
         this.motorDrive = motorDrive;
     }
@@ -34,8 +35,6 @@ public class DriveSystem extends SubsystemBase {
          *    0.938 ~ 0.93
          *    0.006 ~ 0.0
         */
-        if(controller.getAButtonPressed() && !controller.getAButtonReleased())
-            inverse();
         motorDrive.tankDrive(i*Math.floor(controller.getY(Hand.kLeft)*100)/100*.75,
         i*Math.floor(controller.getY(Hand.kRight)*100)/100*.75, false);
     }

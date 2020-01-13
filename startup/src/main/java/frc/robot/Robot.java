@@ -8,7 +8,7 @@
 package frc.robot;
 
 
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
   private UsbCamera mainCamera;
 
   //--Objects for user inputs
-  private XboxController controller;
+  private Joystick controller;
 
   //--Objects for autonomous
   private AutoSegment autoSegment;
@@ -88,7 +88,7 @@ public class Robot extends TimedRobot {
 
     //--Initilization of input devices
     //-Buttons
-    controller = new XboxController(0); //joystick ID zero, can change
+    controller = new Joystick(0); //joystick ID zero, can change
     //-Camera
     mainCamera = new UsbCamera("FrontCamera", 1); //Camera
     
