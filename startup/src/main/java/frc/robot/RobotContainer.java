@@ -37,7 +37,7 @@ public class RobotContainer {
     driveSystem = new DriveSystem(controller);
     cameraSystem = new CameraSystem();
 
-    smoothMove = new SmoothMove(driveSystem, 2, .8);
+    firstMove = new SmoothMove(driveSystem, 2, .8, .8);
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -59,6 +59,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return smoothMove;
+    return firstMove;
   }
 }

@@ -20,18 +20,19 @@ public class SmoothMove extends CommandBase {
 
   private Timer timer;
 
-  double time, speed;
+  double time, leftSpeed, rightSpeed;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public SmoothMove(DriveSystem driveSystem, double time, double speed) {
+  public SmoothMove(DriveSystem driveSystem, double time, double leftSpeed, double rightSpeed) {
     this.driveSystem = driveSystem;
 
     this.time = time;
-    this.speed = speed;
+    this.leftSpeed = leftSpeed;
+    this.rightSpeed = rightSpeed;
 
     timer = new Timer();
     // Use addRequirements() here to declare subsystem dependencies.
@@ -50,11 +51,11 @@ public class SmoothMove extends CommandBase {
     double now = timer.get();
 
     if(now <= time*.25) {
-      driveSystem.drive(now*speed, now*speed);
+      driveSystem.drive(now*leftSpeed, now*rightSpeed);
     } else if(now <= time*.75) {
-      driveSystem.drive(speed, speed);
+      driveSystem.drive(leftSpeed, rightSpeed);
     } else {
-      driveSystem.drive((time-now)*speed, (time-now)*speed);
+      driveSystem.drive((time-now)*leftSpeed, (time-now)*rightSpeed);
     }
   }
 
