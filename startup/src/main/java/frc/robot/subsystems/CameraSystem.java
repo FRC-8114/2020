@@ -23,7 +23,14 @@ public class CameraSystem extends SubsystemBase{
                 if (cvSink.grabFrame(source)==0) {
                     continue;
                 }
-                Core.inRange(source, new Scalar(0, 0, 0), new Scalar(0, 255, 0), filtered);
+                for(int x = 0; x < source.rows(); x++) {
+                    for(int y = 0; y < source.cols(); y++) {
+                        double[] proc = source.get(x, y);
+                        proc[0] = 0; // BLUE
+                        proc[2] = 0; // RED
+                        filtered.put(x, y, proc);
+                    }
+                }
                 Imgproc.cvtColor(filtered, output, Imgproc.COLOR_BGR2GRAY);
                 outputStream.putFrame(output);
             }
