@@ -111,7 +111,7 @@ public class Robot extends TimedRobot {
         if (cvSink.grabFrame(source) == 0) {
           continue;
         }
-        Core.inRange(source, new Scalar(0, 0, 0), new Scalar(0, 255, 0), output);
+        Core.inRange(source, new Scalar(0, 0, 0), new Scalar(0, 255, 0), filtered);
         Imgproc.cvtColor(filtered, output, Imgproc.COLOR_BGR2GRAY);
         outputStream.putFrame(output);
       }
