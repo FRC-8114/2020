@@ -26,7 +26,7 @@ public class RobotContainer {
   private final DriveSystem driveSystem;
   private final CameraSystem cameraSystem;
 
-  private final SmoothMove smoothMove;
+  private final SmoothMove firstMove;
 
 
 
