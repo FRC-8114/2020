@@ -32,7 +32,7 @@ public class RobotContainer {
    */
   public RobotContainer(XboxController controller) {
     driveSystem = new DriveSystem(controller);
-    smoothMove = new SmoothMove(driveSystem, 4, .8);
+    smoothMove = new SmoothMove(driveSystem, 2, .8);
     // Configure the button bindings
     configureButtonBindings();
   }
