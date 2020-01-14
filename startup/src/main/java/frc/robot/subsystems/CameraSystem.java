@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.cameraserver.CameraServer;
 import org.opencv.core.*;
 import edu.wpi.cscore.*;
+import org.opencv.imgproc.*;
 
 public class CameraSystem extends SubsystemBase{
     public CameraSystem() {
@@ -22,9 +23,9 @@ public class CameraSystem extends SubsystemBase{
                 if (cvSink.grabFrame(source)==0) {
                     continue;
                 }
-                //Core.inRange(source, new Scalar(0, 0, 0), filtered);
-                //Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-                outputStream.putFrame(source);
+                Core.inRange(source, new Scalar(0, 0, 0), new Scalar(0, 255, 0), filtered);
+                Imgproc.cvtColor(filtered, output, Imgproc.COLOR_BGR2GRAY);
+                outputStream.putFrame(output);
             }
         }).start();
     }

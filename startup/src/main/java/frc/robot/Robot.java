@@ -7,33 +7,11 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
-
-import edu.wpi.first.wpilibj.GenericHID.Hand;
-
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-
-import edu.wpi.first.cameraserver.CameraServer;
-
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
-
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.XboxController;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -54,8 +32,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
     controller = new XboxController(0);
 
     m_robotContainer = new RobotContainer(controller);
@@ -138,4 +114,4 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
-}
+}       
