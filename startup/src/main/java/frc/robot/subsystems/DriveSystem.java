@@ -41,4 +41,8 @@ public class DriveSystem extends SubsystemBase {
   public void periodic() {
     driveTrain.tankDrive(-Math.floor(controller.getY(Hand.kLeft)*100)/100, -Math.floor(controller.getY(Hand.kRight)*100)/100, false);
   }
+
+  public void drive(double left, double right) {
+    driveTrain.tankDrive(left, right, false);
+  }
 }
