@@ -9,9 +9,11 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
+
 import frc.robot.commands.SmoothMove;
 import frc.robot.subsystems.DriveSystem;
-import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.CameraSystem;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -22,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSystem driveSystem;
+  private final CameraSystem cameraSystem;
 
   private final SmoothMove smoothMove;
 
@@ -32,6 +35,8 @@ public class RobotContainer {
    */
   public RobotContainer(XboxController controller) {
     driveSystem = new DriveSystem(controller);
+    cameraSystem = new CameraSystem();
+
     smoothMove = new SmoothMove(driveSystem, 2, .8);
     // Configure the button bindings
     configureButtonBindings();
