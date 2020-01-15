@@ -16,23 +16,14 @@ public class CameraSystem extends SubsystemBase{
             CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 320, 240);
 
             Mat source = new Mat();
-            Mat filtered = new Mat();
-            Mat output = new Mat();
+            //Mat filtered = new Mat();
+            //Mat output = new Mat();
 
             while(!Thread.interrupted()) {
                 if (cvSink.grabFrame(source)==0) {
                     continue;
                 }
-                for(int x = 0; x < source.rows(); x++) {
-                    for(int y = 0; y < source.cols(); y++) {
-                        double[] proc = source.get(x, y);
-                        proc[0] = 0; // BLUE
-                        proc[2] = 0; // RED
-                        filtered.put(x, y, proc);
-                    }
-                }
-                Imgproc.cvtColor(filtered, output, Imgproc.COLOR_BGR2GRAY);
-                outputStream.putFrame(output);
+                outputStream.putFrame(source);
             }
         }).start();
     }
