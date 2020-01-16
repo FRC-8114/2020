@@ -24,8 +24,7 @@ public class CameraSystem extends SubsystemBase{
                     continue;
                 }
                 Imgproc.cvtColor(source, filtered, Imgproc.COLOR_BGR2HSV);
-                Core.inRange(source,
-                new Scalar(0, 0, 0), new Scalar(0, 255, 0), output);
+                Core.inRange(filtered, new Scalar(0, 0, 0), new Scalar(0, 255, 0), output);
                 //Imgproc.cvtColor(filtered, output, Imgproc.COLOR_BGR2GRAY);
                 outputStream.putFrame(output);
             }
