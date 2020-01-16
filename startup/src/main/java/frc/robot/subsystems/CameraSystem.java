@@ -26,7 +26,7 @@ public class CameraSystem extends SubsystemBase{
                     continue;
                 }
                 imgProc.applyColorMap(source, output, imgProc.COLORMAP_COOL);
-                outputStream.putFrame(source);
+                outputStream.putFrame(output);
             }
         }).start();
     }
