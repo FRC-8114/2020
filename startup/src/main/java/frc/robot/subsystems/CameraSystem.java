@@ -15,14 +15,17 @@ public class CameraSystem extends SubsystemBase{
             CvSink cvSink = CameraServer.getInstance().getVideo();
             CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 320, 240);
 
+            Imgproc imgProc = new Imgproc();
+
             Mat source = new Mat();
             //Mat filtered = new Mat();
-            //Mat output = new Mat();
+            Mat output = new Mat();
 
             while(!Thread.interrupted()) {
                 if (cvSink.grabFrame(source)==0) {
                     continue;
                 }
+                imgProc.applyColorMap(source, output, imgProc.COLORMAP_COOL);
                 outputStream.putFrame(source);
             }
         }).start();
