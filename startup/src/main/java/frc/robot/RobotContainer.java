@@ -12,8 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.commands.SmoothMove;
-import frc.robot.subsystems.DriveSystem;
-import frc.robot.subsystems.CameraSystem;
+import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -26,6 +25,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSystem driveSystem;
   private final CameraSystem cameraSystem;
+  private final OdometrySubsystem odometrySystem;
+  private final NetworkSystem networkSystem;
 
   private final SmoothMove firstMove;
 
@@ -37,6 +38,8 @@ public class RobotContainer {
   public RobotContainer(XboxController controller) {
     driveSystem = new DriveSystem(controller);
     cameraSystem = new CameraSystem();
+    odometrySystem = new OdometrySubsystem();
+    networkSystem = new NetworkSystem();
 
     firstMove = new SmoothMove(driveSystem, 2, .8, .8);
     // Configure the button bindings

@@ -6,9 +6,12 @@ import edu.wpi.first.cameraserver.CameraServer;
 import org.opencv.core.*;
 import edu.wpi.cscore.*;
 import org.opencv.imgproc.*;
+import edu.wpi.first.networktables.*;
 
 public class CameraSystem extends SubsystemBase{
     public CameraSystem() {
+        NetworkTableInstance.getDefault();
+
         new Thread(() -> {
             UsbCamera mainCamera = CameraServer.getInstance().startAutomaticCapture();
             mainCamera.setResolution(320, 240);
@@ -23,23 +26,10 @@ public class CameraSystem extends SubsystemBase{
                 if (cvSink.grabFrame(source)==0) {
                     continue;
                 }
-                Imgproc.cvtColor(source, filtered, Imgproc.COLOR_BGR2HSV);
-                Core.inRange(filtered, new Scalar(0, 0, 0), new Scalar(0, 255, 0), output);
-                //Imgproc.cvtColor(filtered, output, Imgproc.COLOR_BGR2GRAY);
+                Core.inRange(source, new Scalar(0, 0, 0), new Scalar(0, 255, 0), filtered);
+                Imgproc.cvtColor(filtered, output, Imgproc.COLOR_BGR2GRAY);
                 outputStream.putFrame(output);
             }
         }).start();
     }
 }
-
-/*
-while(!Thread.interrupted()) {
-    if (cvSink.grabFrame(source) == 0) {
-      continue;
-    }
-    Core.inRange(source, new Scalar(0, 0, 0), new Scalar(0, 255, 0), output);
-    Imgproc.cvtColor(filtered, output, Imgproc.COLOR_BGR2GRAY);
-    outputStream.putFrame(output);
-  }
-}).start();
-*/

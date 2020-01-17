@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.DriveSystem;
+import frc.robot.subsystems.OdometrySubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj.Timer;
 public class SmoothMove extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveSystem driveSystem;
+  private final OdometrySubsystem odometrySubsystem;
 
   private Timer timer;
 
@@ -27,9 +29,10 @@ public class SmoothMove extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public SmoothMove(DriveSystem driveSystem, double time, double leftSpeed, double rightSpeed) {
+  public SmoothMove(DriveSystem driveSystem, OdometrySubsystem odometrySubsystem, double time, double leftSpeed, double rightSpeed) {
     this.driveSystem = driveSystem;
-
+    this.odometrySubsystem = odometrySubsystem;
+    
     this.time = time;
     this.leftSpeed = leftSpeed;
     this.rightSpeed = rightSpeed;

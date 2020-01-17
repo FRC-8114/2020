@@ -26,4 +26,9 @@ public class OdometrySubsystem extends SubsystemBase {
         return Math.PI*InchesToMeters(diameter);
         // Calculates the circumference of the wheel by multiplying pi by the diameter in meters
     }
+
+    public void resetDriveEncoders() {
+        leftEncoder.reset();
+        rightEncoder.reset();
+    }
 }
