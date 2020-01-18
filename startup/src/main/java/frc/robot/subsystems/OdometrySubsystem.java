@@ -31,4 +31,8 @@ public class OdometrySubsystem extends SubsystemBase {
         leftEncoder.reset();
         rightEncoder.reset();
     }
+
+    public double getDriveDistance() {
+        return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2.0;
+    }
 }

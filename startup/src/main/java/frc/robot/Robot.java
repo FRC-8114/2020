@@ -24,7 +24,7 @@ public class Robot extends TimedRobot {
 
   private Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  private RobotContainer robotContainer;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     controller = new XboxController(0);
 
-    m_robotContainer = new RobotContainer(controller);
+    robotContainer = new RobotContainer(controller);
   }
 
   /**
@@ -69,7 +69,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

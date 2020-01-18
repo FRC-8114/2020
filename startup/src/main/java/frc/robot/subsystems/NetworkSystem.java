@@ -6,9 +6,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class NetworkSystem extends SubsystemBase {
     public NetworkTable table;
+    public NetworkTableInstance inst;
 
     public NetworkSystem() {
-        NetworkTableInstance inst = NetworkTableInstance.getDefault();
+        inst = NetworkTableInstance.getDefault();
         table = inst.getTable("");
+    }
+
+    public NetworkTable getTable() {
+        return table;
     }
 }

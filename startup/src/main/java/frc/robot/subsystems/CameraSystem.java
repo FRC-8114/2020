@@ -1,18 +1,79 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import java.lang.reflect.Array;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.cameraserver.CameraServer;
-import org.opencv.core.*;
 import edu.wpi.cscore.*;
-import org.opencv.imgproc.*;
 import edu.wpi.first.networktables.*;
 
-public class CameraSystem extends SubsystemBase{
-    public CameraSystem() {
-        NetworkTableInstance.getDefault();
+import frc.robot.subsystems.NetworkSystem;
 
-        new Thread(() -> {
+import org.opencv.imgproc.*;
+import org.opencv.core.*;
+
+public class CameraSystem extends SubsystemBase{
+    private NetworkTableInstance inst;
+    private NetworkTable table;
+    private NetworkTableEntry points;
+
+    private double[] locations;
+
+    public CameraSystem() {
+        inst = NetworkTableInstance.getDefault();
+        table = inst.getTable("");
+
+        points = table.getEntry("points");
+        locations = new double[12];
+    }
+
+    public void assignPoints() {
+        double[] points = this.points.getDoubleArray(locations);
+        for(int i=0;i<locations.length;i++) {
+            locations[i] = points[i];
+        }
+
+        /*
+        * locations[0]: top left x  
+        * locations[1]: top left y
+        * locations[2]: top right x
+        * locations[3]: top right y
+        * locations[4]: middle top left x
+        * locations[5]: middle top left y
+        * locations[6]: middle top right x
+        * locations[7]: middle top right y
+        * locations[8]: middle bottom left x
+        * locations[9]: middle bottom left y
+        * locations[10]: middle bottom right x
+        * locations[11]: middle bottom right y
+        */
+    }
+
+    public void autoAim() {
+        assignPoints();
+
+        findDistance(0.0508, 0, (locations[7] - locations[11]), 0);
+
+        // In meters
+        double focalLength = 0.0023;
+        double realHeight = 0.0508;
+        double imageHeight = 0; // Temprary
+        double objectHeight = locations[7] - locations[11];
+        double sensorHeight = 0; // Temporary
+
+        double distance = (focalLength * realHeight * imageHeight) / (objectHeight * sensorHeight);
+        
+    }
+
+    public double findDistance(double realHeight, double imageHeight, double objectHeight, double sensorHeight) {
+        double focalLength = 0.0023;
+
+        return (focalLength * realHeight * imageHeight) / (objectHeight * sensorHeight);
+    }
+}
+
+/*
+new Thread(() -> {
             UsbCamera mainCamera = CameraServer.getInstance().startAutomaticCapture();
             mainCamera.setResolution(320, 240);
             CvSink cvSink = CameraServer.getInstance().getVideo();
@@ -31,5 +92,4 @@ public class CameraSystem extends SubsystemBase{
                 outputStream.putFrame(output);
             }
         }).start();
-    }
-}
+*/
