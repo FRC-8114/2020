@@ -346,6 +346,8 @@ public final class Main {
       } catch (InterruptedException ex) {
         return;
       }
+
+      System.out.println("");
     }
   }
 }
