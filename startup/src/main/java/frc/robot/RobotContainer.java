@@ -41,7 +41,7 @@ public class RobotContainer {
     odometrySystem = new OdometrySubsystem();
     networkSystem = new NetworkSystem();
 
-    firstMove = new SmoothMove(driveSystem, 2, .8, .8);
+    firstMove = new SmoothMove(driveSystem, odometrySystem, 2, .8, .8);
     // Configure the button bindings
     configureButtonBindings();
   }
