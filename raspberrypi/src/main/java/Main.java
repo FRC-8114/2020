@@ -95,7 +95,12 @@ public final class Main {
   public static List<SwitchedCameraConfig> switchedCameraConfigs = new ArrayList<>();
   public static List<VideoSource> cameras = new ArrayList<>();
 
+  public Network network;
+  public GripPipeline gripPipeline;
+
   private Main() {
+    network = new Network();
+    gripPipeline = new GripPipeline();
   }
 
   /**
