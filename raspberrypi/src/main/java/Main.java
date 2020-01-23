@@ -22,8 +22,7 @@ import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSource;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.networktables.EntryListenerFlags;
-import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.*;
 import edu.wpi.first.vision.VisionPipeline;
 import edu.wpi.first.vision.VisionThread;
 
@@ -95,7 +94,13 @@ public final class Main {
   public static List<SwitchedCameraConfig> switchedCameraConfigs = new ArrayList<>();
   public static List<VideoSource> cameras = new ArrayList<>();
 
+  public NetworkTableInstance instance;
+  public NetworkTable table;
+  public GripPipeline gripPipeline;
+
   private Main() {
+    instance = NetworkTableInstance.getDefault();
+    table = instance.getTable("");
   }
 
   /**
@@ -346,6 +351,8 @@ public final class Main {
       } catch (InterruptedException ex) {
         return;
       }
+
+      System.out.println("");
     }
   }
 }
