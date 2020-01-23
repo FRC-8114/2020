@@ -175,7 +175,7 @@ public class GripPipeline {
 		Core.inRange(out, new Scalar(red[0], green[0], blue[0]),
 			new Scalar(red[1], green[1], blue[1]), out);
 	}
-
+	
 	/**
 	 * Segment an image based on hue, saturation, and value ranges.
 	 *
