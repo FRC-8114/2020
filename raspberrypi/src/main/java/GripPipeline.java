@@ -85,6 +85,7 @@ public class GripPipeline {
 		boolean findBlobsDarkBlobs = false;
 		findBlobs(findBlobsInput, findBlobsMinArea, findBlobsCircularity, findBlobsDarkBlobs, findBlobsOutput);
 
+		System.out.println("Frame Analysis complete");
 	}
 
 	/**
@@ -132,6 +133,7 @@ public class GripPipeline {
 	 * @return Mat output from Mask.
 	 */
 	public Mat maskOutput() {
+		System.out.println("Grabbed the mask");
 		return maskOutput;
 	}
 
