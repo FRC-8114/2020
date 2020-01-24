@@ -18,15 +18,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import edu.wpi.cscore.MjpegServer;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoSource;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.vision.VisionPipeline;
 import edu.wpi.first.vision.VisionThread;
 
-import org.opencv.core.Mat;
+import org.opencv.core.*;
+import edu.wpi.cscore.*;
+import org.opencv.imgproc.*;
 
 /*
    JSON format:
@@ -94,13 +93,20 @@ public final class Main {
   public static List<SwitchedCameraConfig> switchedCameraConfigs = new ArrayList<>();
   public static List<VideoSource> cameras = new ArrayList<>();
 
-  public NetworkTableInstance instance;
-  public NetworkTable table;
-  public GripPipeline gripPipeline;
+  public static NetworkTableInstance instance;
+  public static NetworkTable table;
+  public static GripPipeline gripPipeline;
+  public static CvSource outputStream;
+  public static CvSink cvSink;
 
   private Main() {
     instance = NetworkTableInstance.getDefault();
     table = instance.getTable("");
+
+    outputStream = CameraServer.getInstance().putVideo("Filtered", 320, 320);
+    cvSink = CameraServer.getInstance().getVideo();
+
+    gripPipeline = new GripPipeline();
   }
 
   /**
@@ -292,7 +298,9 @@ public final class Main {
 
     @Override
     public void process(Mat mat) {
-      val += 1;
+      Mat source = new Mat();
+      cvSink.grabFrame(source);
+      gripPipeline.process(source);
     }
   }
 
@@ -333,7 +341,7 @@ public final class Main {
     if (cameras.size() >= 1) {
       VisionThread visionThread = new VisionThread(cameras.get(0),
               new MyPipeline(), pipeline -> {
-        // do something with pipeline results
+        outputStream.putFrame(gripPipeline.maskOutput());
       });
       /* something like this for GRIP:
       VisionThread visionThread = new VisionThread(cameras.get(0),
