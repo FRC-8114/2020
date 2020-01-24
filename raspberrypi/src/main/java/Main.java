@@ -352,15 +352,22 @@ public final class Main {
       visionThread.start();
     }
 
-    // loop forever
+    for (;;) {
+      System.out.println("Working");
+    }
+
+    // loop forever 
+    /*
     for (;;) {
       try {
         Thread.sleep(10000);
       } catch (InterruptedException ex) {
         return;
       }
+   
 
       System.out.println("");
     }
+    */
   }
 }
