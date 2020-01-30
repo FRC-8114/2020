@@ -30,7 +30,7 @@ public class GripPipeline {
 	private Mat cvBitwiseAndOutput = new Mat();
 	private Mat blurOutput = new Mat();
 	private Mat maskOutput = new Mat();
-	private MatOfKeyPoint findBlobsOutput = new MatOfKeyPoint();
+	public MatOfKeyPoint findBlobsOutput = new MatOfKeyPoint();
 
 	static {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);

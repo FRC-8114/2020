@@ -49,6 +49,11 @@ public class CameraSystem extends SubsystemBase{
         */
     }
 
+    public void periodic() {
+        System.out.println(table.getEntry("minPos"));
+        System.out.println(table.getEntry("maxPos"));
+    }
+
     public void autoAim() {
         assignPoints();
 

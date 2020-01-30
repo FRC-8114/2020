@@ -8,8 +8,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -319,6 +318,7 @@ public final class Main {
 
     // start NetworkTables
     NetworkTableInstance ntinst = NetworkTableInstance.getDefault();
+    NetworkTableEntry minPos = new NetworkTableEntry(ntinst, 0), maxPos= new NetworkTableEntry(ntinst, 1);
     if (server) {
       System.out.println("Setting up NetworkTables server");
       ntinst.startServer();
@@ -339,9 +339,26 @@ public final class Main {
 
     // start image processing on camera 0 if present
     if (cameras.size() >= 1) {
-      VisionThread visionThread = new VisionThread(cameras.get(0),
-              new MyPipeline(), pipeline -> {
-        outputStream.putFrame(gripPipeline.maskOutput());
+      VisionThread visionThread = new VisionThread(cameras.get(0), new MyPipeline(), pipeline -> {
+          outputStream.putFrame(gripPipeline.findBlobsOutput());
+          List<KeyPoint> points = gripPipeline.findBlobsOutput().toList();
+          double[] lows = new double[2], highs = new double[2];
+          Vector xs = new Vector(), ys = new Vector();
+
+          points.forEach((point) -> xs.add(point.pt.x));
+          points.forEach((point) -> ys.add(point.pt.y));
+
+          Collections.sort(xs);
+          Collections.sort(ys);
+
+          lows[0] = (double) xs.get(0);
+          lows[1] = (double) ys.get(0);
+
+          highs[0] = (double) xs.get(xs.size()-1);
+          highs[1] = (double) ys.get(xs.size()-1);
+
+          minPos.setValue(lows);
+          maxPos.setValue(highs);
       });
       /* something like this for GRIP:
       VisionThread visionThread = new VisionThread(cameras.get(0),
