@@ -19,8 +19,7 @@ import com.google.gson.JsonParser;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.*;
-import edu.wpi.first.vision.VisionPipeline;
-import edu.wpi.first.vision.VisionThread;
+import edu.wpi.first.vision.*;
 
 import org.opencv.core.*;
 import edu.wpi.cscore.*;
@@ -306,7 +305,7 @@ public final class Main {
   /**
    * Main.
    */
-  public static void main(String... args) {
+  public static void main(String[] args) {
     if (args.length > 0) {
       configFile = args[0];
     }
