@@ -19,12 +19,20 @@ public class CameraSystem extends SubsystemBase{
 
     private double[] locations;
 
+    /*
+    * Temp
+    */
+    private double[] minPos = new double[2], maxPos = new double[2];
+
     public CameraSystem() {
         inst = NetworkTableInstance.getDefault();
         table = inst.getTable("");
 
         points = table.getEntry("points");
         locations = new double[12];
+
+        minPos = table.getEntry("minPos").getDoubleArray(new double[2]);
+        maxPos = table.getEntry("maxPos").getDoubleArray(new double[2]);
     }
 
     public void assignPoints() {
@@ -50,8 +58,14 @@ public class CameraSystem extends SubsystemBase{
     }
 
     public void periodic() {
-        System.out.println(table.getEntry("minPos"));
-        System.out.println(table.getEntry("maxPos"));
+        minPos = table.getEntry("minPos").getDoubleArray(new double[2]);
+        maxPos = table.getEntry("maxPos").getDoubleArray(new double[2]);
+
+        for(double d : minPos)
+            System.out.print(d +" ");
+        System.out.println("\n");
+        for(double d : maxPos)
+            System.out.println(d +" ");
     }
 
     public void autoAim() {

@@ -339,7 +339,6 @@ public final class Main {
     // start image processing on camera 0 if present
     if (cameras.size() >= 1) {
       VisionThread visionThread = new VisionThread(cameras.get(0), new MyPipeline(), pipeline -> {
-          outputStream.putFrame(gripPipeline.findBlobsOutput());
           List<KeyPoint> points = gripPipeline.findBlobsOutput().toList();
           double[] lows = new double[2], highs = new double[2];
           Vector xs = new Vector(), ys = new Vector();
@@ -358,6 +357,7 @@ public final class Main {
 
           minPos.setValue(lows);
           maxPos.setValue(highs);
+          outputStream.putFrame(gripPipeline.maskOutput());
       });
       /* something like this for GRIP:
       VisionThread visionThread = new VisionThread(cameras.get(0),
