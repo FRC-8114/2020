@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -27,19 +28,18 @@ public class RobotContainer {
   private final CameraSystem cameraSystem;
   private final OdometrySubsystem odometrySystem;
   private final NetworkSystem networkSystem;
-
   private final SmoothMove firstMove;
-
-
+  private final PowerSystem powerSystem;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer(XboxController controller) {
+  public RobotContainer(XboxController controller, PowerDistributionPanel pdp) {
     driveSystem = new DriveSystem(controller);
     cameraSystem = new CameraSystem();
     odometrySystem = new OdometrySubsystem();
     networkSystem = new NetworkSystem();
+    powerSystem = new PowerSystem(pdp);
 
     firstMove = new SmoothMove(driveSystem, 2, .8, .8);
     // Configure the button bindings
