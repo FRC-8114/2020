@@ -320,7 +320,7 @@ public final class Main {
     NetworkTableEntry minPos = new NetworkTableEntry(ntinst, 0), maxPos = new NetworkTableEntry(ntinst, 1);
     if (server) {
       System.out.println("Setting up NetworkTables server");
-      ntinst.startServer();
+      ntinst.startServer("Robot Network");
     } else {
       System.out.println("Setting up NetworkTables client for team " + team);
       ntinst.startClientTeam(team);
