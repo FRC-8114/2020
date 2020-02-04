@@ -11,6 +11,8 @@ public class NetworkSystem extends SubsystemBase {
     public NetworkSystem() {
         inst = NetworkTableInstance.getDefault();
         table = inst.getTable("");
+
+        inst.startServer("Robot Network");
     }
 
     public NetworkTable getTable() {
