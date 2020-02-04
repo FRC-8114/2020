@@ -317,7 +317,7 @@ public final class Main {
 
     // start NetworkTables
     NetworkTableInstance ntinst = NetworkTableInstance.getDefault();
-    NetworkTableEntry minPos = new NetworkTableEntry(ntinst, 0), maxPos= new NetworkTableEntry(ntinst, 1);
+    NetworkTableEntry minPos = new NetworkTableEntry(ntinst, 0), maxPos = new NetworkTableEntry(ntinst, 1);
     if (server) {
       System.out.println("Setting up NetworkTables server");
       ntinst.startServer();
