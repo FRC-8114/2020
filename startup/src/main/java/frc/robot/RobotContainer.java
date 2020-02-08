@@ -15,6 +15,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.SmoothMove;
 import frc.robot.subsystems.*;
 
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.XboxController.Button;
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -30,6 +33,8 @@ public class RobotContainer {
   private final NetworkSystem networkSystem;
   private final SmoothMove firstMove;
   private final PowerSystem powerSystem;
+  private final XboxController controller;
+  private static JoystickButton a,b,x,y,back,start;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -40,6 +45,7 @@ public class RobotContainer {
     odometrySystem = new OdometrySubsystem();
     networkSystem = new NetworkSystem();
     powerSystem = new PowerSystem(pdp);
+    this.controller = controller;
 
     firstMove = new SmoothMove(driveSystem, 2, .8, .8);
     // Configure the button bindings
@@ -52,7 +58,18 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
+  public void configureButtonBindings() {
+    a = new JoystickButton(controller, 1);
+    // b = new JoystickButton(controller, 2); Not used currently
+    x = new JoystickButton(controller, 3);
+    y = new JoystickButton(controller, 4);
+    // back = new JoystickButton(controller, 7); Not used currently
+    // start = new JoystickButton(controller, 8); Not used currently
+
+    y.whenPressed(example_command); // Raise shooter angle
+    x.toggleWhenPressed(example_command); // Toggle color wheel spinner
+    a.whenPressed(example_command); // Lower shooter angle
+
   }
 
 
