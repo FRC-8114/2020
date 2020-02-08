@@ -72,7 +72,7 @@ public class RobotContainer {
     // b = new JoystickButton(controller, 2); Not used currently
     x = new JoystickButton(controller, 3);
     y = new JoystickButton(controller, 4);
-    // back = new JoystickButton(controller, 7); Not uwhileHeldsed currently
+    // back = new JoystickButton(controller, 7); Not used currently
     // start = new JoystickButton(controller, 8); Not used currently
 
     y.whenPressed(() -> shooterSystem.setShooterPitch(.2)).whenReleased(() -> shooterSystem.setShooterPitch(0)); // Raise shooter angle
@@ -86,6 +86,14 @@ public class RobotContainer {
       new IntakeBalls(intakeSystem, 1);
     if(controller.getTriggerAxis(Hand.kRight) == 1)
       new ManualShoot(shooterSystem, intakeSystem, 1);
+    if(controller.getPOV()==360 || controller.getPOV()==360)
+      wheelOfMisfortuneSystem.extendArm(.2);
+    if(controller.getPOV()==90)
+      climberSystem.retractClimber(.2);
+    if(controller.getPOV()==180)
+      wheelOfMisfortuneSystem.retractArm(.2);
+    if(controller.getPOV()==270)
+      climberSystem.extendClimber(.2);
   }
 
   /**

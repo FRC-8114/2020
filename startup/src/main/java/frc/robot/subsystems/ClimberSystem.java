@@ -16,8 +16,13 @@ public class ClimberSystem extends SubsystemBase {
     }
 
 
-    public void setClimbSpeed(double speed) {
+    public void extendClimber(double speed) {
         climberLeft.set(speed);
         climberRight.set(speed);
+    }
+
+    public void retractClimber(double speed) {
+        climberLeft.set(-speed);
+        climberRight.set(-speed);
     }
 }
