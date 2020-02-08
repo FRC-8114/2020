@@ -58,6 +58,7 @@ public class CameraSystem extends SubsystemBase{
     }
 
     public void periodic() {
+        /*
         minPos = table.getEntry("minPos").getDoubleArray(new double[2]);
         maxPos = table.getEntry("maxPos").getDoubleArray(new double[2]);
 
@@ -66,6 +67,7 @@ public class CameraSystem extends SubsystemBase{
         System.out.println("\n");
         for(double d : maxPos)
             System.out.println(d +" ");
+        */
     }
 
     public void autoAim() {

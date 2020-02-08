@@ -12,11 +12,10 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 
-import frc.robot.commands.SmoothMove;
+import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.XboxController.Button;
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -33,6 +32,11 @@ public class RobotContainer {
   private final NetworkSystem networkSystem;
   private final SmoothMove firstMove;
   private final PowerSystem powerSystem;
+  private final ShooterSystem shooterSystem;
+  private final WheelOfMisfortuneSystem wheelOfMisfortuneSystem;
+  private final IntakeSystem intakeSystem;
+  private final ClimberSystem climberSystem;
+
   private final XboxController controller;
   private static JoystickButton a,b,x,y,back,start;
 
@@ -45,6 +49,10 @@ public class RobotContainer {
     odometrySystem = new OdometrySubsystem();
     networkSystem = new NetworkSystem();
     powerSystem = new PowerSystem(pdp);
+    shooterSystem = new ShooterSystem();
+    wheelOfMisfortuneSystem = new WheelOfMisfortuneSystem();
+    intakeSystem = new IntakeSystem();
+    climberSystem = new ClimberSystem();
     this.controller = controller;
 
     firstMove = new SmoothMove(driveSystem, 2, .8, .8);
@@ -66,10 +74,9 @@ public class RobotContainer {
     // back = new JoystickButton(controller, 7); Not used currently
     // start = new JoystickButton(controller, 8); Not used currently
 
-    y.whenPressed(example_command); // Raise shooter angle
-    x.toggleWhenPressed(example_command); // Toggle color wheel spinner
-    a.whenPressed(example_command); // Lower shooter angle
-
+    y.whenPressed(new AngleShooter(shooterSystem, .2)).whenReleased(new AngleShooter(shooterSystem, 0)); // Raise shooter angle
+    x.whileHeld(new RunSpinner(wheelOfMisfortuneSystem, .5)); // Toggle color wheel spinner
+    a.whenPressed(new AngleShooter(shooterSystem, -.2)).whenReleased(new AngleShooter(shooterSystem, 0)); // Lower shooter angle
   }
 
 

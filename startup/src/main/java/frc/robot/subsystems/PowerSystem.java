@@ -12,10 +12,5 @@ public class PowerSystem extends SubsystemBase {
      }
 
      public void periodic() {
-        System.out.println("PDP voltage: "+ pdp.getVoltage());
-        System.out.println("PDP temperature: "+ pdp.getTemperature());
-        System.out.println("PDP total energy: "+ pdp.getTotalEnergy());
-        System.out.println("PDP total current: "+ pdp.getTotalCurrent());
-        System.out.println("PDP total power" + pdp.getTotalPower());
     }
 }

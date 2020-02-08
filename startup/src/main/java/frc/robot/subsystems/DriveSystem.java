@@ -27,24 +27,20 @@ public class DriveSystem extends SubsystemBase {
   public DriveSystem(XboxController controller) {
     this.controller = controller;
 
-    backLeft = new WPI_VictorSPX(0);
     frontLeft = new WPI_VictorSPX(1);
-    //backRight = new PWMVictorSPX(2);
-    //frontRight = new PWMVictorSPX(3);
+    backLeft = new WPI_VictorSPX(2);
+    frontRight = new WPI_VictorSPX(3);
+    backRight = new WPI_VictorSPX(4);
 
-    //left = new SpeedControllerGroup(backLeft, frontLeft);
-    //right = new SpeedControllerGroup(backRight, frontRight);
+    left = new SpeedControllerGroup(backLeft, frontLeft);
+    right = new SpeedControllerGroup(backRight, frontRight);
 
-    //driveTrain = new DifferentialDrive(left, right);
+    driveTrain = new DifferentialDrive(left, right);
   }
 
   @Override
   public void periodic() {
-    //driveTrain.tankDrive(-Math.floor(controller.getY(Hand.kLeft)*100)/100, -Math.floor(controller.getY(Hand.kRight)*100)/100, false);
-    backLeft.set(-Math.floor(controller.getY(Hand.kLeft)*100)/100);
-    frontLeft.set(-Math.floor(controller.getY(Hand.kRight)*100)/100);
-    backLeft.getDeviceID();
-    //backLeft.setLEDOutput(0.75, LEDChannel LEDChannelA);
+    driveTrain.tankDrive(-Math.floor(controller.getY(Hand.kLeft)*100)/100, -Math.floor(controller.getY(Hand.kRight)*100)/100, false);
   }
 
   public void drive(double left, double right) {
