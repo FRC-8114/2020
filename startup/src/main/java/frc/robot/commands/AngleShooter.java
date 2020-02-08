@@ -8,6 +8,7 @@ public class AngleShooter extends CommandBase {
     private double speed;
 
     public AngleShooter(ShooterSystem shooter, double speed) {
+        addRequirements(shooter);
         this.shooter = shooter;
         this.speed = speed;
     }
@@ -17,9 +18,10 @@ public class AngleShooter extends CommandBase {
     }
 
     public void end() {
+        shooter.setShooterPitch(0);
     }
 
     public boolean isFinished() {
-        return true;
+        return false;
     }
 }

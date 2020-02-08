@@ -8,6 +8,7 @@ public class RunSpinner extends CommandBase {
     private double speed;
 
     public RunSpinner(WheelOfMisfortuneSystem womSystem, double speed) {
+        addRequirements(womSystem);
         this.womSystem = womSystem;
         this.speed = speed;
     }

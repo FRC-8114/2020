@@ -10,13 +10,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj2.command.button.*;
+import edu.wpi.first.wpilibj.XboxController.*;
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -71,14 +72,21 @@ public class RobotContainer {
     // b = new JoystickButton(controller, 2); Not used currently
     x = new JoystickButton(controller, 3);
     y = new JoystickButton(controller, 4);
-    // back = new JoystickButton(controller, 7); Not used currently
+    // back = new JoystickButton(controller, 7); Not uwhileHeldsed currently
     // start = new JoystickButton(controller, 8); Not used currently
 
-    y.whenPressed(new AngleShooter(shooterSystem, .2)).whenReleased(new AngleShooter(shooterSystem, 0)); // Raise shooter angle
+    y.whenPressed(() -> shooterSystem.setShooterPitch(.2)).whenReleased(() -> shooterSystem.setShooterPitch(0)); // Raise shooter angle
     x.whileHeld(new RunSpinner(wheelOfMisfortuneSystem, .5)); // Toggle color wheel spinner
-    a.whenPressed(new AngleShooter(shooterSystem, -.2)).whenReleased(new AngleShooter(shooterSystem, 0)); // Lower shooter angle
+    a.whileHeld(new AngleShooter(shooterSystem, -.2)); // Lower shooter angle
   }
 
+
+  public void periodic() {
+    if(controller.getTriggerAxis(Hand.kLeft) == 1)
+      new IntakeBalls(intakeSystem, 1);
+    if(controller.getTriggerAxis(Hand.kRight) == 1)
+      new ManualShoot(shooterSystem, intakeSystem, 1);
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
