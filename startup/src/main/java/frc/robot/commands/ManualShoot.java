@@ -9,7 +9,7 @@ public class ManualShoot extends CommandBase {
     private IntakeSystem intake;
     private double speed;
 
-    public ManualShoot(ShooterSystem system, IntakeSystem intake, double speed) {
+    public ManualShoot(ShooterSystem shooter, IntakeSystem intake, double speed) {
         this.shooter = shooter;
         this.intake = intake;
         this.speed = speed;
