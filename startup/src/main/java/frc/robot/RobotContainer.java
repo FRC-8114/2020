@@ -87,16 +87,16 @@ public class RobotContainer {
      * Triggers control the index, intake, shooter, and kicker wheel
      */
     if(controller.getTriggerAxis(Hand.kLeft) == 1) { // If left trigger is pressed, intake and index are runned
-      new IntakeBalls(intakeSystem, .8).schedule();
+      new IntakeBalls(intakeSystem, .6).schedule();
     }
     if(controller.getTriggerAxis(Hand.kRight) == 1) { //Runs the shooter, kicker, index, and intake
-      new ArmShooter(shooterSystem, .8).schedule(); //Starts shooter
-      new IntakeBalls(intakeSystem, .8).schedule(); //Starts intake, index, kicker
-      shooterSystem.runKicker(.8);
+      new ArmShooter(shooterSystem, .6).schedule(); //Starts shooter
+      new IntakeBalls(intakeSystem, .6).schedule(); //Starts intake, index, kicker
+      shooterSystem.runKicker(.6);
     }
     if(controller.getTriggerAxis(Hand.kRight) != 1 && controller.getTriggerAxis(Hand.kLeft) != 1) { //Stops the shooter, kicker, index, and intake if no relevant input is detected
       new ArmShooter(shooterSystem, 0).schedule(); 
-      new IntakeBalls(intakeSystem, .8).schedule();
+      new IntakeBalls(intakeSystem, 0).schedule();
       shooterSystem.runKicker(0);
     }
 

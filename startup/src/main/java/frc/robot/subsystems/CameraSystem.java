@@ -33,6 +33,18 @@ public class CameraSystem extends SubsystemBase{
 
         minPos = table.getEntry("minPos").getDoubleArray(new double[2]);
         maxPos = table.getEntry("maxPos").getDoubleArray(new double[2]);
+
+        UsbCamera mainCamera = CameraServer.getInstance().startAutomaticCapture();
+        mainCamera.setResolution(320, 240);
+        CvSink cvSink = CameraServer.getInstance().getVideo();
+        CvSource outputStream = CameraServer.getInstance().putVideo("Filtered", 320, 240);
+        Mat source = new Mat();
+        while(!Thread.interrupted()) {
+            if (cvSink.grabFrame(source)==0) {
+                continue;
+            }
+            outputStream.putFrame(source);
+        }
     }
 
     public void assignPoints() {
