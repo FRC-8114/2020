@@ -33,7 +33,7 @@ public class ShooterSystem extends SubsystemBase{
      * @param speed     the speed to run the shooter at
      */
     public void runShooter(double speed) {
-        shooterLeft.set(speed);
+        shooterLeft.set(-speed);
         shooterRight.set(speed);
         if(speed != 0)
             shooterRunning = true;

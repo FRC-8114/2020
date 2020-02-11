@@ -21,11 +21,11 @@ public class WheelOfMisfortuneSystem extends SubsystemBase{
 
     public void extendArm(double speed) {
         armLeft.set(speed);
-        armRight.set(speed);
+        armRight.set(-speed);
     }
 
     public void retractArm(double speed) {
         armLeft.set(-speed);
-        armRight.set(-speed);
+        armRight.set(speed);
     }
 }

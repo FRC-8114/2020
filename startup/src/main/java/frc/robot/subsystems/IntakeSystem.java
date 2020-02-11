@@ -29,4 +29,8 @@ public class IntakeSystem extends SubsystemBase{
     public void runIndex(double speed) {
         index.set(speed);
     }
+
+    public void reverseIndex(double speed) {
+        index.set(-speed);
+    }
 }

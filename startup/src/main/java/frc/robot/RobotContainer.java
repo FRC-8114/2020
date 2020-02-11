@@ -69,31 +69,46 @@ public class RobotContainer {
    */
   public void configureButtonBindings() {
     a = new JoystickButton(controller, 1);
-    // b = new JoystickButton(controller, 2); Not used currently
+    b = new JoystickButton(controller, 2);
     x = new JoystickButton(controller, 3);
     y = new JoystickButton(controller, 4);
     // back = new JoystickButton(controller, 7); Not used currently
     // start = new JoystickButton(controller, 8); Not used currently
 
-    y.whenPressed(() -> shooterSystem.setShooterPitch(.2)).whenReleased(() -> shooterSystem.setShooterPitch(0)); // Raise shooter angle
-    x.whileHeld(new RunSpinner(wheelOfMisfortuneSystem, .5)); // Toggle color wheel spinner
-    a.whileHeld(new AngleShooter(shooterSystem, -.2)); // Lower shooter angle
+    b.whenPressed(() -> intakeSystem.reverseIndex(.5)).whenReleased(() -> intakeSystem.runIndex(0));
+    y.whenPressed(() -> shooterSystem.setShooterPitch(-.2)).whenReleased(() -> shooterSystem.setShooterPitch(0)); // Raise shooter angle
+    x.whenPressed(() -> wheelOfMisfortuneSystem.runSpinner(.4)).whenReleased(() -> wheelOfMisfortuneSystem.runSpinner(0)); // Toggle color wheel spinner
+    a.whenPressed(() -> shooterSystem.setShooterPitch(.2)).whenReleased(() -> shooterSystem.setShooterPitch(0)); // Lower shooter angle
   }
 
 
   public void periodic() {
-    if(controller.getTriggerAxis(Hand.kLeft) == 1)
-      new IntakeBalls(intakeSystem, 1);
-    if(controller.getTriggerAxis(Hand.kRight) == 1)
-      new ManualShoot(shooterSystem, intakeSystem, 1);
-    if(controller.getPOV()==360 || controller.getPOV()==360)
-      wheelOfMisfortuneSystem.extendArm(.2);
+    if(controller.getTriggerAxis(Hand.kLeft) == 1) {
+      intakeSystem.runIndex(.8);
+      intakeSystem.runIntake(1);
+    }
+    if(controller.getTriggerAxis(Hand.kRight) == 1) {
+      shooterSystem.runShooter(.8);
+      shooterSystem.runKicker(.8);
+      intakeSystem.runIndex(.8);
+      intakeSystem.runIntake(1);
+    }
+    if(controller.getTriggerAxis(Hand.kRight) != 1 && controller.getTriggerAxis(Hand.kLeft) != 1) {
+      shooterSystem.runShooter(0);
+      shooterSystem.runKicker(0);
+      intakeSystem.runIndex(0);
+      intakeSystem.runIntake(0);
+    }
+    if(controller.getPOV()==360 || controller.getPOV()==0)
+      wheelOfMisfortuneSystem.extendArm(.4);
     if(controller.getPOV()==90)
       climberSystem.retractClimber(.2);
     if(controller.getPOV()==180)
-      wheelOfMisfortuneSystem.retractArm(.2);
+      wheelOfMisfortuneSystem.retractArm(.4);
     if(controller.getPOV()==270)
       climberSystem.extendClimber(.2);
+    if(controller.getPOV() != 360 && controller.getPOV() != 180)
+      wheelOfMisfortuneSystem.extendArm(0);
   }
 
   /**
