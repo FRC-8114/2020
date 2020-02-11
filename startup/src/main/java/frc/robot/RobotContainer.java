@@ -72,43 +72,53 @@ public class RobotContainer {
     b = new JoystickButton(controller, 2);
     x = new JoystickButton(controller, 3);
     y = new JoystickButton(controller, 4);
-    // back = new JoystickButton(controller, 7); Not used currently
-    // start = new JoystickButton(controller, 8); Not used currently
+    // back = new JoystickButton(controller, 7);
+    // start = new JoystickButton(controller, 8);
 
-    b.whenPressed(() -> intakeSystem.reverseIndex(.5)).whenReleased(() -> intakeSystem.runIndex(0));
-    y.whenPressed(() -> shooterSystem.setShooterPitch(-.2)).whenReleased(() -> shooterSystem.setShooterPitch(0)); // Raise shooter angle
-    x.whenPressed(() -> wheelOfMisfortuneSystem.runSpinner(.4)).whenReleased(() -> wheelOfMisfortuneSystem.runSpinner(0)); // Toggle color wheel spinner
-    a.whenPressed(() -> shooterSystem.setShooterPitch(.2)).whenReleased(() -> shooterSystem.setShooterPitch(0)); // Lower shooter angle
+    b.whenPressed(new IntakeBalls(intakeSystem, -.5)).whenReleased(new IntakeBalls(intakeSystem, 0)); // Reverses the index
+    y.whenPressed(new AngleShooter(shooterSystem, -.2)).whenReleased(new AngleShooter(shooterSystem, 0)); // Raise shooter angle
+    a.whenPressed(new AngleShooter(shooterSystem, .2)).whenReleased(new AngleShooter(shooterSystem, 0)); // Lower shooter angle
+    x.whenPressed(new RunSpinner(wheelOfMisfortuneSystem, .4)).whenReleased(new RunSpinner(wheelOfMisfortuneSystem, 0)); // Toggle color wheel spinner
   }
 
 
   public void periodic() {
-    if(controller.getTriggerAxis(Hand.kLeft) == 1) {
-      intakeSystem.runIndex(.8);
-      intakeSystem.runIntake(1);
+    /**
+     * Triggers control the index, intake, shooter, and kicker wheel
+     */
+    if(controller.getTriggerAxis(Hand.kLeft) == 1) { // If left trigger is pressed, intake and index are runned
+      new IntakeBalls(intakeSystem, .8).schedule();
     }
-    if(controller.getTriggerAxis(Hand.kRight) == 1) {
-      shooterSystem.runShooter(.8);
+    if(controller.getTriggerAxis(Hand.kRight) == 1) { //Runs the shooter, kicker, index, and intake
+      new ArmShooter(shooterSystem, .8).schedule(); //Starts shooter
+      new IntakeBalls(intakeSystem, .8).schedule(); //Starts intake, index, kicker
       shooterSystem.runKicker(.8);
-      intakeSystem.runIndex(.8);
-      intakeSystem.runIntake(1);
     }
-    if(controller.getTriggerAxis(Hand.kRight) != 1 && controller.getTriggerAxis(Hand.kLeft) != 1) {
-      shooterSystem.runShooter(0);
+    if(controller.getTriggerAxis(Hand.kRight) != 1 && controller.getTriggerAxis(Hand.kLeft) != 1) { //Stops the shooter, kicker, index, and intake if no relevant input is detected
+      new ArmShooter(shooterSystem, 0).schedule(); 
+      new IntakeBalls(intakeSystem, .8).schedule();
       shooterSystem.runKicker(0);
-      intakeSystem.runIndex(0);
-      intakeSystem.runIntake(0);
     }
-    if(controller.getPOV()==360 || controller.getPOV()==0)
-      wheelOfMisfortuneSystem.extendArm(.4);
-    if(controller.getPOV()==90)
+
+    /**
+     * DPad raising and lowering the robot via the climber
+     */
+    if(controller.getPOV() != 90 && controller.getPOV() != 270) //Stops the climber when no relevant input is read
+      climberSystem.extendClimber(0);
+    if(controller.getPOV()==90) //Extends the climber
       climberSystem.retractClimber(.2);
-    if(controller.getPOV()==180)
-      wheelOfMisfortuneSystem.retractArm(.4);
-    if(controller.getPOV()==270)
+    if(controller.getPOV()==270) //Retracts the climber
       climberSystem.extendClimber(.2);
-    if(controller.getPOV() != 360 && controller.getPOV() != 180)
-      wheelOfMisfortuneSystem.extendArm(0);
+
+    /**
+     * DPad raising and lowering of the arm
+     */
+    if(controller.getPOV() != 360 && controller.getPOV() != 180) //Stops the arm when no relevant input is read
+      wheelOfMisfortuneSystem.raiseArm(0);
+    if(controller.getPOV()==180) //Raises the arm
+      wheelOfMisfortuneSystem.lowerArm(.4);
+    if(controller.getPOV()==360 || controller.getPOV()==0) //Lowers the arm
+      wheelOfMisfortuneSystem.raiseArm(.4);
   }
 
   /**

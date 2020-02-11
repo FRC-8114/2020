@@ -18,8 +18,7 @@ public class IntakeBalls extends CommandBase {
     }
 
     public void end() {
-        intake.runIntake(0);
-        intake.runIndex(0);
+
     }
 
     public boolean isFinished() {

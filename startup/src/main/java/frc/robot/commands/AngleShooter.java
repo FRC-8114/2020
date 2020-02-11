@@ -22,6 +22,6 @@ public class AngleShooter extends CommandBase {
     }
 
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }

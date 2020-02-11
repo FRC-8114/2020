@@ -17,14 +17,6 @@ public class RunSpinner extends CommandBase {
         womSystem.runSpinner(speed);
     }
 
-    public void execute() {
-
-    }
-
-    public void end() {
-        womSystem.runSpinner(0);
-    }
-
     public boolean isFinished() {
         return true;
     }
