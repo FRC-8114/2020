@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -41,6 +42,9 @@ public class RobotContainer {
   private final XboxController controller;
   private static JoystickButton a,b,x,y,back,start;
 
+  private static Timer timer;
+  private static boolean shooting;
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -57,6 +61,9 @@ public class RobotContainer {
     this.controller = controller;
 
     firstMove = new SmoothMove(driveSystem, 2, .8, .8);
+
+    timer = new Timer();
+    shooting = false;
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -84,20 +91,29 @@ public class RobotContainer {
 
   public void periodic() {
     if(controller.getTriggerAxis(Hand.kLeft) == 1) {
-      intakeSystem.runIndex(.8);
+      intakeSystem.runIndex(.6);
       intakeSystem.runIntake(1);
     }
     if(controller.getTriggerAxis(Hand.kRight) == 1) {
-      shooterSystem.runShooter(.8);
-      shooterSystem.runKicker(.8);
-      intakeSystem.runIndex(.8);
-      intakeSystem.runIntake(1);
+      if(!shooting) {
+        shooterSystem.runShooter(.6);
+        timer.reset();
+        timer.start();
+        shooting = true;
+      }
+      if(shooting && timer.get()>=1) {
+        shooterSystem.runKicker(.2);
+        intakeSystem.runIndex(.6);
+        intakeSystem.runIntake(1);
+      }
     }
     if(controller.getTriggerAxis(Hand.kRight) != 1 && controller.getTriggerAxis(Hand.kLeft) != 1) {
       shooterSystem.runShooter(0);
       shooterSystem.runKicker(0);
       intakeSystem.runIndex(0);
       intakeSystem.runIntake(0);
+      timer.stop();
+      shooting = false;
     }
     if(controller.getPOV()==360 || controller.getPOV()==0)
       wheelOfMisfortuneSystem.extendArm(.4);
