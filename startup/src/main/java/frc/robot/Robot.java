@@ -106,7 +106,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    DriveSystem driveSystem = new DriveSystem(controller);
     robotContainer.periodic();
   }
 
