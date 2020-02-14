@@ -101,7 +101,7 @@ public class RobotContainer {
         timer.start();
         shooting = true;
       }
-      if(shooting && timer.get()>=1) {
+      if(shooting && timer.get()>=0.5) {
         shooterSystem.runKicker(.2);
         intakeSystem.runIndex(.6);
         intakeSystem.runIntake(1);
