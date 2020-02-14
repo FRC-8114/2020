@@ -37,6 +37,7 @@ public class RobotContainer {
   private final WheelOfMisfortuneSystem wheelOfMisfortuneSystem;
   private final IntakeSystem intakeSystem;
   private final ClimberSystem climberSystem;
+  private ReverseIndex reverseIndex;
 
   private final XboxController controller;
   private static JoystickButton a,b,x,y,back,start;
@@ -54,6 +55,9 @@ public class RobotContainer {
     wheelOfMisfortuneSystem = new WheelOfMisfortuneSystem();
     intakeSystem = new IntakeSystem();
     climberSystem = new ClimberSystem();
+    reverseIndex = new ReverseIndex(intakeSystem, 0.6);
+
+
     this.controller = controller;
 
     firstMove = new SmoothMove(driveSystem, 2, .8, .8);
@@ -75,10 +79,10 @@ public class RobotContainer {
     // back = new JoystickButton(controller, 7);
     // start = new JoystickButton(controller, 8);
 
-    b.whenPressed(new IntakeBalls(intakeSystem, -.5)).whenReleased(new IntakeBalls(intakeSystem, 0)); // Reverses the index
-    y.whenPressed(new AngleShooter(shooterSystem, -.2)).whenReleased(new AngleShooter(shooterSystem, 0)); // Raise shooter angle
-    a.whenPressed(new AngleShooter(shooterSystem, .2)).whenReleased(new AngleShooter(shooterSystem, 0)); // Lower shooter angle
-    x.whenPressed(new RunSpinner(wheelOfMisfortuneSystem, .4)).whenReleased(new RunSpinner(wheelOfMisfortuneSystem, 0)); // Toggle color wheel spinner
+    b.whileHeld(new ReverseIndex(intakeSystem, 0.6)); // Reverses the index
+    y.whileHeld(new AngleShooter(shooterSystem, .1)); // Raise shooter angle
+    a.whileHeld(new AngleShooter(shooterSystem, -.1)); // Lower shooter angle
+    x.toggleWhenActive(new RunSpinner(wheelOfMisfortuneSystem, .4)); // Toggle color wheel spinner
   }
 
 
