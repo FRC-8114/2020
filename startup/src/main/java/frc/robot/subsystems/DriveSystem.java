@@ -26,8 +26,8 @@ public class DriveSystem extends SubsystemBase {
   public DriveSystem(XboxController controllerA) {
     this.controllerA = controllerA;
 
-    frontLeft = new WPI_VictorSPX(1);
-    backLeft = new WPI_VictorSPX(2);
+    frontLeft = new WPI_VictorSPX(0);
+    backLeft = new WPI_VictorSPX(1);
     frontRight = new WPI_VictorSPX(3);
     backRight = new WPI_VictorSPX(4);
 
@@ -39,7 +39,7 @@ public class DriveSystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    driveTrain.tankDrive(-Math.floor(controllerA.getY(Hand.kLeft)*100)/100, -Math.floor(controllerA.getY(Hand.kRight)*100)/100, false);
+    driveTrain.tankDrive(-0.75*Math.floor(controllerA.getY(Hand.kLeft)*100)/100, -0.75*Math.floor(controllerA.getY(Hand.kRight)*100)/100, false);
   }
 
   public void drive(double left, double right) {
