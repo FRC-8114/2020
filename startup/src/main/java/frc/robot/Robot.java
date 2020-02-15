@@ -38,6 +38,7 @@ public class Robot extends TimedRobot {
     pdp = new PowerDistributionPanel(0);
 
     robotContainer = new RobotContainer(controller, pdp);
+    m_autonomousCommand = robotContainer.getAutonomousCommand();
   }
 
   /**
@@ -72,8 +73,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = robotContainer.getAutonomousCommand();
-
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -85,6 +84,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    m_autonomousCommand.schedule();
   }
 
   @Override

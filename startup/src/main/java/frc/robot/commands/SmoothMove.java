@@ -50,10 +50,10 @@ public class SmoothMove extends CommandBase {
   @Override
   public void execute() {
     double current = odometrySubsystem.GetDistance();
-    if(current <= 0.75*distance)
-      driveSystem.drive(current/distance, current/distance);
-    else if(current <= 1*distance)
-      driveSystem.drive(current/(distance-current), current/(distance-current));
+    if(current <= 0.5*distance)
+      driveSystem.drive(2*(current/distance), 2*(current/distance));
+    else if(current <= distance)
+      driveSystem.drive((distance-current)/distance, (distance-current)/distance);
 
     /*
     if(now <= time*.25) {

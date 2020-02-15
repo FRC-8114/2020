@@ -26,8 +26,8 @@ public class DriveSystem extends SubsystemBase {
   public DriveSystem(XboxController controller) {
     this.controller = controller;
 
-    frontLeft = new WPI_VictorSPX(1);
-    backLeft = new WPI_VictorSPX(2);
+    frontLeft = new WPI_VictorSPX(0);
+    backLeft = new WPI_VictorSPX(1);
     frontRight = new WPI_VictorSPX(3);
     backRight = new WPI_VictorSPX(4);
 

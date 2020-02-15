@@ -82,10 +82,10 @@ public class RobotContainer {
     // back = new JoystickButton(controller, 7); Not used currently
     // start = new JoystickButton(controller, 8); Not used currently
 
-    b.whenPressed(() -> intakeSystem.reverseIndex(.5)).whenReleased(() -> intakeSystem.runIndex(0));
-    y.whenPressed(() -> shooterSystem.setShooterPitch(-.2)).whenReleased(() -> shooterSystem.setShooterPitch(0)); // Raise shooter angle
-    x.whenPressed(() -> wheelOfMisfortuneSystem.runSpinner(.4)).whenReleased(() -> wheelOfMisfortuneSystem.runSpinner(0)); // Toggle color wheel spinner
-    a.whenPressed(() -> shooterSystem.setShooterPitch(.2)).whenReleased(() -> shooterSystem.setShooterPitch(0)); // Lower shooter angle
+    b.whileHeld(() -> intakeSystem.reverseIndex(.5)).whenReleased(() -> intakeSystem.runIndex(0));
+    y.whileHeld(() -> shooterSystem.setShooterPitch(-.2)).whenReleased(() -> shooterSystem.setShooterPitch(0)); // Raise shooter angle
+    x.whileHeld(() -> wheelOfMisfortuneSystem.runSpinner(.4)).whenReleased(() -> wheelOfMisfortuneSystem.runSpinner(0)); // Toggle color wheel spinner
+    a.whileHeld(() -> shooterSystem.setShooterPitch(.2)).whenReleased(() -> shooterSystem.setShooterPitch(0)); // Lower shooter angle
   }
 
 
