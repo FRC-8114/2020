@@ -15,6 +15,8 @@ public class OdometrySubsystem extends SubsystemBase {
         leftEncoder.setDistancePerPulse(WheelCircumference(6));
         rightEncoder.setDistancePerPulse(WheelCircumference(6));
         // Configures the encoders to recognize one rotation per circumference length
+
+        GetDistance();
     }
 
     public double InchesToMeters (double inches) {
