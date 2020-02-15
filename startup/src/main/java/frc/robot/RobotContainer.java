@@ -88,7 +88,6 @@ public class RobotContainer {
     a.whileHeld(() -> shooterSystem.setShooterPitch(.2)).whenReleased(() -> shooterSystem.setShooterPitch(0)); // Lower shooter angle
   }
 
-
   public void periodic() {
     if(controller.getTriggerAxis(Hand.kLeft) == 1) {
       intakeSystem.runIndex(.6);
