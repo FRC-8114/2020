@@ -115,11 +115,11 @@ public class RobotContainer {
       intakeSystem.runIndex(.6);
     }
   
-    if(controllerB.getBumper(Hand.kLeft) == true) {
+    if(controllerB.getBumper(Hand.kRight) == true) {
       intakeSystem.runIndex(.6);
     }
-    
-    if(controllerB.getTriggerAxis(Hand.kRight) == 1) {
+
+    if(controllerB.getTriggerAxis(Hand.kLeft) == 1) {
       if(!shooting) {
         shooterSystem.runShooter(.6);
         timer.reset();
@@ -141,14 +141,16 @@ public class RobotContainer {
       shooting = false;
     }
   
-    if(controllerB.getPOV()==360 || controllerB.getPOV()==0)
+    if(controllerB.getPOV()==360 || controllerB.getPOV()==0) {
       climberSystem.extendClimber(.2);
-    if(controllerB.getPOV()==180)
+    }
+    if(controllerB.getPOV()==180) {
       climberSystem.retractClimber(.2);
+    }
     if(controllerB.getPOV() != 360 && controllerB.getPOV() != 180)
       wheelOfMisfortuneSystem.extendArm(0);
   
-    if(controllerB.getBumper(Hand.kRight) == true) {
+    if(controllerB.getBumper(Hand.kLeft) == true) {
       shooterSystem.runShooter(.6);
     }
   }
