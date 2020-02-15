@@ -87,7 +87,7 @@ public class RobotContainer {
     // b.whileHeld(() -> intakeSystem.reverseIndex(.5)).whenReleased(() -> intakeSystem.runIndex(0));
     y1.whileHeld(() -> wheelOfMisfortuneSystem.extendArm(.2)); // Raise arm
     y1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
-    x1.whileHeld(() -> wheelOfMisfortuneSystem.runSpinner(.4)).whenReleased(() -> wheelOfMisfortuneSystem.runSpinner(0)); // Toggle color wheel spinner
+    x1.whileHeld(new RunSpinner(wheelOfMisfortuneSystem, .4)).whenReleased(new RunSpinner(wheelOfMisfortuneSystem, 0)); // Toggle color wheel spinner
     a1.whileHeld(() -> wheelOfMisfortuneSystem.retractArm(.2)); // Lower arm
     a1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
   }
@@ -113,6 +113,11 @@ public class RobotContainer {
     if(controllerA.getTriggerAxis(Hand.kLeft) == 1) {
       intakeSystem.runIntake(.6);
       intakeSystem.runIndex(.6);
+    }
+
+    if(controllerA.getBumper(Hand.kRight) == true) {
+      System.out.println("Working");
+      new DriveForward(driveSystem, .5);
     }
   
     if(controllerB.getBumper(Hand.kRight) == true) {
