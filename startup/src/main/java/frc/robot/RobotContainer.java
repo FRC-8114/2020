@@ -39,7 +39,7 @@ private final WheelOfMisfortuneSystem wheelOfMisfortuneSystem;
 private final IntakeSystem intakeSystem;
 private final ClimberSystem climberSystem;
 
-private final XboxController controller0, controller1;
+private final XboxController controllerA, controllerB;
 private static JoystickButton a,b,x,y,back,start;
 
 private static Timer timer;
@@ -48,8 +48,8 @@ private static boolean shooting;
 /**
 * The container for the robot. Contains subsystems, OI devices, and commands.
 */
-public RobotContainer(XboxController controller0, XboxController controller1, PowerDistributionPanel pdp) {
-  driveSystem = new DriveSystem(controller0);
+public RobotContainer(XboxController controllerA, XboxController controllerB, PowerDistributionPanel pdp) {
+  driveSystem = new DriveSystem(controllerA);
   cameraSystem = new CameraSystem();
   odometrySystem = new OdometrySubsystem();
   networkSystem = new NetworkSystem();
@@ -58,16 +58,16 @@ public RobotContainer(XboxController controller0, XboxController controller1, Po
   wheelOfMisfortuneSystem = new WheelOfMisfortuneSystem();
   intakeSystem = new IntakeSystem();
   climberSystem = new ClimberSystem();
-  this.controller0 = controller0;
-  this.controller1 = controller1;
+  this.controllerA = controllerA;
+  this.controllerB = controllerB;
 
   firstMove = new SmoothMove(driveSystem, odometrySystem, 4);
 
   timer = new Timer();
   shooting = false;
   // Configure the button bindings
-  controller0_configureButtonBindings();
-  controller1_configureButtonBindings();
+  controllerA_configureButtonBindings();
+  controllerB_configureButtonBindings();
 }
 
 /**
@@ -76,11 +76,11 @@ public RobotContainer(XboxController controller0, XboxController controller1, Po
 * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
 * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 */
-public void controller0_configureButtonBindings() {
-  a = new JoystickButton(controller1, 1);
+public void controllerA_configureButtonBindings() {
+  a = new JoystickButton(controllerA, 1);
   // b = new JoystickButton(controller1, 2);
-  x = new JoystickButton(controller1, 3);
-  y = new JoystickButton(controller1, 4);
+  x = new JoystickButton(controllerA, 3);
+  y = new JoystickButton(controllerA, 4);
   // back = new JoystickButton(controller, 7); Not used currently
   // start = new JoystickButton(controller, 8); Not used currently
 
@@ -92,56 +92,64 @@ public void controller0_configureButtonBindings() {
   a.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
 }
 
-public void controller1_configureButtonBindings() {
-a = new JoystickButton(controller1, 1);
-// b = new JoystickButton(controller1, 2);
-x = new JoystickButton(controller1, 3);
-y = new JoystickButton(controller1, 4);
-// back = new JoystickButton(controller, 7); Not used currently
-// start = new JoystickButton(controller, 8); Not used currently
+public void controllerB_configureButtonBindings() {
+  a = new JoystickButton(controllerB, 1);
+  // b = new JoystickButton(controllerB, 2);
+  x = new JoystickButton(controllerB, 3);
+  y = new JoystickButton(controllerB, 4);
+  // back = new JoystickButton(controller, 7); Not used currently
+  // start = new JoystickButton(controller, 8); Not used currently
 
-b.whileHeld(() -> intakeSystem.reverseIndex(.5)).whenReleased(() -> intakeSystem.runIndex(0));
-y.whileHeld(() -> shooterSystem.setShooterPitch(-.2)).whenReleased(() -> shooterSystem.setShooterPitch(0)); // Raise shooter angle
-x.whileHeld(() -> wheelOfMisfortuneSystem.runSpinner(.4)).whenReleased(() -> wheelOfMisfortuneSystem.runSpinner(0)); // Toggle color wheel spinner
-a.whileHeld(() -> shooterSystem.setShooterPitch(.2)).whenReleased(() -> shooterSystem.setShooterPitch(0)); // Lower shooter angle
+  // b.whileHeld(() -> intakeSystem.reverseIndex(.5)).whenReleased(() -> intakeSystem.runIndex(0));
+  y.whileHeld(() -> shooterSystem.setShooterPitch(.2));
+  y.whenReleased(() -> shooterSystem.setShooterPitch(0)); // Raise climber
+  x.whileHeld(() -> intakeSystem.reverseIndex(.2));
+  x.whenReleased(() -> intakeSystem.reverseIndex(0)); // Reverse Index
+  a.whileHeld(() -> shooterSystem.setShooterPitch(-.2));
+  a.whenReleased(() -> shooterSystem.setShooterPitch(0)); // Lower climber
 }
 
 public void periodic() {
-if(controller.getTriggerAxis(Hand.kLeft) == 1) {
-intakeSystem.runIndex(.6);
-intakeSystem.runIntake(1);
-}
-if(controller.getTriggerAxis(Hand.kRight) == 1) {
-if(!shooting) {
-shooterSystem.runShooter(.6);
-timer.reset();
-timer.start();
-shooting = true;
-}
-if(shooting && timer.get()>=0.5) {
-shooterSystem.runKicker(.2);
-intakeSystem.runIndex(.6);
-intakeSystem.runIntake(1);
-}
-}
-if(controller.getTriggerAxis(Hand.kRight) != 1 && controller.getTriggerAxis(Hand.kLeft) != 1) {
-shooterSystem.runShooter(0);
-shooterSystem.runKicker(0);
-intakeSystem.runIndex(0);
-intakeSystem.runIntake(0);
-timer.stop();
-shooting = false;
-}
-if(controller.getPOV()==360 || controller.getPOV()==0)
-wheelOfMisfortuneSystem.extendArm(.4);
-if(controller.getPOV()==90)
-climberSystem.retractClimber(.2);
-if(controller.getPOV()==180)
-wheelOfMisfortuneSystem.retractArm(.4);
-if(controller.getPOV()==270)
-climberSystem.extendClimber(.2);
-if(controller.getPOV() != 360 && controller.getPOV() != 180)
-wheelOfMisfortuneSystem.extendArm(0);
+  if(controllerA.getTriggerAxis(Hand.kLeft) == 1) {
+    intakeSystem.runIntake(.6);
+    intakeSystem.runIndex(.6);
+  }
+
+  if(controllerB.getBumper(Hand.kLeft) == true) {
+    intakeSystem.runIndex(.6);
+  }
+  if(controllerB.getTriggerAxis(Hand.kRight) == 1) {
+    if(!shooting) {
+      shooterSystem.runShooter(.6);
+      timer.reset();
+      timer.start();
+      shooting = true;
+    }
+    if(shooting && timer.get()>=0.5) {
+      shooterSystem.runKicker(.2);
+      intakeSystem.runIndex(.6);
+      intakeSystem.runIntake(1);
+    }
+  }
+  if(controllerB.getTriggerAxis(Hand.kRight) != 1 && controllerB.getBumper(Hand.kRight) != true) {
+    shooterSystem.runShooter(0);
+    shooterSystem.runKicker(0);
+    intakeSystem.runIndex(0);
+    intakeSystem.runIntake(0);
+    timer.stop();
+    shooting = false;
+  }
+
+  if(controllerB.getPOV()==360 || controllerB.getPOV()==0)
+    climberSystem.extendClimber(.2);
+  if(controllerB.getPOV()==180)
+    climberSystem.retractClimber(.2);
+  if(controllerB.getPOV() != 360 && controllerB.getPOV() != 180)
+    wheelOfMisfortuneSystem.extendArm(0);
+
+  if(controllerB.getBumper(Hand.kRight) == true) {
+    shooterSystem.runShooter(.6);
+  }
 }
 
 /**
