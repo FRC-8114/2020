@@ -60,7 +60,7 @@ public class RobotContainer {
     climberSystem = new ClimberSystem();
     this.controller = controller;
 
-    firstMove = new SmoothMove(driveSystem, 2, .8, .8);
+    firstMove = new SmoothMove(driveSystem, odometrySystem, 4);
 
     timer = new Timer();
     shooting = false;
