@@ -103,15 +103,17 @@ public class RobotContainer {
     // b.whileHeld(() -> intakeSystem.reverseIndex(.5)).whenReleased(() -> intakeSystem.runIndex(0));
     y2.whileHeld(() -> shooterSystem.setShooterPitch(.2));
     y2.whenReleased(() -> shooterSystem.setShooterPitch(0)); // Raise climber
+     
     x2.whileHeld(() -> intakeSystem.reverseIndex(.2));
     x2.whenReleased(() -> intakeSystem.reverseIndex(0)); // Reverse Index
+
     a2.whileHeld(() -> shooterSystem.setShooterPitch(-.2));
     a2.whenReleased(() -> shooterSystem.setShooterPitch(0)); // Lower climber
   }
   
   public void periodic() {
     if(controllerA.getTriggerAxis(Hand.kLeft) == 1) {
-      intakeSystem.runIntake(.6);
+      intakeSystem.runIntake(1);
       intakeSystem.runIndex(.6);
     }
   
