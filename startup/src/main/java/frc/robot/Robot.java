@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
  * project.
  */
 public class Robot extends TimedRobot {
-  private XboxController controller;
+  private XboxController controllerA, controllerB;
 
   private Command m_autonomousCommand;
 
@@ -34,10 +34,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    controller = new XboxController(0);
+    controllerA = new XboxController(0);
+    controllerB = new XboxController(1);
     pdp = new PowerDistributionPanel(0);
 
-    robotContainer = new RobotContainer(controller, pdp);
+    robotContainer = new RobotContainer(controllerA, controllerB, pdp);
     m_autonomousCommand = robotContainer.getAutonomousCommand();
   }
 

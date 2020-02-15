@@ -17,14 +17,14 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 
 public class DriveSystem extends SubsystemBase {
-  private XboxController controller;
+  private XboxController controllerA;
   
   private WPI_VictorSPX backLeft, frontLeft, backRight, frontRight;
   private SpeedControllerGroup left, right;
   private DifferentialDrive driveTrain;
 
-  public DriveSystem(XboxController controller) {
-    this.controller = controller;
+  public DriveSystem(XboxController controllerA) {
+    this.controllerA = controllerA;
 
     frontLeft = new WPI_VictorSPX(0);
     backLeft = new WPI_VictorSPX(1);
@@ -39,7 +39,7 @@ public class DriveSystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    driveTrain.tankDrive(-0.75*Math.floor(controller.getY(Hand.kLeft)*100)/100, -0.75*Math.floor(controller.getY(Hand.kRight)*100)/100, false);
+    driveTrain.tankDrive(-0.75*Math.floor(controllerA.getY(Hand.kLeft)*100)/100, -0.75*Math.floor(controllerA.getY(Hand.kRight)*100)/100, false);
   }
 
   public void drive(double left, double right) {
