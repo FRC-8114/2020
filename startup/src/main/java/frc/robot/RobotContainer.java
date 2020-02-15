@@ -64,7 +64,6 @@ public class RobotContainer {
     firstMove = new SmoothMove(driveSystem, odometrySystem, 4);
 
     timer = new Timer();
-    shooting = false;
     // Configure the button bindings
     controllerA_configureButtonBindings();
     controllerB_configureButtonBindings();
@@ -120,6 +119,7 @@ public class RobotContainer {
     }
 
     if(controllerB.getTriggerAxis(Hand.kLeft) == 1) {
+      shooting = false;
       if(!shooting) {
         shooterSystem.runShooter(.6);
         timer.reset();
@@ -127,12 +127,10 @@ public class RobotContainer {
         shooting = true;
       }
       if(shooting && timer.get()>=0.5) {
-        shooterSystem.runKicker(.2);
         intakeSystem.runIndex(.6);
-        intakeSystem.runIntake(1);
       }
     }
-    if(controllerB.getTriggerAxis(Hand.kRight) != 1 && controllerB.getBumper(Hand.kRight) != true) {
+    if(controllerB.getTriggerAxis(Hand.kLeft) != 1 && controllerB.getBumper(Hand.kRight) != true) {
       shooterSystem.runShooter(0);
       shooterSystem.runKicker(0);
       intakeSystem.runIndex(0);
