@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class WheelOfMisfortuneSystem extends SubsystemBase{
     private WPI_VictorSPX armLeft, armRight, spinner;
-    private Timer timer = new Timer();
 
     public WheelOfMisfortuneSystem() {
         armLeft = new WPI_VictorSPX(19);
@@ -30,9 +29,9 @@ public class WheelOfMisfortuneSystem extends SubsystemBase{
     public void retractArm(double speed, Timer timer) {
         armLeft.set(speed);
         armRight.set(-speed);
-        if(timer.get() >= .05) {
-            armLeft.set(-.15);
-            armLeft.set(.15);
+        if(timer.get() >= .1) {
+            armLeft.set(-.1);
+            armRight.set(.1);
         }
 
     }

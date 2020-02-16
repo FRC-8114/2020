@@ -27,7 +27,6 @@ import edu.wpi.first.wpilibj.XboxController.*;
  */
 
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
   private final DriveSystem driveSystem;
   private final CameraSystem cameraSystem;
   private final OdometrySubsystem odometrySystem;
@@ -40,8 +39,7 @@ public class RobotContainer {
   private final ClimberSystem climberSystem;
 
   private final XboxController controllerA,controllerB;
-  private static JoystickButton a1,a2,b1,b2,x1,x2,y1,y2,back,start;
-
+  private static JoystickButton a1, a2, x1, x2, y1, y2;
   private static Timer timer;
   private static boolean shooting;
 
@@ -49,6 +47,7 @@ public class RobotContainer {
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer(XboxController controllerA, XboxController controllerB, PowerDistributionPanel pdp) {
+    // Initializes the various subsystems
     driveSystem = new DriveSystem(controllerA);
     cameraSystem = new CameraSystem();
     odometrySystem = new OdometrySubsystem();
@@ -58,13 +57,16 @@ public class RobotContainer {
     wheelOfMisfortuneSystem = new WheelOfMisfortuneSystem();
     intakeSystem = new IntakeSystem();
     climberSystem = new ClimberSystem();
+
+    // Initializes the various commmands
+    firstMove = new SmoothMove(driveSystem, odometrySystem, 4);
+
+    // Initializes others
+    timer = new Timer();
     this.controllerA = controllerA;
     this.controllerB = controllerB;
 
-    firstMove = new SmoothMove(driveSystem, odometrySystem, 4);
-
-    timer = new Timer();
-    // Configure the button bindings
+    // Configure the button bindings for the two controllers
     controllerA_configureButtonBindings();
     controllerB_configureButtonBindings();
   }
@@ -76,64 +78,74 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   public void controllerA_configureButtonBindings() {
+    // Initializes buttons for first XboxController
     a1 = new JoystickButton(controllerA, 1);
-    // b = new JoystickButton(controller1, 2);
     x1 = new JoystickButton(controllerA, 3);
     y1 = new JoystickButton(controllerA, 4);
-    // back = new JoystickButton(controller, 7); Not used currently
-    // start = new JoystickButton(controller, 8); Not used currently
   
-    // b.whileHeld(() -> intakeSystem.reverseIndex(.5)).whenReleased(() -> intakeSystem.runIndex(0));
-    y1.whileHeld(() -> wheelOfMisfortuneSystem.extendArm(.4)); // Raise arm
+    // Raises the Intake Arm
+    y1.whileHeld(() -> wheelOfMisfortuneSystem.extendArm(.4));
     y1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
-    x1.whileHeld(() -> wheelOfMisfortuneSystem.runSpinner(.6)).whenReleased(() -> wheelOfMisfortuneSystem.runSpinner(0)); // Toggle color wheel spinner
+
+    // Runs the Color Spinner
+    x1.whileHeld(() -> wheelOfMisfortuneSystem.runSpinner(.6)).whenReleased(() -> wheelOfMisfortuneSystem.runSpinner(0));
     timer.reset();
-    a1.whileHeld(() -> wheelOfMisfortuneSystem.retractArm(.25, timer)); // Lower arm
+
+    // Lowers the Intake Arm
+    a1.whileHeld(() -> wheelOfMisfortuneSystem.retractArm(.25, timer));
     a1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
   }
   
   public void controllerB_configureButtonBindings() {
+    // Initializes buttons for second XboxController
     a2 = new JoystickButton(controllerB, 1);
-    // b = new JoystickButton(controllerB, 2);
     x2 = new JoystickButton(controllerB, 3);
-    y2 = new JoystickButton(controllerB, 4);
-    // back = new JoystickButton(controller, 7); Not used currently
-    // start = new JoystickButton(controller, 8); Not used currently
-  
-    // b.whileHeld(() -> intakeSystem.reverseIndex(.5)).whenReleased(() -> intakeSystem.runIndex(0));
-    y2.whileHeld(() -> shooterSystem.setShooterPitch(.2));
-    y2.whenReleased(() -> shooterSystem.setShooterPitch(0)); // Raise climber
-     
-    x2.whileHeld(() -> intakeSystem.reverseIndex(.2));
-    x2.whenReleased(() -> intakeSystem.reverseIndex(0)); // Reverse Index
+    y2 = new JoystickButton(controllerB, 4);  
 
+    // Increases Shooter Angle
+    y2.whileHeld(() -> shooterSystem.setShooterPitch(.2));
+    y2.whenReleased(() -> shooterSystem.setShooterPitch(0));
+    
+    // Reverses the Index
+    x2.whileHeld(() -> intakeSystem.reverseIndex(.2));
+    x2.whenReleased(() -> intakeSystem.reverseIndex(0));
+
+    // Decreases Shooter Angle
     a2.whileHeld(() -> shooterSystem.setShooterPitch(-.2));
-    a2.whenReleased(() -> shooterSystem.setShooterPitch(0)); // Lower climber
+    a2.whenReleased(() -> shooterSystem.setShooterPitch(0));
   }
   
   public void periodic() {
+    // If the left bumper of controllerA is pressed, runs the intake and index
     if(controllerA.getBumper(Hand.kLeft) == true) {
       intakeSystem.runIntake(.3);
       intakeSystem.runIndex(.6);
-      System.out.println("Working");
     }
   
+    // If the right bumper of controllerB is pressed, runs the index
     if(controllerB.getBumper(Hand.kRight) == true) {
       intakeSystem.runIndex(.6);
     }
 
+    // If the left trigger of controllerB is pressed, begins scheduled shoot procedure
     if(controllerB.getTriggerAxis(Hand.kLeft) == 1) {
       shooting = false;
+
+      // If shooting is false, runs the shooter and starts the timer
       if(!shooting) {
         shooterSystem.runShooter(.6);
         timer.reset();
         timer.start();
         shooting = true;
       }
+
+      // If the shooter has spun up for 1 second, runs the index
       if(shooting && timer.get()>=1) {
         intakeSystem.runIndex(.6);
       }
     }
+
+    // Ceases the Shooter, Index, Intake, and Timer if the left trigger and right bumper of controllerB are not being pressed
     if(controllerB.getTriggerAxis(Hand.kLeft) != 1 && controllerB.getBumper(Hand.kRight) != true) {
       shooterSystem.runShooter(0);
       shooterSystem.runKicker(0);
@@ -143,17 +155,21 @@ public class RobotContainer {
       shooting = false;
     }
   
-    if(controllerB.getPOV()==360 || controllerB.getPOV()==0) {
+    // Extends the climber if the Up Arrow of the DPad is being pressed on controllerB
+    if(controllerB.getPOV()==360 || controllerB.getPOV()==0)
       climberSystem.extendClimber(.2);
-    }
-    if(controllerB.getPOV()==180) {
+
+    // Retracts the climber if the Down Arrow of the DPad is being pressed on controllerB
+    if(controllerB.getPOV()==180)
       climberSystem.retractClimber(.2);
-    }
+
+    // Ceases the extension or retraction of the Intake Arm if the Up or Down Arrows of the DPad are not being pressed on controllerB
     if(controllerB.getPOV() != 360 && controllerB.getPOV() != 180)
       wheelOfMisfortuneSystem.extendArm(0);
   
+    // Runs the shooter if the left bumper of controllerB is pressed
     if(controllerB.getBumper(Hand.kLeft) == true) {
-      shooterSystem.runShooter(1);
+      shooterSystem.runShooter(.75);
     }
   }
 
