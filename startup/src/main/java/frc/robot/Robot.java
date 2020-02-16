@@ -10,8 +10,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.OdometrySubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import frc.robot.subsystems.*;
 
 
 /**
@@ -27,6 +29,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer robotContainer;
   private PowerDistributionPanel pdp;
+  private OdometrySubsystem odometrySystem;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -37,6 +40,7 @@ public class Robot extends TimedRobot {
     controllerA = new XboxController(0);
     controllerB = new XboxController(1);
     pdp = new PowerDistributionPanel(0);
+    odometrySystem = new OdometrySubsystem();
 
     robotContainer = new RobotContainer(controllerA, controllerB, pdp);
     m_autonomousCommand = robotContainer.getAutonomousCommand();
@@ -105,6 +109,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     robotContainer.periodic();
+    odometrySystem.GetDistance();
   }
 
   @Override
