@@ -27,7 +27,7 @@ public class WheelOfMisfortuneSystem extends SubsystemBase{
         armRight.set(speed);
     }
 
-    public void retractArmWOM(double speed, Timer timer) {
+    public void retractArm(double speed, Timer timer) {
         armLeft.set(speed);
         armRight.set(-speed);
         if(timer.get() >= .05) {

@@ -86,9 +86,9 @@ public class RobotContainer {
     // b.whileHeld(() -> intakeSystem.reverseIndex(.5)).whenReleased(() -> intakeSystem.runIndex(0));
     y1.whileHeld(() -> wheelOfMisfortuneSystem.extendArm(.4)); // Raise arm
     y1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
-    x1.whileHeld(() -> wheelOfMisfortuneSystem.runSpinner(.4)).whenReleased(() -> wheelOfMisfortuneSystem.runSpinner(0)); // Toggle color wheel spinner
+    x1.whileHeld(() -> wheelOfMisfortuneSystem.runSpinner(.6)).whenReleased(() -> wheelOfMisfortuneSystem.runSpinner(0)); // Toggle color wheel spinner
     timer.reset();
-    a1.whileHeld(() -> wheelOfMisfortuneSystem.retractArmWOM(.25, timer)); // Lower arm
+    a1.whileHeld(() -> wheelOfMisfortuneSystem.retractArm(.25, timer)); // Lower arm
     a1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
   }
   
