@@ -84,10 +84,11 @@ public class RobotContainer {
     // start = new JoystickButton(controller, 8); Not used currently
   
     // b.whileHeld(() -> intakeSystem.reverseIndex(.5)).whenReleased(() -> intakeSystem.runIndex(0));
-    y1.whileHeld(() -> wheelOfMisfortuneSystem.extendArm(.2)); // Raise arm
+    y1.whileHeld(() -> wheelOfMisfortuneSystem.extendArm(.4)); // Raise arm
     y1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
     x1.whileHeld(() -> wheelOfMisfortuneSystem.runSpinner(.4)).whenReleased(() -> wheelOfMisfortuneSystem.runSpinner(0)); // Toggle color wheel spinner
-    a1.whileHeld(() -> wheelOfMisfortuneSystem.retractArm(.2)); // Lower arm
+    timer.reset();
+    a1.whileHeld(() -> wheelOfMisfortuneSystem.retractArmWOM(.25, timer)); // Lower arm
     a1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
   }
   
@@ -111,9 +112,10 @@ public class RobotContainer {
   }
   
   public void periodic() {
-    if(controllerA.getTriggerAxis(Hand.kLeft) == 1) {
-      intakeSystem.runIntake(1);
+    if(controllerA.getBumper(Hand.kLeft) == true) {
+      intakeSystem.runIntake(.3);
       intakeSystem.runIndex(.6);
+      System.out.println("Working");
     }
   
     if(controllerB.getBumper(Hand.kRight) == true) {
@@ -128,7 +130,7 @@ public class RobotContainer {
         timer.start();
         shooting = true;
       }
-      if(shooting && timer.get()>=0.5) {
+      if(shooting && timer.get()>=1) {
         intakeSystem.runIndex(.6);
       }
     }
@@ -151,7 +153,7 @@ public class RobotContainer {
       wheelOfMisfortuneSystem.extendArm(0);
   
     if(controllerB.getBumper(Hand.kLeft) == true) {
-      shooterSystem.runShooter(.6);
+      shooterSystem.runShooter(1);
     }
   }
 

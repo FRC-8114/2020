@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.XboxController;
 public class DriveSystem extends SubsystemBase {
   private XboxController controllerA;
   
-  private WPI_VictorSPX backLeft, frontLeft, backRight, frontRight;
+  private WPI_VictorSPX backLeft, frontLeft, backRight, frontRight, misc;
   private SpeedControllerGroup left, right;
   private DifferentialDrive driveTrain;
 
@@ -30,8 +30,9 @@ public class DriveSystem extends SubsystemBase {
     backLeft = new WPI_VictorSPX(1);
     frontRight = new WPI_VictorSPX(3);
     backRight = new WPI_VictorSPX(4);
+    misc = new WPI_VictorSPX(39);
 
-    left = new SpeedControllerGroup(backLeft, frontLeft);
+    left = new SpeedControllerGroup(backLeft, frontLeft, misc);
     right = new SpeedControllerGroup(backRight, frontRight);
 
     driveTrain = new DifferentialDrive(left, right);

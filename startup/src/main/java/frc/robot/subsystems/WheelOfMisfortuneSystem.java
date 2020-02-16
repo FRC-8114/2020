@@ -4,8 +4,11 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public class WheelOfMisfortuneSystem extends SubsystemBase{
     private WPI_VictorSPX armLeft, armRight, spinner;
+    private Timer timer = new Timer();
 
     public WheelOfMisfortuneSystem() {
         armLeft = new WPI_VictorSPX(19);
@@ -20,12 +23,17 @@ public class WheelOfMisfortuneSystem extends SubsystemBase{
 
 
     public void extendArm(double speed) {
-        armLeft.set(speed);
-        armRight.set(-speed);
-    }
-
-    public void retractArm(double speed) {
         armLeft.set(-speed);
         armRight.set(speed);
+    }
+
+    public void retractArmWOM(double speed, Timer timer) {
+        armLeft.set(speed);
+        armRight.set(-speed);
+        if(timer.get() >= .05) {
+            armLeft.set(-.15);
+            armLeft.set(.15);
+        }
+
     }
 }
