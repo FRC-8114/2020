@@ -30,9 +30,8 @@ public class DriveSystem extends SubsystemBase {
     backLeft = new WPI_VictorSPX(1);
     frontRight = new WPI_VictorSPX(3);
     backRight = new WPI_VictorSPX(4);
-    misc = new WPI_VictorSPX(39);
 
-    left = new SpeedControllerGroup(backLeft, frontLeft, misc);
+    left = new SpeedControllerGroup(backLeft, frontLeft);
     right = new SpeedControllerGroup(backRight, frontRight);
 
     driveTrain = new DifferentialDrive(left, right);

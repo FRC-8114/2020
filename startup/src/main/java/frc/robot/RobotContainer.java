@@ -117,13 +117,16 @@ public class RobotContainer {
   
   public void periodic() {
     // If the left bumper of controllerA is pressed, runs the intake and index
+    /*
     if(controllerA.getBumper(Hand.kLeft) == true) {
       intakeSystem.runIntake(.3);
       intakeSystem.runIndex(.6);
     }
+    */
   
     // If the right bumper of controllerB is pressed, runs the index
     if(controllerB.getBumper(Hand.kRight) == true) {
+      intakeSystem.runIntake(.8);
       intakeSystem.runIndex(.6);
     }
 
@@ -141,6 +144,7 @@ public class RobotContainer {
 
       // If the shooter has spun up for 1 second, runs the index
       if(shooting && timer.get()>=1) {
+        intakeSystem.runIndex(.6);
         intakeSystem.runIndex(.6);
       }
     }
