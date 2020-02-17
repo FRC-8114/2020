@@ -33,6 +33,5 @@ public class WheelOfMisfortuneSystem extends SubsystemBase{
             armLeft.set(-.1);
             armRight.set(.1);
         }
-
     }
 }

@@ -1,0 +1,4 @@
+To Do:
+ - Make shooting option to spin up shooter first and then shoot a singular ball
+ - Camera Targeting System
+ - Autonomous
