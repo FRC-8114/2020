@@ -59,7 +59,7 @@ public class RobotContainer {
     climberSystem = new ClimberSystem();
 
     // Initializes the various commmands
-    firstMove = new SmoothMove(driveSystem, odometrySystem, 4);
+    firstMove = new SmoothMove(driveSystem, odometrySystem, 2); // In meters
 
     // Initializes others
     timer = new Timer();
