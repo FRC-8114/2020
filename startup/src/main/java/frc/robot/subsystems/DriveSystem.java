@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.XboxController;
 public class DriveSystem extends SubsystemBase {
   private XboxController controllerA;
   
-  private WPI_VictorSPX backLeft, frontLeft, backRight, frontRight, misc;
+  private WPI_VictorSPX backLeft, frontLeft, backRight, frontRight;
   private SpeedControllerGroup left, right;
   private DifferentialDrive driveTrain;
 
