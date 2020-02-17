@@ -107,7 +107,7 @@ public class RobotContainer {
     y2.whenReleased(() -> shooterSystem.setShooterPitch(0));
     
     // Reverses the Index
-    x2.whileHeld(() -> intakeSystem.reverseIndex(.2));
+    x2.whileHeld(() -> intakeSystem.reverseIndex(.4));
     x2.whenReleased(() -> intakeSystem.reverseIndex(0));
 
     // Decreases Shooter Angle
@@ -117,23 +117,29 @@ public class RobotContainer {
   
   public void periodic() {
     // If the left bumper of controllerA is pressed, runs the intake and index
-    /*
-    if(controllerA.getBumper(Hand.kLeft) == true) {
-      intakeSystem.runIntake(.3);
-      intakeSystem.runIndex(.6);
+    if(controllerA.getTriggerAxis(Hand.kLeft) == 1) {
+      intakeSystem.runIntake(1);
     }
-    */
+
+    if(controllerA.getTriggerAxis(Hand.kRight) == 1){
+      intakeSystem.runIndex(.4);
+    }
+
+    if(controllerA.getBumper(Hand.kLeft) == true) {
+      intakeSystem.reverseIntake(1);
+    }
+
+    if(controllerA.getBumper(Hand.kRight) == true) {
+      intakeSystem.reverseIndex(.4);
+    }
   
     // If the right bumper of controllerB is pressed, runs the index
     if(controllerB.getBumper(Hand.kRight) == true) {
-      intakeSystem.runIntake(.8);
-      intakeSystem.runIndex(.6);
+      intakeSystem.runIndex(.4);
     }
 
     // If the left trigger of controllerB is pressed, begins scheduled shoot procedure
     if(controllerB.getTriggerAxis(Hand.kLeft) == 1) {
-      shooting = false;
-
       // If shooting is false, runs the shooter and starts the timer
       if(!shooting) {
         shooterSystem.runShooter(.6);
@@ -144,13 +150,12 @@ public class RobotContainer {
 
       // If the shooter has spun up for 1 second, runs the index
       if(shooting && timer.get()>=1) {
-        intakeSystem.runIndex(.6);
-        intakeSystem.runIndex(.6);
+        intakeSystem.runIndex(.5);
       }
     }
 
     // Ceases the Shooter, Index, Intake, and Timer if the left trigger and right bumper of controllerB are not being pressed
-    if(controllerB.getTriggerAxis(Hand.kLeft) != 1 && controllerB.getBumper(Hand.kRight) != true) {
+    if(controllerA.getBumper(Hand.kLeft) != true && controllerA.getBumper(Hand.kRight) != true && controllerA.getTriggerAxis(Hand.kLeft) != 1 && controllerA.getTriggerAxis(Hand.kRight) != 1 && controllerB.getTriggerAxis(Hand.kLeft) != 1 && controllerB.getBumper(Hand.kRight) != true && controllerB.getBumper(Hand.kLeft) != true) {
       shooterSystem.runShooter(0);
       shooterSystem.runKicker(0);
       intakeSystem.runIndex(0);
