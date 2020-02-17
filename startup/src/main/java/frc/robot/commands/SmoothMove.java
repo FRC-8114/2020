@@ -49,7 +49,7 @@ public class SmoothMove extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double current = odometrySubsystem.GetDistance();
+    double current = odometrySubsystem.getDriveDistance();
     if(current <= 0.5*distance)
       driveSystem.drive(2*(current/distance), 2*(current/distance));
     else if(current <= distance)
@@ -75,7 +75,7 @@ public class SmoothMove extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(odometrySubsystem.GetDistance() >= distance)
+    if(odometrySubsystem.getDriveDistance() >= distance)
       return true;
     return false;
   }

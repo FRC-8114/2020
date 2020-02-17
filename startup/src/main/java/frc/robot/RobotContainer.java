@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.commands.*;
+import frc.robot.commands.commandGroups.*;
 import frc.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj2.command.button.*;
@@ -31,7 +32,7 @@ public class RobotContainer {
   private final CameraSystem cameraSystem;
   private final OdometrySubsystem odometrySystem;
   private final NetworkSystem networkSystem;
-  private final SmoothMove firstMove;
+  private final Autonomous autonomous;
   private final PowerSystem powerSystem;
   private final ShooterSystem shooterSystem;
   private final WheelOfMisfortuneSystem wheelOfMisfortuneSystem;
@@ -59,7 +60,7 @@ public class RobotContainer {
     climberSystem = new ClimberSystem();
 
     // Initializes the various commmands
-    firstMove = new SmoothMove(driveSystem, odometrySystem, 2); // In meters
+    autonomous = new Autonomous(driveSystem, odometrySystem, shooterSystem, intakeSystem); // In meters
 
     // Initializes others
     timer = new Timer();
@@ -189,7 +190,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return firstMove;
+    return autonomous;
   }
 
 

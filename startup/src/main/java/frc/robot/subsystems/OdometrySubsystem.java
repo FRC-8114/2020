@@ -15,8 +15,6 @@ public class OdometrySubsystem extends SubsystemBase {
         leftEncoder.setDistancePerPulse(WheelCircumference(6));
         rightEncoder.setDistancePerPulse(WheelCircumference(6));
         // Configures the encoders to recognize one rotation per circumference length
-
-        GetDistance();
     }
 
     public double InchesToMeters (double inches) {
@@ -27,10 +25,6 @@ public class OdometrySubsystem extends SubsystemBase {
     public double WheelCircumference (double diameter) {
         return Math.PI*InchesToMeters(diameter);
         // Calculates the circumference of the wheel by multiplying pi by the diameter in meters
-    }
-
-    public double GetDistance() {
-        return leftEncoder.getDistance();
     }
 
     public double GetDistancePerPulse() {
