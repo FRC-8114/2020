@@ -93,7 +93,7 @@ public class RobotContainer {
     timer.reset();
 
     // Lowers the Intake Arm
-    a1.whileHeld(() -> wheelOfMisfortuneSystem.retractArm(.25, timer));
+    a1.whileHeld(() -> wheelOfMisfortuneSystem.retractArm(.25, timer, .1));
     a1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
   }
   

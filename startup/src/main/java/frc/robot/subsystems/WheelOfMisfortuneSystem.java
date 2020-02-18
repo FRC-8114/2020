@@ -26,12 +26,17 @@ public class WheelOfMisfortuneSystem extends SubsystemBase{
         armRight.set(speed);
     }
 
-    public void retractArm(double speed, Timer timer) {
+    public void retractArm(double speed, Timer timer, double delay) {
         armLeft.set(speed);
         armRight.set(-speed);
-        if(timer.get() >= .1) {
-            armLeft.set(-.1);
-            armRight.set(.1);
+        double current = timer.get();
+        if(current >= 2*delay) {
+            if (current > 1) {
+                current = 1;
+            }
+            double newspd = timer.get()/2-delay;
+            armLeft.set(-newspd);
+            armRight.set(newspd);
         }
     }
 }
