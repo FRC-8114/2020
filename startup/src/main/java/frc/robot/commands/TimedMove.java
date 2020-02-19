@@ -25,6 +25,7 @@ public class TimedMove extends CommandBase {
     this.leftSpeed = leftSpeed;
     this.rightSpeed = rightSpeed;
     this.odometrySystem = odometrySystem;
+    System.out.println("TimedMove created");
 
     timer = new Timer();
     // Use addRequirements() here to declare subsystem dependencies.
@@ -34,6 +35,7 @@ public class TimedMove extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("TimedMove initalized");
     timer.start();
     odometrySystem.resetDriveEncoders();
   }
@@ -49,6 +51,7 @@ public class TimedMove extends CommandBase {
     } else {
       driveSystem.drive((time-now)*leftSpeed, (time-now)*rightSpeed);
     }
+    System.out.println("Timed move running");
   }
 
   // Called once the command ends or is interrupted.
