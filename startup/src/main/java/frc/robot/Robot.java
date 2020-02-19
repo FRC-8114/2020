@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import frc.robot.commands.SmoothMove;
-import edu.wpi.first.wpilibj.Watchdog;
 import frc.robot.subsystems.*;
 
 
@@ -33,7 +32,6 @@ public class Robot extends TimedRobot {
   //private PowerDistributionPanel pdp;
   private DriveSystem driveSystem;
   private OdometrySubsystem odometrySystem;
-  private static Watchdog watchdog;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -82,7 +80,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    watchdog.disable();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
@@ -102,7 +99,6 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    watchdog.enable();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
