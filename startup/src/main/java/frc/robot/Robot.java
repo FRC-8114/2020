@@ -82,6 +82,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    watchdog.disable();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
