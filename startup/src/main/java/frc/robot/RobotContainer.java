@@ -33,7 +33,7 @@ public class RobotContainer {
   private final OdometrySubsystem odometrySystem;
   private final NetworkSystem networkSystem;
   private final Autonomous autonomous;
-  private final PowerSystem powerSystem;
+  //private final PowerSystem powerSystem;
   private final ShooterSystem shooterSystem;
   private final WheelOfMisfortuneSystem wheelOfMisfortuneSystem;
   private final IntakeSystem intakeSystem;
@@ -47,13 +47,13 @@ public class RobotContainer {
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer(XboxController controllerA, XboxController controllerB, PowerDistributionPanel pdp) {
+  public RobotContainer(XboxController controllerA, XboxController controllerB/*, PowerDistributionPanel pdp*/) {
     // Initializes the various subsystems
     driveSystem = new DriveSystem(controllerA);
     cameraSystem = new CameraSystem();
     odometrySystem = new OdometrySubsystem();
     networkSystem = new NetworkSystem();
-    powerSystem = new PowerSystem(pdp);
+    //powerSystem = new PowerSystem(pdp);
     shooterSystem = new ShooterSystem();
     wheelOfMisfortuneSystem = new WheelOfMisfortuneSystem();
     intakeSystem = new IntakeSystem();
