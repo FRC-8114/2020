@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import frc.robot.commands.SmoothMove;
-import edu.wpi.first.wpilibj.Watchdog;
 import frc.robot.subsystems.*;
 
 
@@ -29,10 +29,9 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer robotContainer;
-  private PowerDistributionPanel pdp;
+  //private PowerDistributionPanel pdp;
   private DriveSystem driveSystem;
   private OdometrySubsystem odometrySystem;
-  private static Watchdog watchdog;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -42,9 +41,9 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     controllerA = new XboxController(0);
     controllerB = new XboxController(1);
-    pdp = new PowerDistributionPanel(0);
+    //pdp = new PowerDistributionPanel(0);
 
-    robotContainer = new RobotContainer(controllerA, controllerB, pdp);
+    robotContainer = new RobotContainer(controllerA, controllerB/*, pdp*/);
 
     m_autonomousCommand = robotContainer.getAutonomousCommand();
   }
@@ -81,7 +80,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    watchdog.disable();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
@@ -92,7 +90,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    m_autonomousCommand.schedule();
+    Scheduler.getInstance().run();
   }
 
   @Override
@@ -101,7 +99,6 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    watchdog.enable();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }

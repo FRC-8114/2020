@@ -12,17 +12,18 @@ public class AutoShoot extends CommandBase {
     private Timer timer;
 
     public AutoShoot(ShooterSystem shooter, IntakeSystem intake, double speed, int balls) {
+        System.out.println("AutoShoot created");
         this.shooter = shooter;
         this.intake = intake;
         this.speed = speed;
         this.balls = balls;
         timer = new Timer();
         addRequirements(shooter, intake);
+        timer.start();
     }
 
     public void initalize() {
-        timer.reset();
-        timer.start();
+        System.out.println("AutoShoot initalized");
         shooter.runShooter(speed);
     }
 
@@ -35,6 +36,7 @@ public class AutoShoot extends CommandBase {
         else if(timer.get() >= 1) {
             intake.runIndex(speed);
         }
+        System.out.println("AutoShoot running||timer.get()=="+ timer.get());
     }
 
     public boolean isFinished() {

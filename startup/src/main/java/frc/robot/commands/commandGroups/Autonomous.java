@@ -6,6 +6,7 @@ import frc.robot.commands.*;
 
 public class Autonomous extends SequentialCommandGroup {
     public Autonomous(DriveSystem driveSystem, OdometrySubsystem odometrySystem, ShooterSystem shooterSystem, IntakeSystem intakeSystem) {
+        System.out.println("Autonomous initialized");
         addCommands(
             // Shoots for the high goal
             new AutoShoot(shooterSystem, intakeSystem, .8, 3),
