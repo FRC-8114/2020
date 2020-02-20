@@ -17,6 +17,7 @@ public class AutoShoot extends CommandBase {
         this.speed = speed;
         this.balls = balls;
         timer = new Timer();
+        addRequirements(shooter, intake);
     }
 
     public void initalize() {
