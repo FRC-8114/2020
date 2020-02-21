@@ -28,6 +28,7 @@ public class AutoShoot extends CommandBase {
     }
 
     public void execute() {
+        shooter.runShooter(speed);
         // If the current time is more than or equal to 1 and the remainder of the current time is less than .5 seconds, stops index
         if(timer.get() >= 1 && timer.get()%2 < .5) {
             intake.runIndex(0);
@@ -40,8 +41,12 @@ public class AutoShoot extends CommandBase {
     }
 
     public boolean isFinished() {
-        if(timer.get() >= balls*2+1)
+        /* if(timer.get() >= balls*2+1) {
             return true;
+        } */
+        if(timer.get() >= 7) {
+            return true;
+        }
         return false;
     }
 }
