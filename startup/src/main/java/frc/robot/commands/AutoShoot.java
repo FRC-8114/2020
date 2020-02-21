@@ -30,7 +30,7 @@ public class AutoShoot extends CommandBase {
     public void execute() {
         shooter.runShooter(speed);
         // If the current time is more than or equal to 1 and the remainder of the current time is less than .5 seconds, stops index
-        if(timer.get() >= 1 && timer.get()%2 < .5) {
+        if(timer.get() >= 1 || timer.get()%2 < .5) {
             intake.runIndex(0);
         }
         // Otherwise if the current time is more than or equal to 1, run the index 
