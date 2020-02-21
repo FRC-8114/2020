@@ -11,7 +11,7 @@ public class AutoCommand extends CommandBase {
 
     Timer timer;
 
-    public AutoCommand(DriveSystem driveSystem, IntakeSystem intakesystem, ShooterSystem shooterSystem) {
+    public AutoCommand(DriveSystem driveSystem, IntakeSystem intakeSystem, ShooterSystem shooterSystem) {
         this.driveSystem = driveSystem;
         this.intakeSystem = intakeSystem;
         this.shooterSystem = shooterSystem;

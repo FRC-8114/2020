@@ -3,14 +3,14 @@ package frc.robot.subsystems;
 //import java.lang.reflect.Array;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.cscore.*;
+// import edu.wpi.first.cameraserver.CameraServer;
+// import edu.wpi.cscore.*;
 import edu.wpi.first.networktables.*;
 
 //import frc.robot.subsystems.NetworkSystem;
 
 //import org.opencv.imgproc.*;
-import org.opencv.core.*;
+// import org.opencv.core.*;
 
 public class CameraSystem extends SubsystemBase{
     private NetworkTableInstance inst;
@@ -91,13 +91,13 @@ public class CameraSystem extends SubsystemBase{
         findDistance(0.0508, 0, (locations[7] - locations[11]), 0);
 
         // In meters
-        double focalLength = 0.0023;
-        double realHeight = 0.0508;
-        double imageHeight = 0; // Temprary
-        double objectHeight = locations[7] - locations[11];
-        double sensorHeight = 0; // Temporary
+        // double focalLength = 0.0023;
+        // double realHeight = 0.0508;
+        // double imageHeight = 0; // Temprary
+        // double objectHeight = locations[7] - locations[11];
+        // double sensorHeight = 0; // Temporary
 
-        double distance = (focalLength * realHeight * imageHeight) / (objectHeight * sensorHeight);
+        //double distance = (focalLength * realHeight * imageHeight) / (objectHeight * sensorHeight);
         
     }
 

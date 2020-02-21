@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj2.command.button.*;
 public class RobotContainer {
   private final DriveSystem driveSystem;
   //private final CameraSystem cameraSystem;
-  private final OdometrySubsystem odometrySystem;
+  //private final OdometrySubsystem odometrySystem;
   //private final NetworkSystem networkSystem;
   private final AutoCommand autonomous;
   //private final PowerSystem powerSystem;
@@ -51,7 +51,7 @@ public class RobotContainer {
     // Initializes the various subsystems
     driveSystem = new DriveSystem(controllerA);
     //cameraSystem = new CameraSystem();
-    odometrySystem = new OdometrySubsystem();
+    //odometrySystem = new OdometrySubsystem();
     //networkSystem = new NetworkSystem();
     //powerSystem = new PowerSystem(pdp);
     shooterSystem = new ShooterSystem();
