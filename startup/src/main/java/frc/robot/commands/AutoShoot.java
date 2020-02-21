@@ -23,8 +23,6 @@ public class AutoShoot extends CommandBase {
     }
 
     public void initalize() {
-        System.out.println("AutoShoot initalized");
-        shooter.runShooter(speed);
     }
 
     public void execute() {
