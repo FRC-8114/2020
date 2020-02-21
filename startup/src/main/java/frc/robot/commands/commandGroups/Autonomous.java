@@ -11,7 +11,7 @@ public class Autonomous extends SequentialCommandGroup {
             // Shoots for the high goal
             new AutoShoot(shooterSystem, intakeSystem, .8, 3),
             // Moves away from the initiation line
-            new TimedMove(driveSystem, odometrySystem, 0.8, -.75, -.75)
+            new TimedMove(driveSystem, /*odometrySystem,*/ 0.8, -.75, -.75)
         );
       }
 }

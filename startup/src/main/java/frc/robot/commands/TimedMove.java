@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Timer;
 public class TimedMove extends CommandBase {
   private final DriveSystem driveSystem;
 
-  private final OdometrySubsystem odometrySystem;
+  //private final OdometrySubsystem odometrySystem;
 
   private Timer timer;
 
@@ -19,17 +19,17 @@ public class TimedMove extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public TimedMove(DriveSystem driveSystem, OdometrySubsystem odometrySystem, double time, double leftSpeed, double rightSpeed) {
+  public TimedMove(DriveSystem driveSystem/*, OdometrySubsystem odometrySystem*/, double time, double leftSpeed, double rightSpeed) {
     this.driveSystem = driveSystem;
     this.time = time;
     this.leftSpeed = leftSpeed;
     this.rightSpeed = rightSpeed;
-    this.odometrySystem = odometrySystem;
+    //this.odometrySystem = odometrySystem;
     System.out.println("TimedMove created");
 
     timer = new Timer();
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(driveSystem, odometrySystem);
+    addRequirements(driveSystem/*, odometrySystem*/);
   }
 
   // Called when the command is initially scheduled.
@@ -37,7 +37,7 @@ public class TimedMove extends CommandBase {
   public void initialize() {
     System.out.println("TimedMove initalized");
     timer.start();
-    odometrySystem.resetDriveEncoders();
+    //odometrySystem.resetDriveEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -64,7 +64,7 @@ public class TimedMove extends CommandBase {
   @Override
   public boolean isFinished() {
     if(timer.get() >= time) {
-        System.out.println("The current speed is: " + odometrySystem.getDriveDistance() / time);
+        //System.out.println("The current speed is: " + odometrySystem.getDriveDistance() / time);
         return true;
     }
     return false;
