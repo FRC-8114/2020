@@ -19,7 +19,7 @@ public class AutoCommand extends CommandBase {
         timer = new Timer();
     }
 
-    public void initalize() {
+    public void initialize() {
         timer.start();
         timer.reset();
         driveSystem.drive(0, 0);
