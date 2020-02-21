@@ -12,9 +12,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import frc.robot.commands.SmoothMove;
-import frc.robot.subsystems.*;
+//mport edu.wpi.first.wpilibj.PowerDistributionPanel;
+//import frc.robot.subsystems.*;
 
 
 /**
@@ -30,8 +29,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer robotContainer;
   //private PowerDistributionPanel pdp;
-  private DriveSystem driveSystem;
-  private OdometrySubsystem odometrySystem;
+  //private OdometrySubsystem odometrySystem;
 
   /**
    * This function is run when the robot is first started up and should be used for any

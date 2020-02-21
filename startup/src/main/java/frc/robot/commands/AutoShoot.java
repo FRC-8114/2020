@@ -8,15 +8,15 @@ public class AutoShoot extends CommandBase {
     private ShooterSystem shooter;
     private IntakeSystem intake;
     private double speed;
-    private int balls;
+    //private int balls;
     private Timer timer;
 
-    public AutoShoot(ShooterSystem shooter, IntakeSystem intake, double speed, int balls) {
+    public AutoShoot(ShooterSystem shooter, IntakeSystem intake, double speed/*, int balls*/) {
         System.out.println("AutoShoot created");
         this.shooter = shooter;
         this.intake = intake;
         this.speed = speed;
-        this.balls = balls;
+        //this.balls = balls;
         timer = new Timer();
         addRequirements(shooter, intake);
         timer.start();

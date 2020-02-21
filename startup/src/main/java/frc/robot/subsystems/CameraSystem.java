@@ -1,15 +1,15 @@
 package frc.robot.subsystems;
 
-import java.lang.reflect.Array;
+//import java.lang.reflect.Array;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.cscore.*;
 import edu.wpi.first.networktables.*;
 
-import frc.robot.subsystems.NetworkSystem;
+//import frc.robot.subsystems.NetworkSystem;
 
-import org.opencv.imgproc.*;
+//import org.opencv.imgproc.*;
 import org.opencv.core.*;
 
 public class CameraSystem extends SubsystemBase{
@@ -22,7 +22,7 @@ public class CameraSystem extends SubsystemBase{
     /*
     * Temp
     */
-    private double[] minPos = new double[2], maxPos = new double[2];
+    //private double[] minPos = new double[2], maxPos = new double[2];
 
     public CameraSystem() {
         inst = NetworkTableInstance.getDefault();
@@ -31,10 +31,10 @@ public class CameraSystem extends SubsystemBase{
         points = table.getEntry("points");
         locations = new double[12];
 
-        minPos = table.getEntry("minPos").getDoubleArray(new double[2]);
-        maxPos = table.getEntry("maxPos").getDoubleArray(new double[2]);
+        //minPos = table.getEntry("minPos").getDoubleArray(new double[2]);
+        //maxPos = table.getEntry("maxPos").getDoubleArray(new double[2]);
 
-        new Thread(() -> {
+        /* new Thread(() -> {
             UsbCamera mainCamera = CameraServer.getInstance().startAutomaticCapture();
             CvSink cvSink = CameraServer.getInstance().getVideo();
             CvSource outputStream = CameraServer.getInstance().putVideo("Source", 320, 240);
@@ -47,7 +47,7 @@ public class CameraSystem extends SubsystemBase{
                 }
                 outputStream.putFrame(source);
             }
-        }).start();
+        }).start(); */
     }
 
     public void assignPoints() {

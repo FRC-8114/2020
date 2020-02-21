@@ -8,18 +8,18 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
+//import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
 
+//import frc.robot.commands.*;
 import frc.robot.commands.*;
-import frc.robot.commands.commandGroups.*;
 import frc.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj2.command.button.*;
-import edu.wpi.first.wpilibj.XboxController.*;
+//import edu.wpi.first.wpilibj.XboxController.*;
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -29,9 +29,9 @@ import edu.wpi.first.wpilibj.XboxController.*;
 
 public class RobotContainer {
   private final DriveSystem driveSystem;
-  private final CameraSystem cameraSystem;
+  //private final CameraSystem cameraSystem;
   private final OdometrySubsystem odometrySystem;
-  private final NetworkSystem networkSystem;
+  //private final NetworkSystem networkSystem;
   private final Autonomous autonomous;
   //private final PowerSystem powerSystem;
   private final ShooterSystem shooterSystem;
@@ -50,9 +50,9 @@ public class RobotContainer {
   public RobotContainer(XboxController controllerA, XboxController controllerB/*, PowerDistributionPanel pdp*/) {
     // Initializes the various subsystems
     driveSystem = new DriveSystem(controllerA);
-    cameraSystem = new CameraSystem();
+    //cameraSystem = new CameraSystem();
     odometrySystem = new OdometrySubsystem();
-    networkSystem = new NetworkSystem();
+    //networkSystem = new NetworkSystem();
     //powerSystem = new PowerSystem(pdp);
     shooterSystem = new ShooterSystem();
     wheelOfMisfortuneSystem = new WheelOfMisfortuneSystem();
