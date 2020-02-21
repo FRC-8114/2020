@@ -19,27 +19,24 @@ public class AutoShoot extends CommandBase {
         //this.balls = balls;
         timer = new Timer();
         addRequirements(shooter, intake);
-        timer.start();
     }
 
     public void initialize() {
-        System.out.println("Initialized time for Auto Shoot is = " + timer.get());
+        timer.start();
     } 
 
     public void execute() {
         shooter.runShooter(speed);
         System.out.println("Current time for Auto Shoot = "+timer.get());
-        // If the current time is more than or equal to 1 and the remainder of the current time is less than .5 seconds, stops index
         if(timer.get() <= 1) {
             intake.runIndex(0);
         }
-        // Otherwise if the current time is more than or equal to 1, run the index 
         else {
             intake.runIndex(speed);
         }
     }
 
-    public void end() {
+    public void end(boolean interrupted) {
         intake.runIndex(0);
         shooter.runShooter(0);
     }
