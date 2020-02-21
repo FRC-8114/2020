@@ -32,7 +32,7 @@ public class RobotContainer {
   //private final CameraSystem cameraSystem;
   private final OdometrySubsystem odometrySystem;
   //private final NetworkSystem networkSystem;
-  private final Autonomous autonomous;
+  private final AutoCommand autonomous;
   //private final PowerSystem powerSystem;
   private final ShooterSystem shooterSystem;
   private final WheelOfMisfortuneSystem wheelOfMisfortuneSystem;
@@ -60,7 +60,7 @@ public class RobotContainer {
     climberSystem = new ClimberSystem();
 
     // Initializes the various commmands
-    autonomous = new Autonomous(driveSystem, odometrySystem, shooterSystem, intakeSystem); // In meters
+    autonomous = new AutoCommand(driveSystem, intakeSystem, shooterSystem); // In meters
 
     // Initializes others
     timer = new Timer();
