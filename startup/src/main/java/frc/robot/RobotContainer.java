@@ -174,8 +174,8 @@ public class RobotContainer {
       climberSystem.retractClimber(.2);
 
     // Ceases the extension or retraction of the Intake Arm if the Up or Down Arrows of the DPad are not being pressed on controllerB
-    if((controllerB.getPOV() != 360 && controllerB.getPOV() != 0) && controllerB.getPOV() != 180)
-      wheelOfMisfortuneSystem.extendArm(0);
+    if(controllerB.getPOV() != 0 && controllerB.getPOV() != 180)
+      climberSystem.extendClimber(0);
   
     // Runs the shooter if the left bumper of controllerB is pressed
     if(controllerB.getBumper(Hand.kLeft) == true) {

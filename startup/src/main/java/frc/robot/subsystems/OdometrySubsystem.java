@@ -28,7 +28,11 @@ public class OdometrySubsystem extends SubsystemBase {
     }
 
     public double GetDistancePerPulse() {
-        return leftEncoder.getDistancePerPulse();
+        return (leftEncoder.getDistancePerPulse() + rightEncoder.getDistancePerPulse()) / 2.;
+    }
+
+    public double GetSpeed() {
+        return (leftEncoder.getRate() + rightEncoder.getRate()) / 2.;
     }
 
     public void resetDriveEncoders() {
