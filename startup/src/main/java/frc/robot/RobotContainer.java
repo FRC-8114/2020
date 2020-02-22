@@ -158,7 +158,7 @@ public class RobotContainer {
     if(controllerB.getBumper(Hand.kLeft) == true) {
       shooterSystem.runShooter(.6);
     }
-  }
+  
   if(controllerB.getTriggerAxis(Hand.kRight) != 1 && controllerB.getBumper(Hand.kRight) != true) {
     shooterSystem.runShooter(0);
     shooterSystem.runKicker(0);
