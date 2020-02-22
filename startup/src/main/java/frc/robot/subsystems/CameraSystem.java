@@ -34,7 +34,7 @@ public class CameraSystem extends SubsystemBase{
         //minPos = table.getEntry("minPos").getDoubleArray(new double[2]);
         //maxPos = table.getEntry("maxPos").getDoubleArray(new double[2]);
 
-        /* new Thread(() -> {
+        new Thread(() -> {
             UsbCamera mainCamera = CameraServer.getInstance().startAutomaticCapture();
             CvSink cvSink = CameraServer.getInstance().getVideo();
             CvSource outputStream = CameraServer.getInstance().putVideo("Source", 320, 240);
@@ -47,7 +47,7 @@ public class CameraSystem extends SubsystemBase{
                 }
                 outputStream.putFrame(source);
             }
-        }).start(); */
+        }).start(); 
     }
 
     public void assignPoints() {
@@ -91,13 +91,13 @@ public class CameraSystem extends SubsystemBase{
         findDistance(0.0508, 0, (locations[7] - locations[11]), 0);
 
         // In meters
-        double focalLength = 0.0023;
-        double realHeight = 0.0508;
-        double imageHeight = 0; // Temprary
-        double objectHeight = locations[7] - locations[11];
-        double sensorHeight = 0; // Temporary
+        // double focalLength = 0.0023;
+        // double realHeight = 0.0508;
+        // double imageHeight = 0; // Temprary
+        // double objectHeight = locations[7] - locations[11];
+        // double sensorHeight = 0; // Temporary
 
-        double distance = (focalLength * realHeight * imageHeight) / (objectHeight * sensorHeight);
+        //double distance = (focalLength * realHeight * imageHeight) / (objectHeight * sensorHeight);
         
     }
 

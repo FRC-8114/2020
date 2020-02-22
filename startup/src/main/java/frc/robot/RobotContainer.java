@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj2.command.button.*;
 
 public class RobotContainer {
   private final DriveSystem driveSystem;
-  //private final CameraSystem cameraSystem;
+  private final CameraSystem cameraSystem;
   private final OdometrySubsystem odometrySystem;
   //private final NetworkSystem networkSystem;
   private final Autonomous autonomous;
@@ -50,7 +50,7 @@ public class RobotContainer {
   public RobotContainer(XboxController controllerA, XboxController controllerB/*, PowerDistributionPanel pdp*/) {
     // Initializes the various subsystems
     driveSystem = new DriveSystem(controllerA);
-    //cameraSystem = new CameraSystem();
+    cameraSystem = new CameraSystem();
     odometrySystem = new OdometrySubsystem();
     //networkSystem = new NetworkSystem();
     //powerSystem = new PowerSystem(pdp);
@@ -108,7 +108,7 @@ public class RobotContainer {
     y2.whenReleased(() -> shooterSystem.setShooterPitch(0));
     
     // Reverses the Index
-    x2.whileHeld(() -> intakeSystem.reverseIndex(.4));
+    x2.whileHeld(() -> intakeSystem.reverseIndex(.6));
     x2.whenReleased(() -> intakeSystem.reverseIndex(0));
 
     // Decreases Shooter Angle
@@ -123,7 +123,7 @@ public class RobotContainer {
     }
 
     if(controllerA.getTriggerAxis(Hand.kRight) == 1){
-      intakeSystem.runIndex(.4);
+      intakeSystem.runIndex(.65);
     }
 
     if(controllerA.getBumper(Hand.kLeft) == true) {
@@ -131,7 +131,7 @@ public class RobotContainer {
     }
 
     if(controllerA.getBumper(Hand.kRight) == true) {
-      intakeSystem.reverseIndex(.4);
+      intakeSystem.reverseIndex(.65);
     }
   
     // If the right bumper of controllerB is pressed, runs the index
@@ -143,7 +143,7 @@ public class RobotContainer {
     if(controllerB.getTriggerAxis(Hand.kLeft) == 1) {
       // If shooting is false, runs the shooter and starts the timer
       if(!shooting) {
-        shooterSystem.runShooter(.6);
+        shooterSystem.runShooter(.8);
         timer.reset();
         timer.start();
         shooting = true;
@@ -179,7 +179,7 @@ public class RobotContainer {
   
     // Runs the shooter if the left bumper of controllerB is pressed
     if(controllerB.getBumper(Hand.kLeft) == true) {
-      shooterSystem.runShooter(.75);
+      shooterSystem.runShooter(.8);
     }
   }
 

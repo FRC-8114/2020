@@ -45,7 +45,7 @@ public class AutoShoot extends CommandBase {
         /* if(timer.get() >= balls*2+1) {
             return true;
         } */
-        if(timer.get() >= 7) {
+        if(timer.get() >= 3) {
             return true;
         }
         return false;
