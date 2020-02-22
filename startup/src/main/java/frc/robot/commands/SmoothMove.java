@@ -11,6 +11,7 @@ import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.OdometrySubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Encoder;
 
 /**
  * An example command that uses an example subsystem.
@@ -20,9 +21,11 @@ public class SmoothMove extends CommandBase {
   private final DriveSystem driveSystem;
   private OdometrySubsystem odometrySubsystem;
 
+  private Encoder left_encoder, right_encoder;
+
   private Timer timer;
 
-  double distance;
+  private double distance;
 
   /**
    * Creates a new ExampleCommand.
@@ -36,6 +39,8 @@ public class SmoothMove extends CommandBase {
     this.distance = distance;
 
     timer = new Timer();
+    left_encoder = new Encoder(0,1);
+    right_encoder = new Encoder(2,3);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveSystem);
   }
@@ -50,6 +55,7 @@ public class SmoothMove extends CommandBase {
   @Override
   public void execute() {
     double current = odometrySubsystem.getDriveDistance();
+    System.out.println("Current encoder count is = " + current);
     if(current <= 0.5*distance)
       driveSystem.drive(2*(current/distance), 2*(current/distance));
     else if(current <= distance)
