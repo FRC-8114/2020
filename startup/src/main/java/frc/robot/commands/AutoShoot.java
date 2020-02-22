@@ -22,20 +22,27 @@ public class AutoShoot extends CommandBase {
         timer.start();
     }
 
-    public void initalize() {
-    }
+    public void initialize() {
+        System.out.println("Initialized time for Auto Shoot is = " + timer.get());
+        timer.reset();
+    } 
 
     public void execute() {
         shooter.runShooter(speed);
+        System.out.println("Current time for Auto Shoot = "+timer.get());
         // If the current time is more than or equal to 1 and the remainder of the current time is less than .5 seconds, stops index
-        if(timer.get() >= 1 || timer.get()%2 < .5) {
+        if(timer.get() <= 1) {
             intake.runIndex(0);
         }
         // Otherwise if the current time is more than or equal to 1, run the index 
-        else if(timer.get() >= 1) {
+        else {
             intake.runIndex(speed);
         }
-        System.out.println("AutoShoot running||timer.get()=="+ timer.get());
+    }
+
+    public void end() {
+        intake.runIndex(0);
+        shooter.runShooter(0);
     }
 
     public boolean isFinished() {

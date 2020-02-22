@@ -49,7 +49,6 @@ public class TimedMove extends CommandBase {
     } else {
       driveSystem.drive((time-now)*leftSpeed, (time-now)*rightSpeed);
     }
-    System.out.println("Timed move running");
   }
 
   // Called once the command ends or is interrupted.
