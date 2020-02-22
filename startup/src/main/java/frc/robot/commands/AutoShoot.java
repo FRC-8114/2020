@@ -24,7 +24,6 @@ public class AutoShoot extends CommandBase {
 
     public void initialize() {
         System.out.println("Initialized time for Auto Shoot is = " + timer.get());
-        timer.reset();
     } 
 
     public void execute() {
