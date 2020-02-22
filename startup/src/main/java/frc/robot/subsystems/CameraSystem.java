@@ -1,27 +1,21 @@
 package frc.robot.subsystems;
 
-//import java.lang.reflect.Array;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.cscore.*;
 import edu.wpi.first.networktables.*;
 
+//import edu.wpi.first.cameraserver.CameraServer;
+//import edu.wpi.cscore.*;
+//import org.opencv.core.*;
 //import frc.robot.subsystems.NetworkSystem;
-
+//import java.lang.reflect.Array;
 //import org.opencv.imgproc.*;
-import org.opencv.core.*;
 
 public class CameraSystem extends SubsystemBase{
     private NetworkTableInstance inst;
-    private NetworkTable table;
     private NetworkTableEntry points;
-
+    private NetworkTable table;
     private double[] locations;
 
-    /*
-    * Temp
-    */
     //private double[] minPos = new double[2], maxPos = new double[2];
 
     public CameraSystem() {
