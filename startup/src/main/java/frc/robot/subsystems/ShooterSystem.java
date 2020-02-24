@@ -14,7 +14,6 @@ public class ShooterSystem extends SubsystemBase{
         shooterPitch = new WPI_VictorSPX(9);
         kicker = new WPI_VictorSPX(14);
         shooterRunning = false;
-        System.out.println("Shooter Subsytem created.");
     }
 
     /**
@@ -23,7 +22,6 @@ public class ShooterSystem extends SubsystemBase{
      * @param speed    the speed at which to run the motor
      */
     public void setShooterPitch(double speed) {
-        System.out.println("ShooterSystem: shooterPitch speed set to "+ speed +".");
         shooterPitch.set(speed);
     }
 

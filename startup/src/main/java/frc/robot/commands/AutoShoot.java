@@ -12,7 +12,6 @@ public class AutoShoot extends CommandBase {
     private Timer timer;
 
     public AutoShoot(ShooterSystem shooter, IntakeSystem intake, double speed/*, int balls*/) {
-        System.out.println("AutoShoot created");
         this.shooter = shooter;
         this.intake = intake;
         this.speed = speed;
@@ -27,7 +26,6 @@ public class AutoShoot extends CommandBase {
 
     public void execute() {
         shooter.runShooter(speed);
-        System.out.println("Current time for Auto Shoot = "+timer.get());
         if(timer.get() <= 1) {
             intake.runIndex(0);
         }

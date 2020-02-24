@@ -17,6 +17,10 @@ public class IntakeBalls extends CommandBase {
         intake.runIndex(speed);
     }
 
+    public void execute() {
+        
+    }
+
     public void end() {
         intake.runIntake(0);
         intake.runIndex(0);
