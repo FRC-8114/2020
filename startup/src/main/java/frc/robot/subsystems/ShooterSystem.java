@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSystem extends SubsystemBase{
-    private WPI_VictorSPX shooterLeft, shooterRight, shooterPitch, /*kicker*/;
+    private WPI_VictorSPX shooterLeft, shooterRight, shooterPitch/*, kicker*/;
     private boolean shooterRunning;
 
     public ShooterSystem() {
