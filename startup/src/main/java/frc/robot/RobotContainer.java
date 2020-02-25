@@ -40,7 +40,7 @@ public class RobotContainer {
   private final ClimberSystem climberSystem;
 
   private final XboxController controllerA,controllerB;
-  private static JoystickButton a1, a2, x1, x2, y1, y2;
+  private static JoystickButton a1, a2, x1, x2, y1, y2, lb1, rb1, lb2, rb2;
   private static Timer timer;
   private static boolean shooting;
 
@@ -83,7 +83,9 @@ public class RobotContainer {
     a1 = new JoystickButton(controllerA, 1);
     x1 = new JoystickButton(controllerA, 3);
     y1 = new JoystickButton(controllerA, 4);
-  
+    lb1 = new JoystickButton(controllerA, 5);
+    rb1 = new JoystickButton(controllerA, 6);
+
     // Raises the Intake Arm
     y1.whileHeld(() -> wheelOfMisfortuneSystem.extendArm(.4));
     y1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
@@ -95,6 +97,14 @@ public class RobotContainer {
     // Lowers the Intake Arm
     a1.whileHeld(() -> wheelOfMisfortuneSystem.retractArm(.25, .1));
     a1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
+
+    // Reverses the intake
+    lb1.whileHeld(() -> intakeSystem.runIntake(-1));
+    lb1.whenReleased(() -> intakeSystem.runIntake(0));
+
+    // Reverses the index
+    rb1.whileHeld(() -> intakeSystem.runIndex(-.65));
+    rb1.whenReleased(() -> intakeSystem.runIndex(0));
   }
   
   public void controllerB_configureButtonBindings() {
@@ -102,6 +112,8 @@ public class RobotContainer {
     a2 = new JoystickButton(controllerB, 1);
     x2 = new JoystickButton(controllerB, 3);
     y2 = new JoystickButton(controllerB, 4);  
+    lb2 = new JoystickButton(controllerB, 5);
+    rb2 = new JoystickButton(controllerB, 6);
 
     // Increases Shooter Angle
     y2.whileHeld(() -> shooterSystem.setShooterPitch(.2));
@@ -114,6 +126,14 @@ public class RobotContainer {
     // Decreases Shooter Angle
     a2.whileHeld(() -> shooterSystem.setShooterPitch(-.2));
     a2.whenReleased(() -> shooterSystem.setShooterPitch(0));
+
+    // Runs the shooter
+    lb2.whileHeld(() -> shooterSystem.runShooter(.8));
+    lb2.whenReleased(() -> shooterSystem.runShooter(0));
+
+    // Runs the index
+    rb2.whileHeld(() -> intakeSystem.runIndex(.65));
+    rb2.whenReleased(() -> intakeSystem.runIndex(0));
   }
   
   public void periodic() {
@@ -124,19 +144,6 @@ public class RobotContainer {
 
     if(controllerA.getTriggerAxis(Hand.kRight) == 1){
       intakeSystem.runIndex(.65);
-    }
-
-    if(controllerA.getBumper(Hand.kLeft) == true) {
-      intakeSystem.reverseIntake(1);
-    }
-
-    if(controllerA.getBumper(Hand.kRight) == true) {
-      intakeSystem.reverseIndex(.65);
-    }
-  
-    // If the right bumper of controllerB is pressed, runs the index
-    if(controllerB.getBumper(Hand.kRight) == true) {
-      intakeSystem.runIndex(.4);
     }
 
     // If the left trigger of controllerB is pressed, begins scheduled shoot procedure
@@ -156,7 +163,7 @@ public class RobotContainer {
     }
 
     // Ceases the Shooter, Index, Intake, and Timer if the left trigger and right bumper of controllerB are not being pressed
-    if(controllerA.getBumper(Hand.kLeft) != true && controllerA.getBumper(Hand.kRight) != true && controllerA.getTriggerAxis(Hand.kLeft) != 1 && controllerA.getTriggerAxis(Hand.kRight) != 1 && controllerB.getTriggerAxis(Hand.kLeft) != 1 && controllerB.getBumper(Hand.kRight) != true && controllerB.getBumper(Hand.kLeft) != true) {
+    if(true && controllerA.getTriggerAxis(Hand.kLeft) != 1 && controllerA.getTriggerAxis(Hand.kRight) != 1 && controllerB.getTriggerAxis(Hand.kLeft) != 1) {
       shooterSystem.runShooter(0);
       shooterSystem.runKicker(0);
       intakeSystem.runIndex(0);
