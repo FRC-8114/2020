@@ -39,7 +39,7 @@ public class DriveSystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    driveTrain.tankDrive(-.9*Math.floor(controllerA.getY(Hand.kLeft)*100)/100, -Math.floor(controllerA.getY(Hand.kRight)*100)/100, false);
+    driveTrain.tankDrive(-Math.floor(controllerA.getY(Hand.kLeft)*100)/100, -Math.floor(controllerA.getY(Hand.kRight)*100)/100, false);
   }
 
   public void drive(double left, double right) {

@@ -5,19 +5,18 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.*;
 import edu.wpi.cscore.*;
 import org.opencv.core.*;
-//import frc.robot.subsystems.NetworkSystem;
-//import java.lang.reflect.Array;
-//import org.opencv.imgproc.*;
 
 public class CameraSystem extends SubsystemBase{
     private NetworkTableInstance inst;
     private NetworkTableEntry points;
     private NetworkTable table;
     private double[] locations;
+    private GripPipeline gripPipeline;
 
     //private double[] minPos = new double[2], maxPos = new double[2];
 
     public CameraSystem() {
+        gripPipeline = new GripPipeline();
         inst = NetworkTableInstance.getDefault();
         table = inst.getTable("");
 
@@ -38,9 +37,10 @@ public class CameraSystem extends SubsystemBase{
                 if (cvSink.grabFrame(source)==0) {
                     continue;
                 }
-                outputStream.putFrame(source);
+                gripPipeline.process(source);
+                outputStream.putFrame(gripPipeline.cvRectangleOutput());
             }
-        }).start(); 
+        }).start();
     }
 
     public void assignPoints() {
@@ -122,3 +122,4 @@ new Thread(() -> {
             }
         }).start();
 */
+

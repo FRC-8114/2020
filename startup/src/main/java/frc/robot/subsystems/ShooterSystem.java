@@ -12,7 +12,6 @@ public class ShooterSystem extends SubsystemBase{
         shooterLeft = new WPI_VictorSPX(10);
         shooterRight = new WPI_VictorSPX(11);
         shooterPitch = new WPI_VictorSPX(9);
-        //kicker = new WPI_VictorSPX(14);
         shooterRunning = false;
     }
 
@@ -38,16 +37,6 @@ public class ShooterSystem extends SubsystemBase{
         else
             shooterRunning = false;
     }
-
-    /**
-     * Sets the kickers speed
-     * 
-     * @param speed     the speed to run the kicker at
-     */
-    /* public void runKicker(double speed) {
-        kicker.set(speed);
-    } */
-
     
     public boolean isShooterRunning() {
         return shooterRunning;

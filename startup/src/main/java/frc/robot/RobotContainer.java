@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj.GenericHID;
 //import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
@@ -40,7 +42,8 @@ public class RobotContainer {
   private final ClimberSystem climberSystem;
 
   private final XboxController controllerA,controllerB;
-  private static JoystickButton a1, a2, x1, x2, y1, y2;
+  private static JoystickButton a1, a2, x1, x2, y1, y2, lb1, rb1, lb2, rb2;
+  private static Trigger rt1, rt2, lt1, lt2;
   private static Timer timer;
   private static boolean shooting;
 
@@ -84,7 +87,22 @@ public class RobotContainer {
     a1 = new JoystickButton(controllerA, 1);
     x1 = new JoystickButton(controllerA, 3);
     y1 = new JoystickButton(controllerA, 4);
-  
+    lb1 = new JoystickButton(controllerA, 5);
+    rb1 = new JoystickButton(controllerA, 6);
+    lt1 = new Trigger(new BooleanSupplier() {
+      @Override
+      public boolean getAsBoolean() {
+        return controllerA.getTriggerAxis(Hand.kLeft) == 1;
+      }});
+    rt1 = new Trigger(new BooleanSupplier() {
+      @Override
+      public boolean getAsBoolean() {
+        return controllerA.getTriggerAxis(Hand.kRight) == 1;
+      }});
+
+    lt1.whenActive(() -> intakeSystem.runIntake(1)).whenInactive(() -> intakeSystem.runIntake(0));
+    rt1.whenActive(() -> intakeSystem.runIndex(.65)).whenInactive(() -> intakeSystem.runIndex(0));
+    
     // Raises the Intake Arm
     y1.whileHeld(() -> wheelOfMisfortuneSystem.extendArm(.4));
     y1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
@@ -95,6 +113,14 @@ public class RobotContainer {
     // Lowers the Intake Arm
     a1.whileHeld(() -> wheelOfMisfortuneSystem.retractArm(.25, .1));
     a1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
+
+    // Reverses the intake
+    lb1.whileHeld(() -> intakeSystem.runIntake(-1));
+    lb1.whenReleased(() -> intakeSystem.runIntake(0));
+
+    // Reverses the index
+    rb1.whileHeld(() -> intakeSystem.runIndex(-.65));
+    rb1.whenReleased(() -> intakeSystem.runIndex(0));
   }
   
   public void controllerB_configureButtonBindings() {
@@ -102,7 +128,19 @@ public class RobotContainer {
     a2 = new JoystickButton(controllerB, 1);
     x2 = new JoystickButton(controllerB, 3);
     y2 = new JoystickButton(controllerB, 4);  
-
+    lb2 = new JoystickButton(controllerB, 5);
+    rb2 = new JoystickButton(controllerB, 6);
+    /* lt2 = new Trigger(new BooleanSupplier() {
+      @Override
+      public boolean getAsBoolean() {
+        return controllerA.getTriggerAxis(Hand.kLeft) == 1;
+      }});
+    rt2 = new Trigger(new BooleanSupplier() {
+      @Override
+      public boolean getAsBoolean() {
+        return controllerA.getTriggerAxis(Hand.kRight) == 1;
+      }}); */
+    
     // Increases Shooter Angle
     y2.whileHeld(() -> shooterSystem.setShooterPitch(.2));
     y2.whenReleased(() -> shooterSystem.setShooterPitch(0));
@@ -114,59 +152,30 @@ public class RobotContainer {
     // Decreases Shooter Angle
     a2.whileHeld(() -> shooterSystem.setShooterPitch(-.2));
     a2.whenReleased(() -> shooterSystem.setShooterPitch(0));
+
+    // Runs the shooter
+    lb2.whileHeld(() -> shooterSystem.runShooter(.8));
+    lb2.whenReleased(() -> shooterSystem.runShooter(0));
+
+    // Runs the index
+    rb2.whileHeld(() -> intakeSystem.runIndex(.65));
+    rb2.whenReleased(() -> intakeSystem.runIndex(0));
   }
   
   public void periodic() {
-    // Intake
-    if(controllerA.getTriggerAxis(Hand.kLeft) == 1) {
-      intakeSystem.runIntake(1);
-    }
-    else if(controllerA.getBumper(Hand.kLeft) == true) {
-      intakeSystem.reverseIntake(1);
-    }
-    else {
-      intakeSystem.runIntake(0);
-    }
-
-    // Index
-    if(controllerA.getTriggerAxis(Hand.kRight) == 1){
-      intakeSystem.runIndex(.65);
-    }
-    else if(controllerA.getBumper(Hand.kRight) == true) {
-      intakeSystem.reverseIndex(.65);
-    }
-    else if(controllerB.getBumper(Hand.kRight) == true) {
-      intakeSystem.runIndex(.65);
-    }
-    else {
-      intakeSystem.runIndex(0);
-    }
-
-    // Shooter
+    /* // If the left trigger of controllerB is pressed, begins scheduled shoot procedure
     if(controllerB.getTriggerAxis(Hand.kLeft) == 1) {
       if(!shooting) {
         shooterSystem.runShooter(.8);
         timer.start();
         shooting = true;
       }
-    }
-    else if(controllerB.getBumper(Hand.kLeft) == true) {
-      shooterSystem.runShooter(.8);
-    }
-    else {
-      shooterSystem.runShooter(0);
-    }
 
-    // Timer
-    if(timer.get()>=1) {
-      intakeSystem.runIndex(.5);
-    }
-    else if (timer.get() >= 5) {
-      intakeSystem.runIndex(0);
-      timer.stop();
-      timer.reset();
-      shooting = false;
-    }
+      // If the shooter has spun up for 1 second, runs the index
+      if(shooting && timer.get()>=1) {
+        intakeSystem.runIndex(.5);
+      }
+    } */
   
     // DPad
     if(controllerB.getPOV()==360 || controllerB.getPOV()==0) {
