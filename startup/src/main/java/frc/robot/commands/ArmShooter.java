@@ -17,6 +17,10 @@ public class ArmShooter extends CommandBase {
             shooter.runShooter(1);
     }
 
+    public void execute() {
+        
+    }
+
     public boolean isFinished() {
         return true;
     }

@@ -57,5 +57,10 @@ public class WheelOfMisfortuneSystem extends SubsystemBase{
             armLeft.set(-newspd);
             armRight.set(newspd);
         }
+
+        if (current > 4) {
+            timer.stop();
+            timer.reset();
+        }
     }
 }

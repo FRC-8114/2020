@@ -66,6 +66,7 @@ public class RobotContainer {
     timer = new Timer();
     this.controllerA = controllerA;
     this.controllerB = controllerB;
+    shooting = false;
 
     // Configure the button bindings for the two controllers
     controllerA_configureButtonBindings();
@@ -90,7 +91,6 @@ public class RobotContainer {
 
     // Runs the Color Spinner
     x1.whileHeld(() -> wheelOfMisfortuneSystem.runSpinner(.6)).whenReleased(() -> wheelOfMisfortuneSystem.runSpinner(0));
-    timer.reset();
 
     // Lowers the Intake Arm
     a1.whileHeld(() -> wheelOfMisfortuneSystem.retractArm(.25, .1));
@@ -117,60 +117,66 @@ public class RobotContainer {
   }
   
   public void periodic() {
-    // If the left bumper of controllerA is pressed, runs the intake and index
+    // Intake
     if(controllerA.getTriggerAxis(Hand.kLeft) == 1) {
       intakeSystem.runIntake(1);
-    } else if(controllerA.getTriggerAxis(Hand.kRight) == 1){
-      intakeSystem.runIndex(.65);
-    } else if(controllerA.getBumper(Hand.kLeft) == true) {
+    }
+    else if(controllerA.getBumper(Hand.kLeft) == true) {
       intakeSystem.reverseIntake(1);
-    } else if(controllerA.getBumper(Hand.kRight) == true) {
+    }
+    else {
+      intakeSystem.runIntake(0);
+    }
+
+    // Index
+    if(controllerA.getTriggerAxis(Hand.kRight) == 1){
+      intakeSystem.runIndex(.65);
+    }
+    else if(controllerA.getBumper(Hand.kRight) == true) {
       intakeSystem.reverseIndex(.65);
     }
-    // If the right bumper of controllerB is pressed, runs the index
     else if(controllerB.getBumper(Hand.kRight) == true) {
-      intakeSystem.runIndex(.4);
+      intakeSystem.runIndex(.65);
     }
-    // If the left trigger of controllerB is pressed, begins scheduled shoot procedure
+    else {
+      intakeSystem.runIndex(0);
+    }
+
+    // Shooter
     if(controllerB.getTriggerAxis(Hand.kLeft) == 1) {
-      // If shooting is false, runs the shooter and starts the timer
       if(!shooting) {
         shooterSystem.runShooter(.8);
-        timer.reset();
         timer.start();
         shooting = true;
       }
-      // If the shooter has spun up for 1 second, runs the index
-      else if(timer.get()>=1) {
-        intakeSystem.runIndex(.5);
-      }
     }
-    // Ceases the Shooter, Index, Intake, and Timer if the left trigger and right bumper of controllerB are not being pressed
+    else if(controllerB.getBumper(Hand.kLeft) == true) {
+      shooterSystem.runShooter(.8);
+    }
     else {
       shooterSystem.runShooter(0);
-      //shooterSystem.runKicker(0);
+    }
+
+    // Timer
+    if(timer.get()>=1) {
+      intakeSystem.runIndex(.5);
+    }
+    else if (timer.get() >= 5) {
       intakeSystem.runIndex(0);
-      intakeSystem.runIntake(0);
       timer.stop();
+      timer.reset();
       shooting = false;
     }
   
-    // Extends the climber if the Up Arrow of the DPad is being pressed on controllerB
+    // DPad
     if(controllerB.getPOV()==360 || controllerB.getPOV()==0) {
       climberSystem.extendClimber(.6);
     }
-    // Retracts the climber if the Down Arrow of the DPad is being pressed on controllerB
     else if(controllerB.getPOV()==180) {
       climberSystem.retractClimber(.2);
     }
-    // Ceases the extension or retraction of the Intake Arm if the Up or Down Arrows of the DPad are not being pressed on controllerB
     else {
       climberSystem.retractClimber(0);
-    }
-
-    // Runs the shooter if the left bumper of controllerB is pressed
-    if(controllerB.getBumper(Hand.kLeft) == true) {
-      shooterSystem.runShooter(.8);
     }
   }
 
