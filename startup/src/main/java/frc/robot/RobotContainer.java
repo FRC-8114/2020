@@ -43,7 +43,7 @@ public class RobotContainer {
 
   private final XboxController controllerA,controllerB;
   private static JoystickButton a1, a2, x1, x2, y1, y2, lb1, rb1, lb2, rb2;
-  private static Trigger rt1, rt2, lt1, lt2;
+  private static Trigger rt1, rt2, lt1, lt2, du2, dd2, dl2, dr2;
   private static Timer timer;
   private static boolean shooting;
 
@@ -100,8 +100,13 @@ public class RobotContainer {
         return controllerA.getTriggerAxis(Hand.kRight) == 1;
       }});
 
-    lt1.whenActive(() -> intakeSystem.runIntake(1)).whenInactive(() -> intakeSystem.runIntake(0));
-    rt1.whenActive(() -> intakeSystem.runIndex(.65)).whenInactive(() -> intakeSystem.runIndex(0));
+    // Runs the intake
+    lt1.whenActive(() -> intakeSystem.runIntake(1));
+    lt1.whenInactive(() -> intakeSystem.runIntake(0));
+
+    // Runs the index
+    rt1.whenActive(() -> intakeSystem.runIndex(.65));
+    rt1.whenInactive(() -> intakeSystem.runIndex(0));
     
     // Raises the Intake Arm
     y1.whileHeld(() -> wheelOfMisfortuneSystem.extendArm(.4));
@@ -130,17 +135,17 @@ public class RobotContainer {
     y2 = new JoystickButton(controllerB, 4);  
     lb2 = new JoystickButton(controllerB, 5);
     rb2 = new JoystickButton(controllerB, 6);
-    /* lt2 = new Trigger(new BooleanSupplier() {
-      @Override
+    dd2 = new Trigger(new BooleanSupplier() {
       public boolean getAsBoolean() {
-        return controllerA.getTriggerAxis(Hand.kLeft) == 1;
-      }});
-    rt2 = new Trigger(new BooleanSupplier() {
-      @Override
+        return controllerB.getPOV() == 180;
+      }
+    });
+    du2 = new Trigger(new BooleanSupplier() {
       public boolean getAsBoolean() {
-        return controllerA.getTriggerAxis(Hand.kRight) == 1;
-      }}); */
-    
+        return controllerB.getPOV() == 0;
+      }
+    });
+
     // Increases Shooter Angle
     y2.whileHeld(() -> shooterSystem.setShooterPitch(.2));
     y2.whenReleased(() -> shooterSystem.setShooterPitch(0));
@@ -160,33 +165,14 @@ public class RobotContainer {
     // Runs the index
     rb2.whileHeld(() -> intakeSystem.runIndex(.65));
     rb2.whenReleased(() -> intakeSystem.runIndex(0));
-  }
-  
-  public void periodic() {
-    /* // If the left trigger of controllerB is pressed, begins scheduled shoot procedure
-    if(controllerB.getTriggerAxis(Hand.kLeft) == 1) {
-      if(!shooting) {
-        shooterSystem.runShooter(.8);
-        timer.start();
-        shooting = true;
-      }
 
-      // If the shooter has spun up for 1 second, runs the index
-      if(shooting && timer.get()>=1) {
-        intakeSystem.runIndex(.5);
-      }
-    } */
-  
-    // DPad
-    if(controllerB.getPOV()==360 || controllerB.getPOV()==0) {
-      climberSystem.extendClimber(.6);
-    }
-    else if(controllerB.getPOV()==180) {
-      climberSystem.retractClimber(.2);
-    }
-    else {
-      climberSystem.retractClimber(0);
-    }
+    // Runs the climber quickly for raising
+    du2.whenActive(() -> climberSystem.extendClimber(.6));
+    du2.whenInactive(() -> climberSystem.extendClimber(0));
+
+    // Runs the climber slowly for lowering
+    dd2.whenActive(() -> climberSystem.retractClimber(.3));
+    dd2.whenInactive(() -> climberSystem.retractClimber(0));
   }
 
   /**
