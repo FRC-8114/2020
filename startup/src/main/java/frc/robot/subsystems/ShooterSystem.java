@@ -5,14 +5,14 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSystem extends SubsystemBase{
-    private WPI_VictorSPX shooterLeft, shooterRight, shooterPitch, kicker;
+    private WPI_VictorSPX shooterLeft, shooterRight, shooterPitch, /*kicker*/;
     private boolean shooterRunning;
 
     public ShooterSystem() {
         shooterLeft = new WPI_VictorSPX(10);
         shooterRight = new WPI_VictorSPX(11);
         shooterPitch = new WPI_VictorSPX(9);
-        kicker = new WPI_VictorSPX(14);
+        //kicker = new WPI_VictorSPX(14);
         shooterRunning = false;
     }
 
@@ -44,9 +44,9 @@ public class ShooterSystem extends SubsystemBase{
      * 
      * @param speed     the speed to run the kicker at
      */
-    public void runKicker(double speed) {
+    /* public void runKicker(double speed) {
         kicker.set(speed);
-    }
+    } */
 
     
     public boolean isShooterRunning() {
