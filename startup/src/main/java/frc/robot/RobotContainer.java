@@ -165,7 +165,6 @@ public class RobotContainer {
     // Ceases the Shooter, Index, Intake, and Timer if the left trigger and right bumper of controllerB are not being pressed
     if(true && controllerA.getTriggerAxis(Hand.kLeft) != 1 && controllerA.getTriggerAxis(Hand.kRight) != 1 && controllerB.getTriggerAxis(Hand.kLeft) != 1) {
       shooterSystem.runShooter(0);
-      shooterSystem.runKicker(0);
       intakeSystem.runIndex(0);
       intakeSystem.runIntake(0);
       timer.stop();

@@ -42,7 +42,6 @@ public class TimedMove extends CommandBase {
   @Override
   public void execute() {
     now = timer.get();
-    System.out.println("Timed Move running at " + now + " seconds.");
     if(now <= time*.25) {
       driveSystem.drive(now*leftSpeed, now*rightSpeed);
     } else if(now <= time*.75) {

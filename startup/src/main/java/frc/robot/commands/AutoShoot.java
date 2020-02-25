@@ -27,7 +27,6 @@ public class AutoShoot extends CommandBase {
 
     public void execute() {
         shooter.runShooter(speed);
-        System.out.println("Current time for Auto Shoot = "+timer.get());
         if(timer.get() <= 1) {
             intake.runIndex(0);
         }
