@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj.GenericHID;
 //import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
@@ -41,6 +43,7 @@ public class RobotContainer {
 
   private final XboxController controllerA,controllerB;
   private static JoystickButton a1, a2, x1, x2, y1, y2, lb1, rb1, lb2, rb2;
+  private static Trigger rt1, rt2, lt1, lt2;
   private static Timer timer;
   private static boolean shooting;
 
@@ -85,6 +88,16 @@ public class RobotContainer {
     y1 = new JoystickButton(controllerA, 4);
     lb1 = new JoystickButton(controllerA, 5);
     rb1 = new JoystickButton(controllerA, 6);
+    lt1 = new Trigger(new BooleanSupplier() {
+      @Override
+      public boolean getAsBoolean() {
+        return controllerA.getTriggerAxis(Hand.kLeft) == 1;
+      }});
+    rt1 = new Trigger(new BooleanSupplier() {
+      @Override
+      public boolean getAsBoolean() {
+        return controllerA.getTriggerAxis(Hand.kRight) == 1;
+      }});
 
     // Raises the Intake Arm
     y1.whileHeld(() -> wheelOfMisfortuneSystem.extendArm(.4));
@@ -114,6 +127,16 @@ public class RobotContainer {
     y2 = new JoystickButton(controllerB, 4);  
     lb2 = new JoystickButton(controllerB, 5);
     rb2 = new JoystickButton(controllerB, 6);
+    lt2 = new Trigger(new BooleanSupplier() {
+      @Override
+      public boolean getAsBoolean() {
+        return controllerA.getTriggerAxis(Hand.kLeft) == 1;
+      }});
+    rt2 = new Trigger(new BooleanSupplier() {
+      @Override
+      public boolean getAsBoolean() {
+        return controllerA.getTriggerAxis(Hand.kRight) == 1;
+      }});
 
     // Increases Shooter Angle
     y2.whileHeld(() -> shooterSystem.setShooterPitch(.2));
