@@ -37,7 +37,7 @@ public class SmoothMove extends CommandBase {
 
     timer = new Timer();
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(driveSystem);
+    addRequirements(driveSystem, odometrySubsystem);
   }
 
   // Called when the command is initially scheduled.
