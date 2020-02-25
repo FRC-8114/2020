@@ -99,6 +99,9 @@ public class RobotContainer {
         return controllerA.getTriggerAxis(Hand.kRight) == 1;
       }});
 
+    lt1.whenActive(() -> intakeSystem.runIntake(1)).whenInactive(() -> intakeSystem.runIntake(0));
+    rt1.whenActive(() -> intakeSystem.runIndex(.65)).whenInactive(() -> intakeSystem.runIndex(0));
+    
     // Raises the Intake Arm
     y1.whileHeld(() -> wheelOfMisfortuneSystem.extendArm(.4));
     y1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
@@ -127,7 +130,7 @@ public class RobotContainer {
     y2 = new JoystickButton(controllerB, 4);  
     lb2 = new JoystickButton(controllerB, 5);
     rb2 = new JoystickButton(controllerB, 6);
-    lt2 = new Trigger(new BooleanSupplier() {
+    /* lt2 = new Trigger(new BooleanSupplier() {
       @Override
       public boolean getAsBoolean() {
         return controllerA.getTriggerAxis(Hand.kLeft) == 1;
@@ -136,8 +139,8 @@ public class RobotContainer {
       @Override
       public boolean getAsBoolean() {
         return controllerA.getTriggerAxis(Hand.kRight) == 1;
-      }});
-
+      }}); */
+    
     // Increases Shooter Angle
     y2.whileHeld(() -> shooterSystem.setShooterPitch(.2));
     y2.whenReleased(() -> shooterSystem.setShooterPitch(0));
@@ -160,16 +163,7 @@ public class RobotContainer {
   }
   
   public void periodic() {
-    // If the left bumper of controllerA is pressed, runs the intake and index
-    if(controllerA.getTriggerAxis(Hand.kLeft) == 1) {
-      intakeSystem.runIntake(1);
-    }
-
-    if(controllerA.getTriggerAxis(Hand.kRight) == 1){
-      intakeSystem.runIndex(.65);
-    }
-
-    // If the left trigger of controllerB is pressed, begins scheduled shoot procedure
+    /* // If the left trigger of controllerB is pressed, begins scheduled shoot procedure
     if(controllerB.getTriggerAxis(Hand.kLeft) == 1) {
       // If shooting is false, runs the shooter and starts the timer
       if(!shooting) {
@@ -183,16 +177,7 @@ public class RobotContainer {
       if(shooting && timer.get()>=1) {
         intakeSystem.runIndex(.5);
       }
-    }
-
-    // Ceases the Shooter, Index, Intake, and Timer if the left trigger and right bumper of controllerB are not being pressed
-    if(true && controllerA.getTriggerAxis(Hand.kLeft) != 1 && controllerA.getTriggerAxis(Hand.kRight) != 1 && controllerB.getTriggerAxis(Hand.kLeft) != 1) {
-      shooterSystem.runShooter(0);
-      intakeSystem.runIndex(0);
-      intakeSystem.runIntake(0);
-      timer.stop();
-      shooting = false;
-    }
+    } */
   
     // Extends the climber if the Up Arrow of the DPad is being pressed on controllerB
     if(controllerB.getPOV()==360 || controllerB.getPOV()==0)
