@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 //import frc.robot.commands.*;
@@ -41,9 +42,9 @@ public class RobotContainer {
   private final IntakeSystem intakeSystem;
   private final ClimberSystem climberSystem;
 
-  private final XboxController controllerA,controllerB;
-  private static JoystickButton a1, a2, x1, x2, y1, y2, lb1, rb1, lb2, rb2;
-  private static Trigger rt1, rt2, lt1, lt2, du2, dd2, dl2, dr2;
+  private final XboxController controllerA;
+  private static JoystickButton a1, x1, y1, lb1, rb1;
+  private static Trigger rt1, lt1;
   private static Timer timer;
   private static boolean shooting;
 
@@ -68,12 +69,20 @@ public class RobotContainer {
     // Initializes others
     timer = new Timer();
     this.controllerA = controllerA;
-    this.controllerB = controllerB;
     shooting = false;
+
+    SmartDashboard.putData(shooterSystem);
+    SmartDashboard.putData(driveSystem);
+    SmartDashboard.putData(intakeSystem);
+
+    SmartDashboard.putData("Shooter on", new ShooterOn(shooterSystem));
+    SmartDashboard.putData("Shooter off", new ShooterOff(shooterSystem));
+
+    SmartDashboard.putData("Run index", new IndexOn(intakeSystem)); 
+    SmartDashboard.putData("Stop index", new IndexOff(intakeSystem));
 
     // Configure the button bindings for the two controllers
     controllerA_configureButtonBindings();
-    controllerB_configureButtonBindings();
   }
 
   /**
@@ -126,53 +135,6 @@ public class RobotContainer {
     // Reverses the index
     rb1.whileHeld(() -> intakeSystem.runIndex(-.65));
     rb1.whenReleased(() -> intakeSystem.runIndex(0));
-  }
-  
-  public void controllerB_configureButtonBindings() {
-    // Initializes buttons for second XboxController
-    a2 = new JoystickButton(controllerB, 1);
-    x2 = new JoystickButton(controllerB, 3);
-    y2 = new JoystickButton(controllerB, 4);  
-    lb2 = new JoystickButton(controllerB, 5);
-    rb2 = new JoystickButton(controllerB, 6);
-    dd2 = new Trigger(new BooleanSupplier() {
-      public boolean getAsBoolean() {
-        return controllerB.getPOV() == 180;
-      }
-    });
-    du2 = new Trigger(new BooleanSupplier() {
-      public boolean getAsBoolean() {
-        return controllerB.getPOV() == 0;
-      }
-    });
-
-    // Increases Shooter Angle
-    y2.whileHeld(() -> shooterSystem.setShooterPitch(.2));
-    y2.whenReleased(() -> shooterSystem.setShooterPitch(0));
-    
-    // Reverses the Index
-    x2.whileHeld(() -> intakeSystem.reverseIndex(.6));
-    x2.whenReleased(() -> intakeSystem.reverseIndex(0));
-
-    // Decreases Shooter Angle
-    a2.whileHeld(() -> shooterSystem.setShooterPitch(-.2));
-    a2.whenReleased(() -> shooterSystem.setShooterPitch(0));
-
-    // Runs the shooter
-    lb2.whileHeld(() -> shooterSystem.runShooter(.8));
-    lb2.whenReleased(() -> shooterSystem.runShooter(0));
-
-    // Runs the index
-    rb2.whileHeld(() -> intakeSystem.runIndex(.65));
-    rb2.whenReleased(() -> intakeSystem.runIndex(0));
-
-    // Runs the climber quickly for raising
-    du2.whenActive(() -> climberSystem.extendClimber(.6));
-    du2.whenInactive(() -> climberSystem.extendClimber(0));
-
-    // Runs the climber slowly for lowering
-    dd2.whenActive(() -> climberSystem.retractClimber(.3));
-    dd2.whenInactive(() -> climberSystem.retractClimber(0));
   }
 
   /**

@@ -3,18 +3,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSystem;
 
-public class ArmShooter extends CommandBase {
+public class ShooterOn extends CommandBase {
     private ShooterSystem shooter;
 
-    public ArmShooter(ShooterSystem shooter) {
+    public ShooterOn(ShooterSystem shooter) {
         this.shooter = shooter;
     }
 
     public void initalize() {
-        if(shooter.isShooterRunning())
-            shooter.runShooter(0);
-        else
-            shooter.runShooter(1);
+        shooter.runShooter(.8);
     }
 
     public void execute() {
