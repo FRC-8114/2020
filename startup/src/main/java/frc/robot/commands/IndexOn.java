@@ -11,11 +11,11 @@ public class IndexOn extends CommandBase {
     }
 
     public void initalize() {
-        index.runIndex(.8);
+        index.runIndex(.4);
     }
 
     public void execute() {
-        
+        index.runIndex(.4);
     }
 
     public boolean isFinished() {

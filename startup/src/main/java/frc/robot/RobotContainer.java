@@ -45,8 +45,6 @@ public class RobotContainer {
   private final XboxController controllerA;
   private static JoystickButton a1, x1, y1, lb1, rb1;
   private static Trigger rt1, lt1;
-  private static Timer timer;
-  private static boolean shooting;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -67,9 +65,7 @@ public class RobotContainer {
     autonomous = new Autonomous(driveSystem, odometrySystem, shooterSystem, intakeSystem); // In meters
 
     // Initializes others
-    timer = new Timer();
     this.controllerA = controllerA;
-    shooting = false;
 
     SmartDashboard.putData(shooterSystem);
     SmartDashboard.putData(driveSystem);

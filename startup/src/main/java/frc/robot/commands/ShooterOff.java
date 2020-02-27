@@ -15,7 +15,7 @@ public class ShooterOff extends CommandBase {
     }
 
     public void execute() {
-        
+        shooter.runShooter(0);
     }
 
     public boolean isFinished() {

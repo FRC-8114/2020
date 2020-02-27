@@ -15,7 +15,7 @@ public class IndexOff extends CommandBase {
     }
 
     public void execute() {
-        
+        index.runIndex(0);
     }
 
     public boolean isFinished() {
