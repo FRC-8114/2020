@@ -50,20 +50,11 @@ public class SmoothMove extends CommandBase {
   @Override
   public void execute() {
     double current = odometrySubsystem.getDriveDistance();
+    System.out.println(current);
     if(current <= 0.5*distance)
       driveSystem.drive(2*(current/distance), 2*(current/distance));
     else if(current <= distance)
       driveSystem.drive((distance-current)/distance, (distance-current)/distance);
-
-    /*
-    if(now <= time*.25) {
-      driveSystem.drive(now*leftSpeed, now*rightSpeed);
-    } else if(now <= time*.75) {
-      driveSystem.drive(leftSpeed, rightSpeed);
-    } else {
-      driveSystem.drive((time-now)*leftSpeed, (time-now)*rightSpeed);
-    }
-    */
   }
 
   // Called once the command ends or is interrupted.
