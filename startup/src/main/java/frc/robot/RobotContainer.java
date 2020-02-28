@@ -31,16 +31,16 @@ import edu.wpi.first.wpilibj2.command.button.*;
  */
 
 public class RobotContainer {
-  private final DriveSystem driveSystem;
-  private final CameraSystem cameraSystem;
-  private final OdometrySubsystem odometrySystem;
-  //private final NetworkSystem networkSystem;
-  private final Autonomous autonomous;
+  public final DriveSystem driveSystem;
+  public final CameraSystem cameraSystem;
+  public final OdometrySubsystem odometrySystem;
+  public final NetworkSystem networkSystem;
+  public final Autonomous autonomous;
   //private final PowerSystem powerSystem;
-  private final ShooterSystem shooterSystem;
-  private final WheelOfMisfortuneSystem wheelOfMisfortuneSystem;
-  private final IntakeSystem intakeSystem;
-  private final ClimberSystem climberSystem;
+  public final ShooterSystem shooterSystem;
+  public final WheelOfMisfortuneSystem wheelOfMisfortuneSystem;
+  public final IntakeSystem intakeSystem;
+  public final ClimberSystem climberSystem;
 
   private final XboxController controllerA;
   private static JoystickButton a1, y1, lb1, rb1;
@@ -54,7 +54,7 @@ public class RobotContainer {
     driveSystem = new DriveSystem(controllerA);
     cameraSystem = new CameraSystem();
     odometrySystem = new OdometrySubsystem();
-    //networkSystem = new NetworkSystem();
+    networkSystem = new NetworkSystem();
     //powerSystem = new PowerSystem(pdp);
     shooterSystem = new ShooterSystem();
     wheelOfMisfortuneSystem = new WheelOfMisfortuneSystem();

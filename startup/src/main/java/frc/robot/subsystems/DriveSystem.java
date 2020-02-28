@@ -20,26 +20,16 @@ import edu.wpi.first.wpilibj.XboxController;
 
 public class DriveSystem extends SubsystemBase {
   private XboxController controllerA;
-  private NetworkTableInstance networkInstance;
-  private NetworkTable table;
-  private NetworkTableEntry speedModifierNT;
   
   private WPI_VictorSPX backLeft, frontLeft, backRight, frontRight;
   private SpeedControllerGroup left, right;
   private DifferentialDrive driveTrain;
 
-  private double speedModifier;
+  public double speedModifier;
 
   public DriveSystem(XboxController controllerA) {
     this.controllerA = controllerA;
 
-    networkInstance = NetworkTableInstance.getDefault();
-    table = networkInstance.getTable("");
-    speedModifierNT = table.getEntry("speed-modifier");
-    networkInstance.startClientTeam(190);
-    speedModifierNT.addListener(event -> {
-      speedModifier = speedModifierNT.getDouble(1);
-   }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
    speedModifier = 1;
 
     frontLeft = new WPI_VictorSPX(1);
