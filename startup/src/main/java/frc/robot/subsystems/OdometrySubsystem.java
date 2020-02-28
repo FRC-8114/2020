@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 
 public class OdometrySubsystem extends SubsystemBase {
@@ -14,6 +14,7 @@ public class OdometrySubsystem extends SubsystemBase {
 
         leftEncoder.setDistancePerPulse(WheelCircumference(6));
         rightEncoder.setDistancePerPulse(WheelCircumference(6));
+        leftEncoder.setReverseDirection(true);
         // Configures the encoders to recognize one rotation per circumference length
     }
 
@@ -28,7 +29,7 @@ public class OdometrySubsystem extends SubsystemBase {
     }
 
     public double GetDistancePerPulse() {
-        return (leftEncoder.getDistancePerPulse() + rightEncoder.getDistancePerPulse()) / 2.;
+        return leftEncoder.getDistancePerPulse();
     }
 
     public void resetDriveEncoders() {
@@ -37,6 +38,6 @@ public class OdometrySubsystem extends SubsystemBase {
     }
 
     public double getDriveDistance() {
-        return -(leftEncoder.getDistance() + rightEncoder.getDistance()) / 2.0;
+        return leftEncoder.getDistance();
     }
 }

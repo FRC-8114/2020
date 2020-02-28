@@ -44,6 +44,7 @@ public class SmoothMove extends CommandBase {
   @Override
   public void initialize() {
     odometrySubsystem.resetDriveEncoders();
+    System.out.println(odometrySubsystem.getDriveDistance() + " is previous");
     timer.start();
   }
 
@@ -57,6 +58,8 @@ public class SmoothMove extends CommandBase {
       driveSystem.drive(odometrySubsystem.getDriveDistance()/4, odometrySubsystem.getDriveDistance()/4);
       System.out.println("Current encoder = " + odometrySubsystem.getDriveDistance());
     }
+    else if (odometrySubsystem.getDriveDistance() >= distance)
+      driveSystem.drive(0,0);
     else 
       System.out.print("Encoders are negative");
     /* double current = odometrySubsystem.getDriveDistance();
