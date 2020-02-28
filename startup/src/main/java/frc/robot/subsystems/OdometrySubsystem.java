@@ -8,11 +8,11 @@ public class OdometrySubsystem extends SubsystemBase {
     private Encoder leftEncoder, rightEncoder;
 
     public OdometrySubsystem() {
-        //leftEncoder = new Encoder(0, 1);
-        rightEncoder = new Encoder(8,9);
+        rightEncoder = new Encoder(6, 7);
+        leftEncoder = new Encoder(8,9);
         // Creates two Encoder objects
 
-        //leftEncoder.setDistancePerPulse(WheelCircumference(6));
+        leftEncoder.setDistancePerPulse(WheelCircumference(6));
         rightEncoder.setDistancePerPulse(WheelCircumference(6));
         // Configures the encoders to recognize one rotation per circumference length
     }
@@ -28,16 +28,15 @@ public class OdometrySubsystem extends SubsystemBase {
     }
 
     public double GetDistancePerPulse() {
-        return rightEncoder.getDistancePerPulse();
+        return (leftEncoder.getDistancePerPulse() + rightEncoder.getDistancePerPulse()) / 2.;
     }
 
     public void resetDriveEncoders() {
-        //leftEncoder.reset();
+        leftEncoder.reset();
         rightEncoder.reset();
     }
 
     public double getDriveDistance() {
-        return rightEncoder.getDistance();
-        //return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2.0;
+        return -(leftEncoder.getDistance() + rightEncoder.getDistance()) / 2.0;
     }
 }

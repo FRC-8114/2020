@@ -43,18 +43,26 @@ public class SmoothMove extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    odometrySubsystem.resetDriveEncoders();
     timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double current = odometrySubsystem.getDriveDistance();
+    if (odometrySubsystem.getDriveDistance() == 0) {
+      driveSystem.drive(.5,.5);
+    }
+    else {
+      driveSystem.drive(odometrySubsystem.getDriveDistance()/4, odometrySubsystem.getDriveDistance()/4);
+      System.out.println("Current encoder = " + odometrySubsystem.getDriveDistance());
+    }
+    /* double current = odometrySubsystem.getDriveDistance();
     System.out.println(current);
     if(current <= 0.5*distance)
       driveSystem.drive(2*(current/distance), 2*(current/distance));
     else if(current <= distance)
-      driveSystem.drive((distance-current)/distance, (distance-current)/distance);
+      driveSystem.drive((distance-current)/distance, (distance-current)/distance); */
   }
 
   // Called once the command ends or is interrupted.
