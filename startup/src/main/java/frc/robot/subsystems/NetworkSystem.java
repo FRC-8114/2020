@@ -17,7 +17,7 @@ public class NetworkSystem extends SubsystemBase {
 
         driveSpeed = table.getEntry("speed-modifier");
 
-        inst.startServer("Robot Network");
+        inst.startClient("");
     }
 
     public void UpdateValues() {
