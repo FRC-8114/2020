@@ -53,10 +53,12 @@ public class SmoothMove extends CommandBase {
     if (odometrySubsystem.getDriveDistance() == 0) {
       driveSystem.drive(.5,.5);
     }
-    else {
+    else if (odometrySubsystem.getDriveDistance() > 0){
       driveSystem.drive(odometrySubsystem.getDriveDistance()/4, odometrySubsystem.getDriveDistance()/4);
       System.out.println("Current encoder = " + odometrySubsystem.getDriveDistance());
     }
+    else 
+      System.out.print("Encoders are negative");
     /* double current = odometrySubsystem.getDriveDistance();
     System.out.println(current);
     if(current <= 0.5*distance)
