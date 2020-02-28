@@ -11,7 +11,7 @@ public class ClimberArmLower extends CommandBase {
     }
 
     public void execute() {
-        climber.runSpinner(-.2);
+        climber.runSpinner(-.15);
     }
 
     public boolean isFinished() {
