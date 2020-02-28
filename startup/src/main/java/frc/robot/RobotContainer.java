@@ -46,6 +46,8 @@ public class RobotContainer {
   private static JoystickButton a1, y1, lb1, rb1;
   private static Trigger rt1, lt1;
 
+  public double shootingSpeed, indexShootingSpeed, indexNormalSpeed, intakeSpeed;
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -63,6 +65,11 @@ public class RobotContainer {
 
     // Initializes the various commmands
     autonomous = new Autonomous(driveSystem, odometrySystem, shooterSystem, intakeSystem); // In meters
+
+    shootingSpeed = 1;
+    indexShootingSpeed = 1;
+    indexNormalSpeed = 1;
+    intakeSpeed = 1;
 
     // Initializes others
     this.controllerA = controllerA;
