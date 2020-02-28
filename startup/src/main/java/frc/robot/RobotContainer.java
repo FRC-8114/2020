@@ -43,7 +43,7 @@ public class RobotContainer {
   private final ClimberSystem climberSystem;
 
   private final XboxController controllerA;
-  private static JoystickButton a1, x1, y1, lb1, rb1;
+  private static JoystickButton a1, y1, lb1, rb1;
   private static Trigger rt1, lt1;
 
   /**
@@ -77,6 +77,14 @@ public class RobotContainer {
     SmartDashboard.putData("Run index", new IndexOn(intakeSystem)); 
     SmartDashboard.putData("Stop index", new IndexOff(intakeSystem));
 
+    SmartDashboard.putData("Raise climber", new ClimberRaise(climberSystem));
+    SmartDashboard.putData("Lower climber", new ClimberLower(climberSystem));
+    SmartDashboard.putData("Stop climber", new ClimberStop(climberSystem));
+   
+    SmartDashboard.putData("Raise climber arm", new ClimberArmRaise(wheelOfMisfortuneSystem));
+    SmartDashboard.putData("Lower climber arm", new ClimberArmLower(wheelOfMisfortuneSystem));
+    SmartDashboard.putData("Stop climber arm", new ClimberArmStop(wheelOfMisfortuneSystem));
+  
     // Configure the button bindings for the two controllers
     controllerA_configureButtonBindings();
   }
@@ -90,7 +98,6 @@ public class RobotContainer {
   public void controllerA_configureButtonBindings() {
     // Initializes buttons for first XboxController
     a1 = new JoystickButton(controllerA, 1);
-    x1 = new JoystickButton(controllerA, 3);
     y1 = new JoystickButton(controllerA, 4);
     lb1 = new JoystickButton(controllerA, 5);
     rb1 = new JoystickButton(controllerA, 6);
@@ -116,9 +123,6 @@ public class RobotContainer {
     // Raises the Intake Arm
     y1.whileHeld(() -> wheelOfMisfortuneSystem.extendArm(.4));
     y1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
-
-    // Runs the Color Spinner
-    x1.whileHeld(() -> wheelOfMisfortuneSystem.runSpinner(.6)).whenReleased(() -> wheelOfMisfortuneSystem.runSpinner(0));
 
     // Lowers the Intake Arm
     a1.whileHeld(() -> wheelOfMisfortuneSystem.retractArm(.25, .1));
