@@ -17,6 +17,10 @@ public class ArmLower extends CommandBase {
         arm.extendArm(-speed);
     }
 
+    public void end() {
+        arm.extendArm(0);
+    }
+
     public boolean isFinished() {
         return false;
     }
