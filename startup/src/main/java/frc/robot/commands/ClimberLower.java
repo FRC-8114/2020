@@ -11,7 +11,7 @@ public class ClimberLower extends CommandBase {
     }
 
     public void execute() {
-        climber.retractClimber(.3);
+        climber.retractClimber(1);
     }
 
     public boolean isFinished() {

@@ -11,7 +11,7 @@ public class ClimberRaise extends CommandBase {
     }
 
     public void execute() {
-        climber.extendClimber(.4);
+        climber.extendClimber(1);
     }
 
     public boolean isFinished() {
