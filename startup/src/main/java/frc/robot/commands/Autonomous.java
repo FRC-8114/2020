@@ -4,8 +4,10 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.*;
 
 public class Autonomous extends SequentialCommandGroup {
-    public Autonomous(DriveSystem driveSystem, OdometrySubsystem odometrySystem, ShooterSystem shooterSystem, IntakeSystem intakeSystem) {
+    public Autonomous(DriveSystem driveSystem, OdometrySubsystem odometrySystem, ShooterSystem shooterSystem, IntakeSystem intakeSystem, WheelOfMisfortuneSystem wheelOfMisfortuneSystem) {
         addCommands(
+            // Lowers the arm
+            new ArmLower(wheelOfMisfortuneSystem, .2),
             // Shoots for the high goal
             new AutoShoot(shooterSystem, intakeSystem, .7/*, 3*/),
             // Moves away from the initiation line

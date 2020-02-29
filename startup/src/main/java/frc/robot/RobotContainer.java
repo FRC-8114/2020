@@ -64,7 +64,7 @@ public class RobotContainer {
     climberSystem = new ClimberSystem();
 
     // Initializes the various commmands
-    autonomous = new Autonomous(driveSystem, odometrySystem, shooterSystem, intakeSystem); // In meters
+    autonomous = new Autonomous(driveSystem, odometrySystem, shooterSystem, intakeSystem, wheelOfMisfortuneSystem); // In meters
 
     shootingSpeed = 1;
     indexShootingSpeed = 1;
