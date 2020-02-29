@@ -34,7 +34,7 @@ public class RobotContainer {
   public final DriveSystem driveSystem;
   public final CameraSystem cameraSystem;
   public final OdometrySubsystem odometrySystem;
-  public final NetworkSystem networkSystem;
+  //public final NetworkSystem networkSystem;
   public final Autonomous autonomous;
   //private final PowerSystem powerSystem;
   public final ShooterSystem shooterSystem;
@@ -56,7 +56,7 @@ public class RobotContainer {
     driveSystem = new DriveSystem(controllerA);
     cameraSystem = new CameraSystem();
     odometrySystem = new OdometrySubsystem();
-    networkSystem = new NetworkSystem();
+    //networkSystem = new NetworkSystem();
     //powerSystem = new PowerSystem(pdp);
     shooterSystem = new ShooterSystem();
     wheelOfMisfortuneSystem = new WheelOfMisfortuneSystem();
