@@ -30,7 +30,7 @@ public class NetworkSystem extends SubsystemBase {
         inst.startClientTeam(8114);
     }
 
-    public void UpdateValues() {
+    public void updateValues() {
         container.driveSystem.speedModifier = shooterSpeed.getDouble(1);
         container.shootingSpeed = shooterSpeed.getDouble(.8);
         container.indexShootingSpeed = indexShootingSpeed.getDouble(.4);

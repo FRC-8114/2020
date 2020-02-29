@@ -91,6 +91,8 @@ public class RobotContainer {
     SmartDashboard.putData("Raise climber arm", new ClimberArmRaise(wheelOfMisfortuneSystem));
     SmartDashboard.putData("Lower climber arm", new ClimberArmLower(wheelOfMisfortuneSystem));
     SmartDashboard.putData("Stop climber arm", new ClimberArmStop(wheelOfMisfortuneSystem));
+
+    SmartDashboard.putData("Update networked values", new UpdateNetworkedValues(networkSystem));
   
     // Configure the button bindings for the two controllers
     controllerA_configureButtonBindings();
