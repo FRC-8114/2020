@@ -78,7 +78,8 @@ public class RobotContainer {
     SmartDashboard.putData(driveSystem);
     SmartDashboard.putData(intakeSystem);
 
-    SmartDashboard.putData("Shooter on", new ShooterOn(shooterSystem));
+    SmartDashboard.putData("Shooter high on", new ShooterOn(shooterSystem));
+    SmartDashboard.putData("Shooter low on", new ShooterLowOn(shooterSystem));
     SmartDashboard.putData("Shooter off", new ShooterOff(shooterSystem));
 
     SmartDashboard.putData("Run index", new IndexOn(intakeSystem)); 
