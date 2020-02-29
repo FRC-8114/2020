@@ -27,33 +27,8 @@ public class WheelOfMisfortuneSystem extends SubsystemBase{
         armRight.set(speed);
     }
 
-    public void retractArm(double speed, double delay) {
-        // Begins the count of the timer
-        timer.start();
-        // Activates motors (going downwards)
+    public void retractArm(double speed) {
         armLeft.set(speed);
         armRight.set(-speed);
-        // Gets current time
-        double current = timer.get();
-        // If the current time is more than or equal to the given delay and the current time is less than a given number of seconds, activates motors
-        if(current >= delay && current < 3) {
-            // If current is more than 1 second, current time equals 1
-            if (current > 1)
-                current = 1;
-            // The new speed equals the current time - the delay
-            double newspd = current-delay;
-            // If the new speed is more than a quarter of a second, the new speed is equivalent to .25
-            if(newspd>.25) {
-                newspd=.25;
-            }
-            // Activates motors (going upwards)
-            armLeft.set(-newspd);
-            armRight.set(newspd);
-        }
-
-        if (current > 4) {
-            timer.stop();
-            timer.reset();
-        }
     }
 }

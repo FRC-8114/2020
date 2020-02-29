@@ -135,7 +135,7 @@ public class RobotContainer {
     y1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
 
     // Lowers the Intake Arm
-    a1.whileHeld(() -> wheelOfMisfortuneSystem.retractArm(.25, .1));
+    a1.whileHeld(() -> wheelOfMisfortuneSystem.retractArm(.25));
     a1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
 
     // Reverses the intake
