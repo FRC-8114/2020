@@ -92,6 +92,9 @@ public class RobotContainer {
     SmartDashboard.putData("Lower climber arm", new ClimberArmLower(wheelOfMisfortuneSystem));
     SmartDashboard.putData("Stop climber arm", new ClimberArmStop(wheelOfMisfortuneSystem));
   
+    SmartDashboard.putData("Raise arm", new ArmRaise(wheelOfMisfortuneSystem)); 
+    SmartDashboard.putData("Stop arm", new ArmStop(wheelOfMisfortuneSystem));
+
     // Configure the button bindings for the two controllers
     controllerA_configureButtonBindings();
   }
