@@ -20,7 +20,7 @@ public class NetworkSystem extends SubsystemBase {
         table = inst.getTable("datatable");
         tab = Shuffleboard.getTab("motor-speeds");
 
-        driveSpeed = tab.add("speed-modifier", 1).getEntry();
+        driveSpeed = tab.add("drive-speed--modifier", 1).getEntry();
         shooterSpeed = tab.add("shooter-speed", 0.8).getEntry();
         indexShootingSpeed = tab.add("index-shooting-speed", .4).getEntry();
         indexNormalSpeed = tab.add("index-normal-speed", .7).getEntry();

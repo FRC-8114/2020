@@ -78,10 +78,10 @@ public class RobotContainer {
     SmartDashboard.putData(driveSystem);
     SmartDashboard.putData(intakeSystem);
 
-    SmartDashboard.putData("Shooter on", new ShooterOn(shooterSystem));
+    SmartDashboard.putData("Shooter on", new ShooterOn(shooterSystem, shootingSpeed));
     SmartDashboard.putData("Shooter off", new ShooterOff(shooterSystem));
 
-    SmartDashboard.putData("Run index", new IndexOn(intakeSystem)); 
+    SmartDashboard.putData("Run index", new IndexOn(intakeSystem, indexShootingSpeed)); 
     SmartDashboard.putData("Stop index", new IndexOff(intakeSystem));
 
     SmartDashboard.putData("Raise climber", new ClimberRaise(climberSystem));
@@ -122,11 +122,11 @@ public class RobotContainer {
       }});
 
     // Runs the intake
-    lt1.whenActive(() -> intakeSystem.runIntake(1));
+    lt1.whenActive(() -> intakeSystem.runIntake(intakeSpeed));
     lt1.whenInactive(() -> intakeSystem.runIntake(0));
 
     // Runs the index
-    rt1.whenActive(() -> intakeSystem.runIndex(.65));
+    rt1.whenActive(() -> intakeSystem.runIndex(indexNormalSpeed));
     rt1.whenInactive(() -> intakeSystem.runIndex(0));
     
     // Raises the Intake Arm
@@ -138,11 +138,11 @@ public class RobotContainer {
     a1.whenReleased(() -> wheelOfMisfortuneSystem.extendArm(0));
 
     // Reverses the intake
-    lb1.whileHeld(() -> intakeSystem.runIntake(-1));
+    lb1.whileHeld(() -> intakeSystem.runIntake(-intakeSpeed));
     lb1.whenReleased(() -> intakeSystem.runIntake(0));
 
     // Reverses the index
-    rb1.whileHeld(() -> intakeSystem.runIndex(-.65));
+    rb1.whileHeld(() -> intakeSystem.runIndex(-indexNormalSpeed));
     rb1.whenReleased(() -> intakeSystem.runIndex(0));
   }
 

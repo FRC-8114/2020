@@ -5,17 +5,18 @@ import frc.robot.subsystems.ShooterSystem;
 
 public class ShooterOn extends CommandBase {
     private ShooterSystem shooter;
+    private double speed;
 
-    public ShooterOn(ShooterSystem shooter) {
+    public ShooterOn(ShooterSystem shooter, double speed) {
         this.shooter = shooter;
+        this.speed = speed;
     }
 
     public void initalize() {
-        shooter.runShooter(.8);
     }
 
     public void execute() {
-        shooter.runShooter(.8); 
+        shooter.runShooter(speed); 
     }
 
     public boolean isFinished() {

@@ -5,17 +5,18 @@ import frc.robot.subsystems.IntakeSystem;
 
 public class IndexOn extends CommandBase {
     private IntakeSystem index;
+    private double speed;
 
-    public IndexOn(IntakeSystem index) {
+    public IndexOn(IntakeSystem index, double speed) {
         this.index = index;
+        this.speed = speed;
     }
 
     public void initalize() {
-        index.runIndex(.4);
     }
 
     public void execute() {
-        index.runIndex(.4);
+        index.runIndex(speed);
     }
 
     public boolean isFinished() {
