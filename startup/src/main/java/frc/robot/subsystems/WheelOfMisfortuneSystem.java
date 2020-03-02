@@ -56,4 +56,9 @@ public class WheelOfMisfortuneSystem extends SubsystemBase{
             timer.reset();
         }
     }
+
+    public void holdArm(double speed) {
+        armLeft.set(-speed);
+        armRight.set(speed);
+    }
 }

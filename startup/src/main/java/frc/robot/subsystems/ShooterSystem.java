@@ -24,6 +24,10 @@ public class ShooterSystem extends SubsystemBase{
         shooterPitch.set(speed);
     }
 
+    public void holdShooterPitch(double speed) {
+        shooterPitch.set(speed);
+    }
+
     /**
      * Runs the shooter wheels
      * 

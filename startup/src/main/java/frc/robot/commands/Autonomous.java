@@ -7,9 +7,9 @@ public class Autonomous extends SequentialCommandGroup {
     public Autonomous(DriveSystem driveSystem, OdometrySubsystem odometrySystem, ShooterSystem shooterSystem, IntakeSystem intakeSystem) {
         addCommands(
             // Shoots for the high goal
-            new AutoShoot(shooterSystem, intakeSystem, .7/*, 3*/),
+            new AutoShoot(shooterSystem, intakeSystem, .7),
             // Moves away from the initiation line
-            new SmoothMove(driveSystem, odometrySystem, /*1.5, -.75, -.75*/.1)
+            new SmoothMove(driveSystem, odometrySystem, .1)
         );
       }
 }

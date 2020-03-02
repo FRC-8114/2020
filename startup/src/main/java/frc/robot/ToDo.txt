@@ -1,4 +1,6 @@
 To Do:
- - Make shooting option to spin up shooter first and then shoot a singular ball
  - Camera Targeting System
- - Autonomous
+
+To Do v2:
+ - Make Continuous Pressure on Shooter Pitch and Arm to Hold in Place
+ - Camera System
