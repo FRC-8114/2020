@@ -13,6 +13,10 @@ public class Wait extends CommandBase {
         timer.start();
     }
 
+    public void end() {
+        timer.stop();
+    }
+
     public boolean isFinished() {
         if(timer.get() >= seconds) {
             return true;
