@@ -20,11 +20,9 @@ public class Index extends SubsystemBase {
 
   public void runIndex(double speed) {
     index.set(speed);
-    index.set(speed);
   }
 
   public void reverseIndex(double speed) {
-    index.set(-speed);
     index.set(-speed);
   }
 }
