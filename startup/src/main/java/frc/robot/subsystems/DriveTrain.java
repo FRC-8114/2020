@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -24,6 +25,8 @@ public class DriveTrain extends SubsystemBase {
   private SpeedControllerGroup left, right;
   private DifferentialDrive driveTrain;
 
+  private Encoder leftEncoder, rightEncoder;
+
   public double speedModifier;
 
   public DriveTrain(XboxController controllerA) {
@@ -35,6 +38,10 @@ public class DriveTrain extends SubsystemBase {
     backLeft = new WPI_VictorSPX(2);
     frontRight = new WPI_VictorSPX(3);
     backRight = new WPI_VictorSPX(4);
+
+    leftEncoder = new Encoder(8, 9);
+    rightEncoder = new Encoder(6, 7);
+    setEncoderDistances(inchesToMeters(wheelCircumfrence(6)));
 
     left = new SpeedControllerGroup(backLeft, frontLeft);
     right = new SpeedControllerGroup(backRight, frontRight);
@@ -61,5 +68,31 @@ public class DriveTrain extends SubsystemBase {
 
   public void turnRight(double left, double right) {
     driveTrain.tankDrive(-left, right, false);
+  }
+
+  public void resetEncoders() {
+    leftEncoder.reset();
+    rightEncoder.reset();
+  }
+
+  public void setEncoderDistances(double distance) {
+    leftEncoder.setDistancePerPulse(distance);
+    rightEncoder.setDistancePerPulse(distance);
+  }
+
+  public double inchesToMeters(double inches) {
+    return inches*.0254;
+  }
+
+  public double wheelCircumfrence(double diameter) {
+    return diameter*Math.PI;
+  }
+
+  public double getRightEncoderDistance() {
+    return rightEncoder.getDistance();
+  }
+
+  public double getLeftEncoderDistance() {
+    return leftEncoder.getDistance();
   }
 }
