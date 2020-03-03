@@ -4,3 +4,15 @@ To Do:
 To Do v2:
  - Make Continuous Pressure on Shooter Pitch and Arm to Hold in Place
  - Camera System
+
+Ideal Roster:
+ - Mechanical (4-6) [Nolan, Mason]
+ - Electrical (4-6)
+ - Programming (3-4) [Grant, Ryan B., Carson]
+ - Strategy (4) [Mason]
+
+ - Pit (7-9)
+     - Mechanical (4)
+     - Electrical (2)
+     - Strategy (1)
+     - Programming (1)

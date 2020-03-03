@@ -14,6 +14,7 @@ public class WheelOfMisfortuneSystem extends SubsystemBase{
         armLeft = new WPI_VictorSPX(19);
         armRight = new WPI_VictorSPX(20);
         spinner = new WPI_VictorSPX(21);
+        armLeft.setInverted(true);
     }
 
 
@@ -23,7 +24,7 @@ public class WheelOfMisfortuneSystem extends SubsystemBase{
 
 
     public void extendArm(double speed) {
-        armLeft.set(-speed);
+        armLeft.set(speed);
         armRight.set(speed);
     }
 
@@ -31,7 +32,7 @@ public class WheelOfMisfortuneSystem extends SubsystemBase{
         // Begins the count of the timer
         timer.start();
         // Activates motors (going downwards)
-        armLeft.set(speed);
+        armLeft.set(-speed);
         armRight.set(-speed);
         // Gets current time
         double current = timer.get();
@@ -47,7 +48,7 @@ public class WheelOfMisfortuneSystem extends SubsystemBase{
                 newspd=.25;
             }
             // Activates motors (going upwards)
-            armLeft.set(-newspd);
+            armLeft.set(newspd);
             armRight.set(newspd);
         }
 
@@ -55,10 +56,5 @@ public class WheelOfMisfortuneSystem extends SubsystemBase{
             timer.stop();
             timer.reset();
         }
-    }
-
-    public void holdArm(double speed) {
-        armLeft.set(-speed);
-        armRight.set(speed);
     }
 }
