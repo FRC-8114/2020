@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 
 public class DriveTrain extends SubsystemBase {
-  private XboxController controllerA;
+  private XboxController controller;
   
   private WPI_VictorSPX backLeft, frontLeft, backRight, frontRight;
   private SpeedControllerGroup left, right;
@@ -29,8 +29,8 @@ public class DriveTrain extends SubsystemBase {
 
   public double speedModifier;
 
-  public DriveTrain(XboxController controllerA) {
-    this.controllerA = controllerA;
+  public DriveTrain(XboxController controller) {
+    this.controller = controller;
 
     speedModifier = 1;
 
@@ -51,7 +51,7 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    driveTrain.tankDrive(-speedModifier*Math.floor(controllerA.getY(Hand.kLeft)*100)/100, -speedModifier*Math.floor(controllerA.getY(Hand.kRight)*100)/100, false);
+    driveTrain.tankDrive(-speedModifier*Math.floor(controller.getY(Hand.kLeft)*100)/100, -speedModifier*Math.floor(controller.getY(Hand.kRight)*100)/100, false);
   }
 
   public void driveForward(double speed) {

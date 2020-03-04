@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.autonomous_groups.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -31,6 +32,9 @@ public class RobotContainer {
    */
   private final Intake intake;
   private final Index index;
+  private final DriveTrain drive;
+  private final Shooter shooter;
+  
   private final XboxController controller;
   private JoystickButton lb, rb;
   private Trigger lt, rt;
@@ -39,6 +43,10 @@ public class RobotContainer {
     this.controller = controller;
     intake = new Intake();
     index = new Index();
+    drive = new DriveTrain(controller);
+    shooter = new Shooter();
+
+    configureButtonBindings();
   }
 
   /**
@@ -85,7 +93,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return new ShootAndMove(drive, shooter, intake, index);
   }
 
 
