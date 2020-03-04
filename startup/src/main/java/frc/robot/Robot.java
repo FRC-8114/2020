@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    CommandScheduler.getInstance().cancelAll();
   }
 
   @Override
@@ -64,6 +65,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    if (m_autonomous != null)
+      m_autonomous.schedule();
   }
 
   /**
