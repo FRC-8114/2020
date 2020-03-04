@@ -23,9 +23,10 @@ public class ShootAndMove extends SequentialCommandGroup {
             new ShooterStop(shooter),
 
             // Stops index
-            new IndexStop(index)
+            new IndexStop(index),
 
-            // new DriveBackward(drive, 1)
+            // Drives backward
+            new DriveBackward(drive, 1)
         );
       }
 }
