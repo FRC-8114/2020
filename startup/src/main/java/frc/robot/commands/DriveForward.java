@@ -34,4 +34,11 @@ public class DriveForward extends CommandBase {
             }
         }
     }
+
+    public boolean isFinished() {
+        if(driveTrain.getRightEncoderDistance() >= distance) {
+            return true;
+        }
+        return false;
+    }
 }
