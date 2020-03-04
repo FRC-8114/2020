@@ -18,11 +18,11 @@ public class Spinner extends SubsystemBase {
     spinner = new WPI_VictorSPX(21);
   }
 
-  public void runIntake(double speed) {
+  public void runSpinner(double speed) {
     spinner.set(speed);
   }
 
-  public void reverseIntake(double speed) {
+  public void reverseSpinner(double speed) {
     spinner.set(-speed);
   }
 }
