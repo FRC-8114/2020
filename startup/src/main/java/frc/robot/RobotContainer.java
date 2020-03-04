@@ -7,8 +7,15 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -22,10 +29,16 @@ public class RobotContainer {
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
+  private final Intake intake;
+  private final Index index;
   private final XboxController controller;
+  private JoystickButton lb, rb;
+  private Trigger lt, rt;
   
   public RobotContainer(XboxController controller) {
     this.controller = controller;
+    intake = new Intake();
+    index = new Index();
   }
 
   /**
@@ -35,6 +48,34 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   public void configureButtonBindings() {
+    lb = new JoystickButton(controller, 5);
+    rb = new JoystickButton(controller, 6);
+    lt = new Trigger(new BooleanSupplier() {
+      @Override
+      public boolean getAsBoolean() {
+        return controller.getTriggerAxis(Hand.kLeft) == 1;
+      }});
+    rt = new Trigger(new BooleanSupplier() {
+      @Override
+      public boolean getAsBoolean() {
+        return controller.getTriggerAxis(Hand.kRight) == 1;
+      }});
+
+    // Runs the intake
+    lt.whenActive(new IntakeForward(intake, .8));
+    lt.whenInactive(new IntakeStop(intake));
+
+    // Runs the index
+    rt.whenActive(new IndexForward(index, .6));
+    rt.whenInactive(new IndexStop(index));
+
+    // Reverses the intake
+    lb.whileHeld(new IntakeBackward(intake, .8));
+    lb.whenReleased(new IntakeStop(intake));
+
+    // Reverses the index
+    rb.whileHeld(new IndexBackward(index, .8));
+    rb.whenReleased(new IndexStop(index));
   }
 
   /**
