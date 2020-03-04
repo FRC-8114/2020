@@ -18,19 +18,19 @@ public class DriveForward extends CommandBase {
     public void execute() {
         if(distance*.25<1) {
             if(driveTrain.getRightEncoderDistance() < distance*.25) {
-                driveTrain.driveBackward((driveTrain.getRightEncoderDistance())/(distance*.25)*.8);
+                driveTrain.driveForward((driveTrain.getRightEncoderDistance())/(distance*.25)*.8);
             } else if (driveTrain.getRightEncoderDistance() < distance*.75) {
-                driveTrain.driveBackward(.8);
+                driveTrain.driveForward(.8);
             } else {
-                driveTrain.driveBackward((driveTrain.getRightEncoderDistance()-(distance*.75))/(distance-(distance*.75))*.8);
+                driveTrain.driveForward((driveTrain.getRightEncoderDistance()-(distance*.75))/(distance-(distance*.75))*.8);
             }
         } else {
             if(driveTrain.getRightEncoderDistance() < 1) {
-                driveTrain.driveBackward(driveTrain.getRightEncoderDistance()*.8);
+                driveTrain.driveForward(driveTrain.getRightEncoderDistance()*.8);
             } else if (driveTrain.getRightEncoderDistance() < distance-1) {
-                driveTrain.driveBackward(.8);
+                driveTrain.driveForward(.8);
             } else {
-                driveTrain.driveBackward((driveTrain.getRightEncoderDistance()-(driveTrain.getRightEncoderDistance()-1))*.8);
+                driveTrain.driveForward((driveTrain.getRightEncoderDistance()-(driveTrain.getRightEncoderDistance()-1))*.8);
             }
         }
     }
