@@ -3,15 +3,17 @@ package frc.robot.commands;
 import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ClimberStop extends CommandBase {
+public class ClimberUp extends CommandBase {
 
     private Climber climber;
+    private double speed;
 
-    public ClimberStop(Climber climber) {
+    public ClimberUp(Climber climber, double speed) {
         this.climber = climber;
+        this.speed = speed;
     }
 
     public void initialize() {
-        climber.extend(0);
+        climber.extend(speed);
     }
 }
