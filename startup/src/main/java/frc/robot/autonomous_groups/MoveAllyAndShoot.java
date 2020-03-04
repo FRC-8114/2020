@@ -8,7 +8,7 @@ public class MoveAllyAndShoot extends SequentialCommandGroup {
     public MoveAllyAndShoot(DriveTrain drive, Shooter shooter, Intake intake, Index index) {
         addCommands(
             // Drives Forward, Pushing Ally
-            new DriveForward(drive, 1.5),
+            new DriveForward(drive, 1.5, .95),
 
             // Drives Backward to Original Spot
             new DriveBackward(drive, 1.5),
