@@ -6,12 +6,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class SpinnerBackward extends CommandBase {
 
     private Spinner spinner;
+    private double speed;
 
-    public SpinnerBackward(Spinner spinner) {
+    public SpinnerBackward(Spinner spinner, double speed) {
         this.spinner = spinner;
+        this.speed = speed;
     }
 
-    public void initialize(double speed) {
+    public void initialize() {
         spinner.reverseSpinner(speed);
     }
 }

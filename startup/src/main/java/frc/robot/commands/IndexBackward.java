@@ -6,12 +6,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class IndexBackward extends CommandBase {
 
     private Index index;
+    private double speed;
 
-    public IndexBackward(Index index) {
+    public IndexBackward(Index index, double speed) {
         this.index = index;
+        this.speed = speed;
     }
 
-    public void initialize(double speed) {
+    public void initialize() {
         index.reverseIndex(speed);
     }
 }
