@@ -13,7 +13,11 @@ public class ClimberDown extends CommandBase {
         this.speed = speed;
     }
 
-    public void initialize() {
+    public void execute() {
         climber.retract(speed);
+    }
+
+    public boolean isFinished() {
+        return true;
     }
 }

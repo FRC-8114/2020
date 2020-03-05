@@ -4,7 +4,6 @@ import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ClimberUp extends CommandBase {
-
     private Climber climber;
     private double speed;
 
@@ -13,7 +12,11 @@ public class ClimberUp extends CommandBase {
         this.speed = speed;
     }
 
-    public void initialize() {
+    public void execute() {
         climber.extend(speed);
+    }
+
+    public boolean isFinished() {
+        return true;
     }
 }

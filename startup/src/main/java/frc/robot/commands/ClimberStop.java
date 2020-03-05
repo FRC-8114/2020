@@ -11,7 +11,11 @@ public class ClimberStop extends CommandBase {
         this.climber = climber;
     }
 
-    public void initialize() {
+    public void execute() {
         climber.extend(0);
+    }
+
+    public boolean isFinished() {
+        return true;
     }
 }
