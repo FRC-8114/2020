@@ -22,7 +22,5 @@ public class Network extends SubsystemBase {
         SmartDashboard.putData("Climber raise", new ClimberUp(climber, .8));
         SmartDashboard.putData("Climber lower", new ClimberDown(climber, .4));
         SmartDashboard.putData("Climber raise", new ClimberStop(climber));
-
-        /*  */
     }   
 }
