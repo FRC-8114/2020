@@ -8,7 +8,7 @@ import frc.robot.commands.*;
 public class Network extends SubsystemBase {
     private ShuffleboardTab buttons;
     
-    public Network(Shooter shooter, Index index) {
+    public Network(Shooter shooter, Index index, Climber climber) {
         /* SmartDashboard Buttons for Shooter Control */
         SmartDashboard.putData("Shooter run high", new ShooterForward(shooter, .8));
         SmartDashboard.putData("Shooter run low", new ShooterForward(shooter, .4));
@@ -18,6 +18,11 @@ public class Network extends SubsystemBase {
         SmartDashboard.putData("Run index", new IndexForward(index, .3));
         SmartDashboard.putData("Index stop", new IndexStop(index));
 
-        /* SmartDashboard Buttons for  */
+        /* SmartDashboard Buttons for Climber */
+        SmartDashboard.putData("Climber raise", new ClimberUp(climber, .8));
+        SmartDashboard.putData("Climber lower", new ClimberDown(climber, .4));
+        SmartDashboard.putData("Climber raise", new ClimberStop(climber));
+
+        /*  */
     }   
 }
