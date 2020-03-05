@@ -65,8 +65,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    if (m_autonomous != null)
+    if (m_autonomous != null) {
+      System.out.println("Auto init");
       m_autonomous.schedule();
+    }
   }
 
   /**

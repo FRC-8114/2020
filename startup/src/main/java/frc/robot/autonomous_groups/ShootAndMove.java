@@ -6,6 +6,7 @@ import frc.robot.commands.*;
 
 public class ShootAndMove extends SequentialCommandGroup {
     public ShootAndMove(DriveTrain drive, Shooter shooter, Intake intake, Index index) {
+        System.out.println("Command init");
         addCommands(
             // Starts the spin-up of the shooter
             new ShooterForward(shooter, .8),

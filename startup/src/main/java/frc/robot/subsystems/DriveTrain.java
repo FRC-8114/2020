@@ -41,7 +41,7 @@ public class DriveTrain extends SubsystemBase {
 
     leftEncoder = new Encoder(8, 9);
     rightEncoder = new Encoder(6, 7);
-    setEncoderDistances(inchesToMeters(wheelCircumfrence(6)));
+    setEncoderDistances(wheelCircumference(6));
 
     left = new SpeedControllerGroup(backLeft, frontLeft);
     right = new SpeedControllerGroup(backRight, frontRight);
@@ -63,11 +63,11 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void turnLeft(double left, double right) {
-      driveTrain.tankDrive(left, -right, false);
+      driveTrain.tankDrive(-left, right, false);
   }
 
   public void turnRight(double left, double right) {
-    driveTrain.tankDrive(-left, right, false);
+    driveTrain.tankDrive(left, -right, false);
   }
 
   public void resetEncoders() {
@@ -81,11 +81,11 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double inchesToMeters(double inches) {
-    return inches*.0254;
+    return inches / 39.37;
   }
 
-  public double wheelCircumfrence(double diameter) {
-    return diameter*Math.PI;
+  public double wheelCircumference(double diameter) {
+    return Math.PI * inchesToMeters(diameter);
   }
 
   public double getRightEncoderDistance() {

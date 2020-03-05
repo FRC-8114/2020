@@ -17,6 +17,7 @@ public class DriveBackward extends CommandBase {
 
     public void execute() {
         if(distance*.25<1) {
+            System.out.print("Distance less than 25");
             if(driveTrain.getRightEncoderDistance() > -distance*.25) {
                 driveTrain.driveBackward(-(driveTrain.getRightEncoderDistance())/(distance*.25)*.8);
             } else if (driveTrain.getRightEncoderDistance() > -distance*.75) {
@@ -37,6 +38,7 @@ public class DriveBackward extends CommandBase {
 
     public boolean isFinished() {
         if(driveTrain.getRightEncoderDistance() <= -distance) {
+            System.out.println("Finished");
             return true;
         }
         return false;
