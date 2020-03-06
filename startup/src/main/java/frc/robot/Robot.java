@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private RobotContainer robotContainer;
   private XboxController controller;
-  private Command m_autonomous;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -29,7 +28,6 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     controller = new XboxController(0);
     robotContainer = new RobotContainer(controller);
-    m_autonomous = robotContainer.getAutonomousCommand();
   }
 
   /**
@@ -65,9 +63,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    if (m_autonomous != null) {
+    if (robotContainer.getAutonomousCommand() != null) {
       System.out.println("Auto init");
-      m_autonomous.schedule();
+      robotContainer.getAutonomousCommand().schedule();
     }
   }
 
