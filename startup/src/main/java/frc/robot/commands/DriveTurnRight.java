@@ -1,42 +1,36 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.DriveTrain;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class DriveTurnRight extends CommandBase {
     private DriveTrain driveTrain;
-    private final double distance;
+    private Timer timer;
+    private final double time, speed;
 
-    public DriveTurnRight(DriveTrain driveTrain, double distance) {
+    public DriveTurnRight(DriveTrain driveTrain, double time, double speed) {
         this.driveTrain = driveTrain;
-        this.distance = distance;
+        this.time = time;
+        this.speed = speed;
         driveTrain.resetEncoders();
+        timer = new Timer();
 
         addRequirements(driveTrain);
     }
 
     public void execute() {
-        if(distance*.25<1) {
-            if(driveTrain.getRightEncoderDistance() < distance*.25) {
-                driveTrain.turnRight((driveTrain.getRightEncoderDistance())/(distance*.25)*.8, (driveTrain.getRightEncoderDistance())/(distance*.25)*.8);
-            } else if (driveTrain.getRightEncoderDistance() < distance*.75) {
-                driveTrain.turnRight(.8, .8);
-            } else {
-                driveTrain.turnRight((driveTrain.getRightEncoderDistance()-(distance*.75))/(distance-(distance*.75))*.8, (driveTrain.getRightEncoderDistance()-(distance*.75))/(distance-(distance*.75))*.8);
-            }
+        if(timer.get() < time*.25) {
+            driveTrain.turnRight((timer.get()/(time*.25))*speed, (timer.get()/(time*.25))*speed);
+        } else if(timer.get() < time*.75) {
+            driveTrain.turnRight(speed, speed);
         } else {
-            if(driveTrain.getRightEncoderDistance() < 1) {
-                driveTrain.turnRight(driveTrain.getRightEncoderDistance()*.8, driveTrain.getRightEncoderDistance()*.8);
-            } else if (driveTrain.getRightEncoderDistance() < distance-1) {
-                driveTrain.turnRight(.8, .8);
-            } else {
-                driveTrain.turnRight((driveTrain.getRightEncoderDistance()-(driveTrain.getRightEncoderDistance()-1))*.8, (driveTrain.getRightEncoderDistance()-(driveTrain.getRightEncoderDistance()-1))*.8);
-            }
+            driveTrain.turnRight(((timer.get()-time*.75)/(time*.25))*speed, ((timer.get()-time*.75)/(time*.25))*speed);
         }
     }
 
     public boolean isFinished() {
-        if(driveTrain.getRightEncoderDistance() >= distance) {
+        if(timer.get() >= time) {
             return true;
         }
         return false;

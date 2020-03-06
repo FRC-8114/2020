@@ -34,6 +34,7 @@ public class RobotContainer {
   private final Index index;
   private final DriveTrain drive;
   private final Shooter shooter;
+  private final ShootAndMove auto;
   
   private final XboxController controller;
   private JoystickButton lb, rb;
@@ -45,6 +46,7 @@ public class RobotContainer {
     index = new Index();
     drive = new DriveTrain(controller);
     shooter = new Shooter();
+    auto = new ShootAndMove(drive, shooter, intake, index);
 
     configureButtonBindings();
   }
@@ -93,7 +95,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new ShootAndMove(drive, shooter, intake, index);
+    return auto;
   }
 
 
