@@ -17,4 +17,8 @@ public class ShooterForward extends CommandBase {
         System.out.println("Shooter Forward");
         shooter.runShooter(speed);
     }
+
+    public boolean isFinished() {
+        return true;
+    }
 }

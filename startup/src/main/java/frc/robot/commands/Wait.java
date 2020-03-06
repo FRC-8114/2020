@@ -13,6 +13,10 @@ public class Wait extends CommandBase {
         timer.start();
     }
 
+    public void initialize() {
+        System.out.println("Wait initialized");
+    }
+
     public void end() {
         timer.stop();
     }

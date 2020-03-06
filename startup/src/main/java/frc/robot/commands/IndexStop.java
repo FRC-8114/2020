@@ -13,5 +13,10 @@ public class IndexStop extends CommandBase {
 
     public void initialize() {
         index.runIndex(0);
+        System.out.println("IndexStop");
+    }
+
+    public boolean isFinished() {
+        return true;
     }
 }

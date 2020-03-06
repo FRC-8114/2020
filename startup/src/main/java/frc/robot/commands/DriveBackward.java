@@ -15,6 +15,10 @@ public class DriveBackward extends CommandBase {
         addRequirements(driveTrain);
     }
 
+    public void initialize() {
+        System.out.println("DriveBackward");
+    }
+
     public void execute() {
         if(distance*.25<1) {
             System.out.print("Distance less than 25");
