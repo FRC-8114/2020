@@ -11,7 +11,7 @@ public class MoveAllyAndShoot extends SequentialCommandGroup {
             new DriveForward(drive, 1.5, .95),
 
             // Drives Backward to Original Spot
-            new DriveBackward(drive, 1.5),
+            new DriveBackward(drive, 1.5, .8),
 
             // Begins Shooter
             new ShooterForward(shooter, .8),

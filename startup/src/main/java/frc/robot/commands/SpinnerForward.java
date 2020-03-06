@@ -16,4 +16,8 @@ public class SpinnerForward extends CommandBase {
     public void initialize() {
         spinner.runSpinner(speed);
     }
+
+    public boolean isFinished() {
+        return true;
+    }
 }

@@ -16,4 +16,8 @@ public class SpinnerBackward extends CommandBase {
     public void initialize() {
         spinner.reverseSpinner(speed);
     }
+
+    public boolean isFinished() {
+        return true;
+    }
 }

@@ -20,7 +20,7 @@ public class DriveBackward extends CommandBase {
     }
 
     public void initialize() {
-        System.out.println("DriveBackward");
+        timer.start();
     }
 
     public void execute() {

@@ -14,4 +14,8 @@ public class SpinnerStop extends CommandBase {
     public void initialize() {
         spinner.runSpinner(0);
     }
+
+    public boolean isFinished() {
+        return true;
+    }
 }
