@@ -16,4 +16,8 @@ public class IndexBackward extends CommandBase {
     public void initialize() {
         index.reverseIndex(speed);
     }
+
+    public boolean isFinished() {
+        return true;
+    }
 }

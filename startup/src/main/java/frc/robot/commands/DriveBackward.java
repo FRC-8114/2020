@@ -19,6 +19,10 @@ public class DriveBackward extends CommandBase {
         addRequirements(driveTrain);
     }
 
+    public void initialize() {
+        timer.start();
+    }
+
     public void execute() {
         if(timer.get() < time*.25) {
             driveTrain.driveBackward((timer.get()/(time*.25))*speed);

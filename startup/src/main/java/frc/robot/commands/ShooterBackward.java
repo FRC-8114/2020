@@ -16,4 +16,8 @@ public class ShooterBackward extends CommandBase {
     public void initialize() {
         shooter.reverseShooter(speed);
     }
+
+    public boolean isFinished() {
+        return true;
+    }
 }

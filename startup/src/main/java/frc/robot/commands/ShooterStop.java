@@ -14,4 +14,8 @@ public class ShooterStop extends CommandBase {
     public void initialize() {
         shooter.runShooter(0);
     }
+
+    public boolean isFinished() {
+        return true;
+    }
 }

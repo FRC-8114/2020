@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 
 public class DriveTrain extends SubsystemBase {
   private XboxController controller;
@@ -39,9 +40,11 @@ public class DriveTrain extends SubsystemBase {
     frontRight = new WPI_VictorSPX(3);
     backRight = new WPI_VictorSPX(4);
 
-    leftEncoder = new Encoder(8, 9);
-    rightEncoder = new Encoder(6, 7);
+    leftEncoder = new Encoder(8, 9, false, EncodingType.k1X);
+    rightEncoder = new Encoder(6, 7, false, EncodingType.k1X);
     setEncoderDistances(wheelCircumference(6));
+    leftEncoder.setSamplesToAverage(40);
+    rightEncoder.setSamplesToAverage(40);
 
     left = new SpeedControllerGroup(backLeft, frontLeft);
     right = new SpeedControllerGroup(backRight, frontRight);

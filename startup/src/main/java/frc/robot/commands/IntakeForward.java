@@ -16,4 +16,8 @@ public class IntakeForward extends CommandBase {
     public void initialize() {
         intake.runIntake(speed);
     }
+
+    public boolean isFinished() {
+        return true;
+    }
 }

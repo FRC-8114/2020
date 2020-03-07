@@ -14,4 +14,8 @@ public class IntakeStop extends CommandBase {
     public void initialize() {
         intake.runIntake(0);
     }
+
+    public boolean isFinished() {
+        return true;
+    }
 }

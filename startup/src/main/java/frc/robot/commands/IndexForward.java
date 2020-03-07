@@ -16,4 +16,8 @@ public class IndexForward extends CommandBase {
     public void initialize() {
         index.runIndex(speed);
     }
+
+    public boolean isFinished() {
+        return true;
+    }
 }

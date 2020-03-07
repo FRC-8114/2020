@@ -16,4 +16,8 @@ public class IntakeBackward extends CommandBase {
     public void initialize() {
         intake.reverseIntake(speed);
     }
+
+    public boolean isFinished() {
+        return true;
+    }
 }

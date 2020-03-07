@@ -14,4 +14,8 @@ public class IndexStop extends CommandBase {
     public void initialize() {
         index.runIndex(0);
     }
+
+    public boolean isFinished() {
+        return true;
+    }
 }

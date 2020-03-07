@@ -13,6 +13,9 @@ public class Wait extends CommandBase {
         timer.start();
     }
 
+    public void initialize() {
+    }
+
     public void end() {
         timer.stop();
     }
