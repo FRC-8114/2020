@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import frc.robot;
+import frc.robot.RobotContainer;
 
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.shuffleboard.*;
@@ -27,6 +27,13 @@ public class Network extends SubsystemBase {
 
 
     public void updateValues() {
-
+        container.climbDown = climbDown.getDouble(.4);
+        container.climbUp = climbUp.getDouble(.6);
+        container.indexHigh = indexHigh.getDouble(.8);
+        container.indexLow = indexLow.getDouble(.3);
+        container.shootHigh = shootHigh.getDouble(.8);
+        container.shootLow = shootLow.getDouble(.3);
+        container.intakeSpeed = intake.getDouble(.8);
+        container.getDrive().speedModifier = driveMax.getDouble(1);
     }
 }

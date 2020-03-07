@@ -7,14 +7,14 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
+//import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 public class Shooter extends SubsystemBase {  
   private WPI_VictorSPX left_shooter, right_shooter;
-  private Encoder left_shooter_e, right_shooter_e;
+  //private Encoder left_shooter_e, right_shooter_e;
 
   public Shooter() {
     left_shooter = new WPI_VictorSPX(10);
