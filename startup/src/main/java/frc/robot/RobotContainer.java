@@ -11,6 +11,7 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -32,24 +33,62 @@ public class RobotContainer {
    */
   private final Intake intake;
   private final Index index;
+  private final Climber climber;
   private final DriveTrain drive;
   private final Shooter shooter;
+  private final Network network;
+
   private final ShootAndMove auto;
   
   private final XboxController controller;
   private JoystickButton lb, rb;
   private Trigger lt, rt;
+
+  public double shootHigh, shootLow, indexHigh, indexLow, intakeSpeed, climbUp, climbDown;
   
   public RobotContainer(XboxController controller) {
     this.controller = controller;
+
+    shootHigh = .8;
+    shootLow = .3;
+    indexHigh = .6;
+    indexLow = .3;
+    intakeSpeed = .8;
+    climbUp = .6;
+    climbDown = .4;
+
     intake = new Intake();
     index = new Index();
+    climber = new Climber();
     drive = new DriveTrain(controller);
     shooter = new Shooter();
+    network = new Network();
+
     auto = new ShootAndMove(drive, shooter, intake, index);
 
     configureButtonBindings();
+    configureShuffleBoardButtons();
   }
+
+  public void configureShuffleBoardButtons() {
+    /* SmartDashboard Buttons for Shooter Control */
+    SmartDashboard.putData("Shooter run high", new ShooterForward(shooter, shootHigh));
+    SmartDashboard.putData("Shooter run low", new ShooterForward(shooter, shootLow));
+    SmartDashboard.putData("Shooter stop", new ShooterStop(shooter));
+
+    /* SmartDashboard Buttons for Index Control */
+    SmartDashboard.putData("Run index", new IndexForward(index, indexLow));
+    SmartDashboard.putData("Index stop", new IndexStop(index));
+
+    /* SmartDashboard Buttons for Climber */
+    SmartDashboard.putData("Climber raise", new ClimberUp(climber, climbUp));
+    SmartDashboard.putData("Climber lower", new ClimberDown(climber, climbDown));
+    SmartDashboard.putData("Climber raise", new ClimberStop(climber));
+
+    /* SmartDashborad Buttons for Updating Values */
+    SmartDashboard.putData("Update Values", new NetworkUpdateValues(network));
+  }
+
 
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
@@ -72,19 +111,19 @@ public class RobotContainer {
       }});
 
     // Runs the intake
-    lt.whenActive(new IntakeForward(intake, .8));
+    lt.whenActive(new IntakeForward(intake, intakeSpeed));
     lt.whenInactive(new IntakeStop(intake));
 
     // Runs the index
-    rt.whenActive(new IndexForward(index, .6));
+    rt.whenActive(new IndexForward(index, indexHigh));
     rt.whenInactive(new IndexStop(index));
 
     // Reverses the intake
-    lb.whileHeld(new IntakeBackward(intake, .8));
+    lb.whileHeld(new IntakeBackward(intake, intakeSpeed));
     lb.whenReleased(new IntakeStop(intake));
 
     // Reverses the index
-    rb.whileHeld(new IndexBackward(index, .8));
+    rb.whileHeld(new IndexBackward(index, indexHigh));
     rb.whenReleased(new IndexStop(index));
   }
 
@@ -100,4 +139,7 @@ public class RobotContainer {
 
 
   //Getters
+  public DriveTrain getDrive() {
+    return drive;
+  }
 }

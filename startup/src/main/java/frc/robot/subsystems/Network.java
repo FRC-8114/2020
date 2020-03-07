@@ -1,23 +1,32 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot;
+
+import edu.wpi.first.networktables.*;
+import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.*;
 
-public class Network extends SubsystemBase {   
-    public Network(Shooter shooter, Index index, Climber climber) {
-        /* SmartDashboard Buttons for Shooter Control */
-        SmartDashboard.putData("Shooter run high", new ShooterForward(shooter, .8));
-        SmartDashboard.putData("Shooter run low", new ShooterForward(shooter, .4));
-        SmartDashboard.putData("Shooter stop", new ShooterStop(shooter));
+public class Network extends SubsystemBase {
+    private RobotContainer container;
 
-        /* SmartDashboard Buttons for Index Control */
-        SmartDashboard.putData("Run index", new IndexForward(index, .3));
-        SmartDashboard.putData("Index stop", new IndexStop(index));
+    private ShuffleboardTab tab;
+    private NetworkTableEntry driveMax, shootHigh, shootLow, indexHigh, indexLow, intake, climbUp, climbDown;
+    
+    public Network() {
+        tab = Shuffleboard.getTab("Motor Speeds");
 
-        /* SmartDashboard Buttons for Climber */
-        SmartDashboard.putData("Climber raise", new ClimberUp(climber, .8));
-        SmartDashboard.putData("Climber lower", new ClimberDown(climber, .4));
-        SmartDashboard.putData("Climber raise", new ClimberStop(climber));
+        driveMax = tab.add("Drive Max", 1.0).getEntry();
+        shootHigh = tab.add("Shoot High", .8).getEntry();
+        shootLow = tab.add("Shoot Low", .3).getEntry();
+        indexHigh = tab.add("Index High", .6).getEntry();
+        indexLow = tab.add("Index Low", .3).getEntry();
+        intake = tab.add("Intake", .1).getEntry();
+        climbUp = tab.add("Climb Up", .6).getEntry();
+        climbDown = tab.add("Climb Down", .4).getEntry();
     }   
+
+
+    public void updateValues() {
+
+    }
 }
