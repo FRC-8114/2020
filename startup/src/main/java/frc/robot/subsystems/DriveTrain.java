@@ -54,6 +54,7 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
+    System.out.println("Encoders: \n - Left: "+ leftEncoder.getDistance() +"\n - Right: "+ rightEncoder.getDistance() + "\n");
     driveTrain.tankDrive(-speedModifier*Math.floor(controller.getY(Hand.kLeft)*100)/100, -speedModifier*Math.floor(controller.getY(Hand.kRight)*100)/100, false);
   }
 
