@@ -1,36 +1,31 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.DriveTrain;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class DriveTurnRight extends CommandBase {
     private DriveTrain driveTrain;
-    private Timer timer;
-    private final double time, speed;
+    private final double distance, speed;
 
-    public DriveTurnRight(DriveTrain driveTrain, double time, double speed) {
+    public DriveTurnRight(DriveTrain driveTrain, double distance, double speed) {
         this.driveTrain = driveTrain;
-        this.time = time;
+        this.distance = distance;
         this.speed = speed;
         driveTrain.resetEncoders();
-        timer = new Timer();
 
         addRequirements(driveTrain);
     }
 
+    public void initialize() {
+        driveTrain.resetEncoders();
+    }
+
     public void execute() {
-        if(timer.get() < time*.25) {
-            driveTrain.turnRight((timer.get()/(time*.25))*speed, (timer.get()/(time*.25))*speed);
-        } else if(timer.get() < time*.75) {
-            driveTrain.turnRight(speed, speed);
-        } else {
-            driveTrain.turnRight(((timer.get()-time*.75)/(time*.25))*speed, ((timer.get()-time*.75)/(time*.25))*speed);
-        }
+        driveTrain.turnRight(speed, speed);
     }
 
     public boolean isFinished() {
-        if(timer.get() >= time) {
+        if(driveTrain.getLeftEncoderDistance() >= distance && driveTrain.getRightEncoderDistance() >= distance) {
             return true;
         }
         return false;
