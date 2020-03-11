@@ -20,7 +20,7 @@ public class Camera extends SubsystemBase {
 
   private static Pixy2 pixy;
   private final int blockSignature = 1;
-  private Block largestBlock;
+  private Block largestGoalBlock;
 
   public Camera() {
     pixy = Pixy2.createInstance(new SPILink());
@@ -43,29 +43,29 @@ public class Camera extends SubsystemBase {
     pixy.setLED(0,0,0);
   }
 
-  public Block getBiggestBlock() {
+  public Block getBiggestGoalBlock() {
     int blockCount = pixy.getCCC().getBlocks(false, Pixy2CCC.CCC_SIG1, 25);
     if (blockCount <= 0) {
         return null;
     }
     ArrayList<Block> blocks = pixy.getCCC().getBlockCache();
-    largestBlock = null;
+    largestGoalBlock = null;
     for (Block block : blocks) {
         if (block.getSignature() == blockSignature) {
-            if (largestBlock == null)
-                largestBlock = block;
-            else if (block.getWidth() > largestBlock.getWidth())
-                largestBlock = block;
+            if (largestGoalBlock == null)
+                largestGoalBlock = block;
+            else if (block.getWidth() > largestGoalBlock.getWidth())
+                largestGoalBlock = block;
         }
     }
-    return largestBlock;
+    return largestGoalBlock;
   }
 
-  public double getLargestBlockX() {
-    return largestBlock.getX();
+  public double getGoalBlockX() {
+    return largestGoalBlock.getX();
   }
 
-  public double getLargestBlockY() {
-    return largestBlock.getY();
+  public double getGoalBlockY() {
+    return largestGoalBlock.getY();
   }
 }
