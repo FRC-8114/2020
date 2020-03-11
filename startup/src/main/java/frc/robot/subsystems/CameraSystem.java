@@ -32,7 +32,7 @@ public class CameraSystem extends SubsystemBase{
         //minPos = table.getEntry("minPos").getDoubleArray(new double[2]);
         //maxPos = table.getEntry("maxPos").getDoubleArray(new double[2]);
 
-        new Thread(() -> {
+        /*new Thread(() -> {
             UsbCamera mainCamera = CameraServer.getInstance().startAutomaticCapture();
             CvSink cvSink = CameraServer.getInstance().getVideo();
             CvSource outputStream = CameraServer.getInstance().putVideo("Source", 320, 240);
@@ -50,26 +50,21 @@ public class CameraSystem extends SubsystemBase{
         arduino = new I2C(Port.kOnboard, 0);
     }
 
-    public double[] getDistance() {
+    public double[] getArduinoStuffs() {
         /**
          * order of recv
-         * width - int (4 bytes)
-         * height - int (4 bytes)
-         * x - int (4 bytes)
-         * y - int (4 bytes)
-         * distance - int (8 bytes)
-         * angle - int (8 bytes) */
-        byte[] recv = new byte[4 + 4 + 4 + 4 + 8 + 8];
-        arduino.readOnly(recv, 32);
-        double[] arduinoParams = new double[6];
-        arduinoParams[0] = (double)reconvertInt(Arrays.copyOfRange(recv, 0, 3));
-        arduinoParams[1] = (double)reconvertInt(Arrays.copyOfRange(recv, 4, 7));
-        arduinoParams[2] = (double)reconvertInt(Arrays.copyOfRange(recv, 8, 11));
-        arduinoParams[3] = (double)reconvertInt(Arrays.copyOfRange(recv, 12, 15));
-        arduinoParams[4] = reconvertDouble(Arrays.copyOfRange(recv, 16, 23));
-        arduinoParams[5] = reconvertDouble(Arrays.copyOfRange(recv, 24, 32));
+         * offset - int (4 bytes)
+         * distance - int (4 bytes) */
+        byte[] recv = new byte[4 + 4];
+        arduino.readOnly(recv, 16);
+        int[] arduinoParams = new int[2];
+        arduinoParams[0] = reconvertInt(Arrays.copyOfRange(recv, 0, 3));
+        arduinoParams[1] = reconvertInt(Arrays.copyOfRange(recv, 4, 7));
+        double[] redouble = new double[2];
+        redouble[0] = (double)arduinoParams[0] / 1000;
+        redouble[1] = (double)arduinoParams[1] / 1000;
         System.out.println(Arrays.toString(arduinoParams));
-        return arduinoParams;
+        return redouble;
     }
 
     public void assignPoints() {
