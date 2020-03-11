@@ -22,12 +22,12 @@ public class Shooter extends SubsystemBase {
   }
 
   public void runShooter(double speed) {
-    left_shooter.set(speed);
+    left_shooter.set(-speed);
     right_shooter.set(speed);
   }
 
   public void reverseShooter(double speed) {
-    left_shooter.set(-speed);
+    left_shooter.set(speed);
     right_shooter.set(-speed);
   }
 }

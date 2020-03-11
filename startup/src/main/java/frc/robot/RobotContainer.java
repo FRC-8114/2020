@@ -49,7 +49,7 @@ public class RobotContainer {
   public RobotContainer(XboxController controller) {
     this.controller = controller;
 
-    shootHigh = .8;
+    shootHigh = .6;
     shootLow = .3;
     indexHigh = .6;
     indexLow = .3;

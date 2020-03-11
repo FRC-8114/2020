@@ -16,7 +16,7 @@ public class Network extends SubsystemBase {
         tab = Shuffleboard.getTab("Motor Speeds");
 
         driveMax = tab.add("Drive Max", 1.0).getEntry();
-        shootHigh = tab.add("Shoot High", .8).getEntry();
+        shootHigh = tab.add("Shoot High", .6).getEntry();
         shootLow = tab.add("Shoot Low", .3).getEntry();
         indexHigh = tab.add("Index High", .6).getEntry();
         indexLow = tab.add("Index Low", .3).getEntry();
