@@ -14,12 +14,14 @@ public class OdometrySubsystem extends SubsystemBase {
 
         leftEncoder.setDistancePerPulse(WheelCircumference(6));
         //rightEncoder.setDistancePerPulse(WheelCircumference(6));
-        leftEncoder.setReverseDirection(true);
         // Configures the encoders to recognize one rotation per circumference length
     }
 
+    public void periodic() {
+    }
+
     public double InchesToMeters (double inches) {
-        return inches /= 39.37;
+        return inches / 39.37;
         // Converts an inch value to meters
     }
 
