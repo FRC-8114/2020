@@ -40,11 +40,9 @@ public class DriveTrain extends SubsystemBase {
     frontRight = new WPI_VictorSPX(3);
     backRight = new WPI_VictorSPX(4);
 
-    leftEncoder = new Encoder(8, 9, false, EncodingType.k4X);
-    rightEncoder = new Encoder(6, 7, false, EncodingType.k4X);
-    setEncoderDistances(wheelCircumference(6));
-    leftEncoder.setSamplesToAverage(40);
-    rightEncoder.setSamplesToAverage(40);
+    leftEncoder = new Encoder(8, 9, false, EncodingType.k1X);
+    rightEncoder = new Encoder(6, 7, false, EncodingType.k1X);
+    setEncoderDistances(6);
 
     left = new SpeedControllerGroup(backLeft, frontLeft);
     right = new SpeedControllerGroup(backRight, frontRight);
@@ -80,8 +78,8 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void setEncoderDistances(double distance) {
-    leftEncoder.setDistancePerPulse(distance);
-    rightEncoder.setDistancePerPulse(distance);
+    leftEncoder.setDistancePerPulse(wheelCircumference(distance));
+    rightEncoder.setDistancePerPulse(wheelCircumference(distance));
   }
 
   public double inchesToMeters(double inches) {
