@@ -40,8 +40,8 @@ public class DriveTrain extends SubsystemBase {
     frontRight = new WPI_VictorSPX(3);
     backRight = new WPI_VictorSPX(4);
 
-    leftEncoder = new Encoder(8, 9, false, EncodingType.k1X);
-    rightEncoder = new Encoder(6, 7, false, EncodingType.k1X);
+    leftEncoder = new Encoder(8, 9, false, EncodingType.k4X);
+    rightEncoder = new Encoder(6, 7, false, EncodingType.k4X);
     setEncoderDistances(wheelCircumference(6));
     leftEncoder.setSamplesToAverage(40);
     rightEncoder.setSamplesToAverage(40);
