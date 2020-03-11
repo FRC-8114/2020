@@ -4,7 +4,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.*;
 import edu.wpi.cscore.*;
+
+import java.util.Arrays;
+
 import org.opencv.core.*;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.I2C.Port;
 
 public class CameraSystem extends SubsystemBase{
     private NetworkTableInstance inst;
@@ -12,6 +17,7 @@ public class CameraSystem extends SubsystemBase{
     private NetworkTable table;
     private double[] locations;
     private GripPipeline gripPipeline;
+    private I2C arduino;
 
     //private double[] minPos = new double[2], maxPos = new double[2];
 
@@ -40,7 +46,29 @@ public class CameraSystem extends SubsystemBase{
                 gripPipeline.process(source);
                 outputStream.putFrame(gripPipeline.cvRectangleOutput());
             }
-        }).start();
+        }).start();*/
+        arduino = new I2C(Port.kOnboard, 0);
+    }
+
+    public double[] getDistance() {
+        /**
+         * order of recv
+         * width - int (4 bytes)
+         * height - int (4 bytes)
+         * x - int (4 bytes)
+         * y - int (4 bytes)
+         * distance - int (8 bytes)
+         * angle - int (8 bytes) */
+        byte[] recv = new byte[4 + 4 + 4 + 4 + 8 + 8];
+        arduino.read(1, 32, recv);
+        double[] arduinoParams = new double[6];
+        arduinoParams[0] = (double)reconvertInt(Arrays.copyOfRange(recv, 0, 3));
+        arduinoParams[1] = (double)reconvertInt(Arrays.copyOfRange(recv, 4, 7));
+        arduinoParams[2] = (double)reconvertInt(Arrays.copyOfRange(recv, 8, 11));
+        arduinoParams[3] = (double)reconvertInt(Arrays.copyOfRange(recv, 12, 15));
+        arduinoParams[4] = reconvertDouble(Arrays.copyOfRange(recv, 16, 23));
+        arduinoParams[5] = reconvertDouble(Arrays.copyOfRange(recv, 24, 32));
+        return arduinoParams;
     }
 
     public void assignPoints() {
@@ -99,6 +127,15 @@ public class CameraSystem extends SubsystemBase{
 
         return (focalLength * realHeight * imageHeight) / (objectHeight * sensorHeight);
     }
+    
+    private int reconvertInt(byte[] raw) {
+        return (int)raw[3] << 24 + (int)raw[2] << 16 + (int)raw[1] << 8 + (int)raw[0];
+    }
+    
+    private int reconvertDouble(byte[] raw) {
+        return (int)raw[7] << 56 + (int)raw[6] << 48 + (int)raw[5] << 40 + (int)raw[4] << 32 +
+                (int)raw[3] << 24 + (int)raw[2] << 16 + (int)raw[1] << 8 + (int)raw[0];
+    } 
 }
 
 /*
