@@ -30,10 +30,10 @@ public class DriveTrain extends SubsystemBase {
 
   public double speedModifier;
 
-  public DriveTrain(XboxController controller) {
+  public DriveTrain(XboxController controller, double speedModifier) {
     this.controller = controller;
 
-    speedModifier = 1;
+    this.speedModifier = speedModifier;
 
     frontLeft = new WPI_VictorSPX(1);
     backLeft = new WPI_VictorSPX(2);
@@ -54,6 +54,10 @@ public class DriveTrain extends SubsystemBase {
   public void periodic() {
     System.out.println("Encoders: \n - Left: "+ leftEncoder.getDistance() +"\n - Right: "+ rightEncoder.getDistance() + "\n");
     driveTrain.tankDrive(-speedModifier*Math.floor(controller.getY(Hand.kLeft)*100)/100, -speedModifier*Math.floor(controller.getY(Hand.kRight)*100)/100, false);
+  }
+
+  public double getSpeedModifier() {
+    return speedModifier;
   }
 
   public void driveForward(double speed) {

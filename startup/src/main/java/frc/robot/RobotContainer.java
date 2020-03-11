@@ -41,7 +41,7 @@ public class RobotContainer {
   private final ShootAndMove auto;
   
   private final XboxController controller;
-  private JoystickButton lb, rb;
+  private JoystickButton lb, rb, a;
   private Trigger lt, rt;
 
   public double shootHigh, shootLow, indexHigh, indexLow, intakeSpeed, climbUp, climbDown;
@@ -60,7 +60,7 @@ public class RobotContainer {
     intake = new Intake();
     index = new Index();
     climber = new Climber();
-    drive = new DriveTrain(controller);
+    drive = new DriveTrain(controller, 1);
     shooter = new Shooter();
     network = new Network();
 
@@ -99,6 +99,7 @@ public class RobotContainer {
   public void configureButtonBindings() {
     lb = new JoystickButton(controller, 5);
     rb = new JoystickButton(controller, 6);
+    a = new JoystickButton(controller, 1);
     lt = new Trigger(new BooleanSupplier() {
       @Override
       public boolean getAsBoolean() {
@@ -125,6 +126,9 @@ public class RobotContainer {
     // Reverses the index
     rb.whileHeld(new IndexBackward(index, indexHigh));
     rb.whenReleased(new IndexStop(index));
+
+    // Switches drive direction
+    a.whenPressed(new SwitchDrive(controller, drive));
   }
 
   /**
