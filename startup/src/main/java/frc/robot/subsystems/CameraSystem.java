@@ -60,7 +60,7 @@ public class CameraSystem extends SubsystemBase{
          * distance - int (8 bytes)
          * angle - int (8 bytes) */
         byte[] recv = new byte[4 + 4 + 4 + 4 + 8 + 8];
-        arduino.read(1, 32, recv);
+        arduino.readOnly(recv, 32);
         double[] arduinoParams = new double[6];
         arduinoParams[0] = (double)reconvertInt(Arrays.copyOfRange(recv, 0, 3));
         arduinoParams[1] = (double)reconvertInt(Arrays.copyOfRange(recv, 4, 7));
@@ -68,6 +68,7 @@ public class CameraSystem extends SubsystemBase{
         arduinoParams[3] = (double)reconvertInt(Arrays.copyOfRange(recv, 12, 15));
         arduinoParams[4] = reconvertDouble(Arrays.copyOfRange(recv, 16, 23));
         arduinoParams[5] = reconvertDouble(Arrays.copyOfRange(recv, 24, 32));
+        System.out.println(Arrays.toString(arduinoParams));
         return arduinoParams;
     }
 
