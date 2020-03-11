@@ -368,10 +368,6 @@ public final class Main {
       visionThread.start();
     }
 
-    for (;;) {
-      System.out.println("Working");
-    }
-
     // loop forever 
     /*
     for (;;) {
