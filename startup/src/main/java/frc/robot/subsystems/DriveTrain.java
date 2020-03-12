@@ -52,8 +52,8 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println("Encoders: \n - Left: "+ leftEncoder.getDistance() +"\n - Right: "+ rightEncoder.getDistance() + "\n");
-    driveTrain.tankDrive(-speedModifier*Math.floor(controller.getY(Hand.kLeft)*100)/100, -speedModifier*Math.floor(controller.getY(Hand.kRight)*100)/100, false);
+    System.out.println("Encoders: \n - Left: "+ leftEncoder.getDistance() +"\n - Right: "+ rightEncoder.getDistance() + "\nDistance Per Pulse: " + getDistancePerPulse());
+    driveTrain.tankDrive(speedModifier*Math.floor(controller.getY(Hand.kRight)*100)/100, speedModifier*Math.floor(controller.getY(Hand.kLeft)*100)/100, false);
   }
 
   public double getSpeedModifier() {
@@ -82,8 +82,12 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void setEncoderDistances(double distance) {
-    leftEncoder.setDistancePerPulse(wheelCircumference(distance));
-    rightEncoder.setDistancePerPulse(wheelCircumference(distance));
+    leftEncoder.setDistancePerPulse(2048.0/wheelCircumference(distance));
+    rightEncoder.setDistancePerPulse(2048.0/wheelCircumference(distance));
+  }
+
+  public double getDistancePerPulse() {
+    return leftEncoder.getDistancePerPulse();
   }
 
   public double inchesToMeters(double inches) {
@@ -95,10 +99,10 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getRightEncoderDistance() {
-    return rightEncoder.getDistance();
+    return rightEncoder.getDistance() * wheelCircumference(6);
   }
 
   public double getLeftEncoderDistance() {
-    return leftEncoder.getDistance();
+    return leftEncoder.getDistance() * wheelCircumference(6);
   }
 }

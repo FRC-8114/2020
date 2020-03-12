@@ -18,7 +18,7 @@ public class SwitchDrive extends CommandBase {
 
     public void initialize() {
         var = -1.0 * driveTrain.getSpeedModifier();
-        driveTrain = new DriveTrain(controller, var);
+        driveTrain.speedModifier = var;
     }
 
     public void execute() {
