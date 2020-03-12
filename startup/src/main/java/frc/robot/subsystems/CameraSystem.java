@@ -4,7 +4,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.*;
 import edu.wpi.cscore.*;
+
+import java.util.Arrays;
+
 import org.opencv.core.*;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.I2C.Port;
 
 public class CameraSystem extends SubsystemBase{
     private NetworkTableInstance inst;
@@ -12,6 +17,7 @@ public class CameraSystem extends SubsystemBase{
     private NetworkTable table;
     private double[] locations;
     private GripPipeline gripPipeline;
+    private I2C arduino;
 
     //private double[] minPos = new double[2], maxPos = new double[2];
 
@@ -26,7 +32,7 @@ public class CameraSystem extends SubsystemBase{
         //minPos = table.getEntry("minPos").getDoubleArray(new double[2]);
         //maxPos = table.getEntry("maxPos").getDoubleArray(new double[2]);
 
-        new Thread(() -> {
+        /*new Thread(() -> {
             UsbCamera mainCamera = CameraServer.getInstance().startAutomaticCapture();
             CvSink cvSink = CameraServer.getInstance().getVideo();
             CvSource outputStream = CameraServer.getInstance().putVideo("Source", 320, 240);
@@ -40,7 +46,25 @@ public class CameraSystem extends SubsystemBase{
                 gripPipeline.process(source);
                 outputStream.putFrame(gripPipeline.cvRectangleOutput());
             }
-        }).start();
+        }).start();*/
+        arduino = new I2C(Port.kOnboard, 0);
+    }
+
+    public double[] getArduinoStuffs() {
+        /**
+         * order of recv
+         * offset - int (4 bytes)
+         * distance - int (4 bytes) */
+        byte[] recv = new byte[4 + 4];
+        arduino.readOnly(recv, 16);
+        int[] arduinoParams = new int[2];
+        arduinoParams[0] = reconvertInt(Arrays.copyOfRange(recv, 0, 3));
+        arduinoParams[1] = reconvertInt(Arrays.copyOfRange(recv, 4, 7));
+        double[] redouble = new double[2];
+        redouble[0] = (double)arduinoParams[0] / 1000;
+        redouble[1] = (double)arduinoParams[1] / 1000;
+        System.out.println(Arrays.toString(arduinoParams));
+        return redouble;
     }
 
     public void assignPoints() {
@@ -99,6 +123,15 @@ public class CameraSystem extends SubsystemBase{
 
         return (focalLength * realHeight * imageHeight) / (objectHeight * sensorHeight);
     }
+    
+    private int reconvertInt(byte[] raw) {
+        return (int)raw[3] << 24 + (int)raw[2] << 16 + (int)raw[1] << 8 + (int)raw[0];
+    }
+    
+    private int reconvertDouble(byte[] raw) {
+        return (int)raw[7] << 56 + (int)raw[6] << 48 + (int)raw[5] << 40 + (int)raw[4] << 32 +
+                (int)raw[3] << 24 + (int)raw[2] << 16 + (int)raw[1] << 8 + (int)raw[0];
+    } 
 }
 
 /*
