@@ -2,32 +2,26 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.networktables.*;
 import edu.wpi.cscore.*;
 
 import java.util.Arrays;
 
-import org.opencv.core.*;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 
 public class CameraSystem extends SubsystemBase{
-    private NetworkTableInstance inst;
-    private NetworkTableEntry points;
-    private NetworkTable table;
-    private double[] locations;
+    private double[] redouble;
     private GripPipeline gripPipeline;
     private I2C arduino;
+    private double velocity, distance, angle, offset;
+    private ShooterSystem shooter;
+    private IntakeSystem intake;
+    private DriveSystem drive;
 
     //private double[] minPos = new double[2], maxPos = new double[2];
 
     public CameraSystem() {
         gripPipeline = new GripPipeline();
-        inst = NetworkTableInstance.getDefault();
-        table = inst.getTable("");
-
-        points = table.getEntry("points");
-        locations = new double[12];
 
         //minPos = table.getEntry("minPos").getDoubleArray(new double[2]);
         //maxPos = table.getEntry("maxPos").getDoubleArray(new double[2]);
@@ -58,35 +52,36 @@ public class CameraSystem extends SubsystemBase{
         byte[] recv = new byte[4 + 4];
         arduino.readOnly(recv, 16);
         int[] arduinoParams = new int[2];
-        arduinoParams[0] = reconvertInt(Arrays.copyOfRange(recv, 0, 3));
-        arduinoParams[1] = reconvertInt(Arrays.copyOfRange(recv, 4, 7));
-        double[] redouble = new double[2];
+        arduinoParams[0] = reconvertInt(Arrays.copyOfRange(recv, 0, 3)); // Offset
+        arduinoParams[1] = reconvertInt(Arrays.copyOfRange(recv, 4, 7)); // Distance
+        redouble = new double[2];
         redouble[0] = (double)arduinoParams[0] / 1000;
         redouble[1] = (double)arduinoParams[1] / 1000;
         System.out.println(Arrays.toString(arduinoParams));
         return redouble;
+        // redouble = offset, distance, angle, x, y
     }
 
-    public void assignPoints() {
-        double[] points = this.points.getDoubleArray(locations);
-        for(int i=0;i<locations.length;i++) {
-            locations[i] = points[i];
-        }
+    public void calculateVelocity() {
+        getArduinoStuffs();
+        distance = redouble[1];
+        angle = redouble[2];
+        velocity = (.5 * (1.0 / Math.cos(Math.toRadians(angle))) * Math.sqrt(Math.pow((Math.pow(distance, 2)) * (2 * 386.088583) * Math.tan(Math.toRadians(angle)), 2)));
+        velocity /= (90 * Math.tan(Math.toRadians(angle)) - (98.25 - 24));
+        shooter.runShooter(velocity);
+        // Wait for 3 seconds
+        intake.runIndex(.5);
+    }
 
-        /*
-        * locations[0]: top left x  
-        * locations[1]: top left y
-        * locations[2]: top right x
-        * locations[3]: top right y
-        * locations[4]: middle top left x
-        * locations[5]: middle top left y
-        * locations[6]: middle top right x
-        * locations[7]: middle top right y
-        * locations[8]: middle bottom left x
-        * locations[9]: middle bottom left y
-        * locations[10]: middle bottom right x
-        * locations[11]: middle bottom right y
-        */
+    public void adjustOffset() {
+        getArduinoStuffs();
+        offset = redouble[0];
+        if (offset > 0.5) {
+            drive.drive(-0.3, 0.3);
+        }
+        else if (offset < -0.5) {
+            drive.drive(0.3, -0.3);
+        }
     }
 
     public void periodic() {
@@ -101,28 +96,6 @@ public class CameraSystem extends SubsystemBase{
             System.out.println(d +" ");
         */
     }
-
-    public void autoAim() {
-        assignPoints();
-
-        findDistance(0.0508, 0, (locations[7] - locations[11]), 0);
-
-        // In meters
-        // double focalLength = 0.0023;
-        // double realHeight = 0.0508;
-        // double imageHeight = 0; // Temprary
-        // double objectHeight = locations[7] - locations[11];
-        // double sensorHeight = 0; // Temporary
-
-        //double distance = (focalLength * realHeight * imageHeight) / (objectHeight * sensorHeight);
-        
-    }
-
-    public double findDistance(double realHeight, double imageHeight, double objectHeight, double sensorHeight) {
-        double focalLength = 0.0023;
-
-        return (focalLength * realHeight * imageHeight) / (objectHeight * sensorHeight);
-    }
     
     private int reconvertInt(byte[] raw) {
         return (int)raw[3] << 24 + (int)raw[2] << 16 + (int)raw[1] << 8 + (int)raw[0];
@@ -133,26 +106,3 @@ public class CameraSystem extends SubsystemBase{
                 (int)raw[3] << 24 + (int)raw[2] << 16 + (int)raw[1] << 8 + (int)raw[0];
     } 
 }
-
-/*
-new Thread(() -> {
-            UsbCamera mainCamera = CameraServer.getInstance().startAutomaticCapture();
-            mainCamera.setResolution(320, 240);
-            CvSink cvSink = CameraServer.getInstance().getVideo();
-            CvSource outputStream = CameraServer.getInstance().putVideo("Filtered", 320, 240);
-
-            Mat source = new Mat();
-            Mat filtered = new Mat();
-            Mat output = new Mat();
-
-            while(!Thread.interrupted()) {
-                if (cvSink.grabFrame(source)==0) {
-                    continue;
-                }
-                Core.inRange(source, new Scalar(0, 0, 0), new Scalar(0, 255, 0), filtered);
-                Imgproc.cvtColor(filtered, output, Imgproc.COLOR_BGR2GRAY);
-                outputStream.putFrame(output);
-            }
-        }).start();
-*/
-
